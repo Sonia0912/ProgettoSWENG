@@ -2,12 +2,88 @@
 
 
 /** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
+html, body {
+  margin:0px;
+  height:100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.header {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#nome {
+  font-size: 30px;
   font-weight: bold;
-  color: #777777;
+  color: blue;
   margin: 40px 0px 70px;
-  text-align: center;
+  text-align: left;
+}
+
+.titoletto {
+    color: purple;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.headerButton {
+    float: right;
+}
+
+#universitaInfo {
+    color: black;
+    font-size: 20px;
+    text-align: justify;
+}
+
+.infoUniHomepage {
+    width: 30%;
+    height: 500px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    float:left;
+    background-color: #9fc4d4;
+}
+
+.dipartimentiHomepage {
+    width: 70%;
+    height: 500px;
+    backgroud: red;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    float:left;
+    background-color: #feffab;
+}
+
+.contenuto {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.contattiHomepage {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#dipInfo {
+    color: blue;
+}
+
+#contattiInfo {
+    color: black;
+    font-size: 18px;
+}
+
+.cw-DockPanel {
+    width: inherit;
+    height: inherit;
+}
+
+.cw-DockPanel td {
+  border: 1px solid #BBBBBB;
+  padding: 3px;
 }
 
 .sendButton {
