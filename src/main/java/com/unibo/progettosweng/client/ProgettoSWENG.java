@@ -1,5 +1,10 @@
+/**
+ * HOMEPAGE
+ */
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -9,13 +14,6 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -39,31 +37,43 @@ public class ProgettoSWENG implements EntryPoint {
    */
   public void onModuleLoad() {
 
+    final String uniInfoString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+                                  "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex " +
+                                  "ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
+                                  "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    final String[] nomiDipartimenti = {"Matematica", "Fisica", "Informatica"};
+    final String[] infoDipartimenti = {"Info 1", "Info 2", "Info 3"};
+    final String testoPulsante = "<span>Il mio portale</span>";
+    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: unitech@mail.com";
+
     // Informazioni universita'
-    final String uniInfoString = "Lorem ipsum dolor sit amet, " +
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt" +
-            " ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
-            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex " +
-            "ea commodo consequat. Duis aute irure dolor in reprehenderit in " +
-            "voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa " +
-            "qui officia deserunt mollit anim id est laborum.";
     final HTML uniInfo = new HTML(uniInfoString);
     RootPanel.get("universitaInfo").add(uniInfo);
 
-    // Informazioni dipartimenti
-    final String dipInfoString = "Qui ci sono i dipartimenti";
-    final HTML dipInfo = new HTML(dipInfoString);
-    RootPanel.get("dipInfo").add(dipInfo);
+    // Dipartimenti
+    TabLayoutPanel tabPanel = new TabLayoutPanel(2.2, Style.Unit.EM);
+    tabPanel.setAnimationDuration(1000);
+    tabPanel.getElement().getStyle().setMarginBottom(10.0, Style.Unit.PX);
+    tabPanel.getElement().getStyle().setHeight(420.0, Style.Unit.PX);
+    tabPanel.getElement().getStyle().setBackgroundColor("white");
+
+    HTML[] infoDipHTML = {};
+    for (int i = 0; i < infoDipartimenti.length; i++) {
+      infoDipHTML[i] = new HTML(infoDipartimenti[i]);
+      tabPanel.add(infoDipHTML[i], nomiDipartimenti[i]);
+    }
+
+    tabPanel.selectTab(0);
+    RootPanel.get("dipInfo").add(tabPanel);
+
+    // Login
+    final Button login = new Button(testoPulsante);
+    RootPanel.get("login").add(login);
 
     // Contatti
-    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: uniscientia@mail.com";
     final HTML contatti = new HTML(contattiString);
     RootPanel.get("contattiInfo").add(contatti);
 
-    // Pulsante log in
-    final Button login = new Button("Il mio portale");
-    RootPanel.get("login").add(login);
 
 /*    final Button sendButton = new Button("Send");
     final TextBox nameField = new TextBox();

@@ -1,35 +1,104 @@
 /** Add css rules here for your application. */
 
+/*
+COLORI
+Viola scuro: #6439ad
+Viola molto scuro: #1d0645
+Viola chiaro: #cfbeed
+Arancione pallido: #ffc387
+Arancione acceso: #ffa347
+*/
+
 
 /** Example rules used by the template application (remove for your app) */
 html, body {
-  margin:0px;
-  height:100%;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 0px;
+  height: 100%;
+}
+
+body {
+  margin: 0px !important;
 }
 
 .header {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    padding: 20px;
+    position: relative;
+    height: 80px;
 }
 
-#nome {
-  font-size: 30px;
-  font-weight: bold;
-  color: blue;
-  margin: 40px 0px 70px;
-  text-align: left;
+.logo {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
-.titoletto {
-    color: purple;
-    font-size: 24px;
+#unitech {
+    font-size: 40px;
     font-weight: bold;
+    font-family: "Courier New";
+    color: #6439ad;
+    margin-left: 15px;
+    position: relative;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .headerButton {
     float: right;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.headerButton .gwt-Button {
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 30px;
+    background: #6439ad;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    padding: 15px;
+    width: 160px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.headerButton .gwt-Button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.headerButton .gwt-Button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.headerButton .gwt-Button:hover span {
+    padding-right: 25px;
+}
+
+.headerButton .gwt-Button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.titoletto {
+    color: #6439ad;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 #universitaInfo {
@@ -44,7 +113,7 @@ html, body {
     margin-top: 20px;
     margin-bottom: 20px;
     float:left;
-    background-color: #9fc4d4;
+    background-color: #ffc387;
 }
 
 .dipartimentiHomepage {
@@ -54,21 +123,20 @@ html, body {
     margin-top: 20px;
     margin-bottom: 20px;
     float:left;
-    background-color: #feffab;
+    background-color: #cfbeed;
 }
 
 .contenuto {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 18px;
 }
 
 .contattiHomepage {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    padding: 10px;
 }
 
 #dipInfo {
-    color: blue;
+    color: black;
+    padding-top: 10px;
 }
 
 #contattiInfo {
@@ -76,20 +144,6 @@ html, body {
     font-size: 18px;
 }
 
-.cw-DockPanel {
-    width: inherit;
-    height: inherit;
-}
-
-.cw-DockPanel td {
-  border: 1px solid #BBBBBB;
-  padding: 3px;
-}
-
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
@@ -107,4 +161,20 @@ html, body {
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
+}
+
+.gwt-TabLayoutPanelTabs {
+    background: #cfbeed !important;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
+    background: #6439ad !important;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
+    background: white !important;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContentContainer {
+    border-color: #cfbeed !important;
 }
