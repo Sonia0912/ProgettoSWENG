@@ -9,11 +9,6 @@ html, body {
   margin-right: 20px;
 }
 
-.header {
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
 #nome {
   font-size: 30px;
   font-weight: bold;
@@ -39,27 +34,19 @@ html, body {
 }
 
 .infoUniHomepage {
-    width: 30%;
     height: 500px;
     margin-top: 20px;
     margin-bottom: 20px;
-    float:left;
     background-color: #9fc4d4;
+    padding: 20px 20px 20px 20px;
 }
 
 .dipartimentiHomepage {
-    width: 70%;
     height: 500px;
-    backgroud: red;
     margin-top: 20px;
     margin-bottom: 20px;
-    float:left;
     background-color: #feffab;
-}
-
-.contenuto {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 20px 20px 20px 20px;
 }
 
 .contattiHomepage {
