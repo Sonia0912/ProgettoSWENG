@@ -2,45 +2,61 @@ package com.unibo.progettosweng.client;
 
 import com.unibo.progettosweng.CreazioneDB;
 
+import com.unibo.progettosweng.model.Esame;
+import com.unibo.progettosweng.model.Utente;
+import com.unibo.progettosweng.server.SerializerUtente;
 import org.junit.Test;
+import org.mapdb.DB;
 
 
 public class CreazioneDBTest {
+
     @Test
     public void test(){
-        CreazioneDB db = new CreazioneDB();
-        int result = db.createMap(CreazioneDB.DB_UTENTI, CreazioneDB.UTENTI_MAP);
-
-        assert (result == 1);
+        CreazioneDB<Utente> db = new CreazioneDB();
+        DB result = db.getDb(CreazioneDB.DB_UTENTI);
+        assert (result.isClosed() != true);
 
     }
 
     @Test
     public void inserimentoUtente(){
 
-        CreazioneDB db = new CreazioneDB();
-        db.createMap(CreazioneDB.DB_UTENTI, CreazioneDB.UTENTI_MAP);
-        String [] utente = {"Gianluca", "Gueli","gianluca.gueli@studio.unibo.it"};
-        int result = db.insert(CreazioneDB.DB_UTENTI,CreazioneDB.UTENTI_MAP,utente);
-
-        assert (result == 1);
+        Utente urs1 = new Utente("Gianluca", "Gueli","gianluca.gueli@studio.unibo.it","123","studente");
+        boolean a = urs1.aggiuntiUtenteAlDB();
+        assert (a == true);
     }
 
-   @Test
-   public void getNameUtente(){
 
-       CreazioneDB db = new CreazioneDB();
+    @Test
+    public void getNomiUtentiTest(){
+        Utente urs1 = new Utente("Erika", "Colonna","erika.colonna@studio.unibo","123","studente");
+        urs1.aggiuntiUtenteAlDB();
+        String[] a = urs1.getNomiUtenti();
+        for (String nome : a) {
+            System.out.println("nome -> " + nome);
+        }
+    }
 
-       String [] utente = {"Gianluca", "Gueli","gianluca.gueli@studio.unibo.it"};
-       db.insert(CreazioneDB.DB_UTENTI,CreazioneDB.UTENTI_MAP,utente);
+    @Test
+    public void controlloUtenteDuplicato(){
 
-       String  nome = "Gianluca";
+        Utente urs1 = new Utente("Gianluca", "Gueli","gianluca.gueli@studio.unibo.it","123","studente");
+        urs1.aggiuntiUtenteAlDB();
+        //Non posso inserirlo due volte
+        boolean a = urs1.aggiuntiUtenteAlDB();
+        assert (a == false);
+    }
 
-        String username = db.getUsernameUtente(CreazioneDB.DB_UTENTI,CreazioneDB.UTENTI_MAP,nome);
+    @Test
+    public void inserimentoEsame(){
+        Esame urs1 = new Esame("12-01-21", "12:00","media","M1","Algoritmi");
+        boolean a = urs1.inserimentoEsame();
+        assert (a == true);
+    }
 
-       assert (username.equals(nome));
 
-   }
+
 
 
 }
