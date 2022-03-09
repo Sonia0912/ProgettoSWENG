@@ -3,7 +3,6 @@ package com.unibo.progettosweng.model;
 import com.unibo.progettosweng.CreazioneDB;
 import com.unibo.progettosweng.server.SerializerUtente;
 import org.mapdb.DB;
-import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
@@ -39,12 +38,20 @@ public class Utente {
 
     public void setNome(String nome){
         this.nome = nome;
-    }
-    public void setUsername(String username){
-        this.username = username;
+        aggiorna();
     }
 
-    public boolean aggiuntiUtenteAlDB(){
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+        aggiorna();
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+        aggiorna();
+    }
+
+    public boolean aggiuntiUtente(){
 
         //creo un riferimento alla classe CreazioneBD e creo la struttura data
         // HTreeeMap per salvare gli utenti
@@ -52,7 +59,7 @@ public class Utente {
         DB db = data.getDb(CreazioneDB.DB_UTENTI);
         HTreeMap<String,Utente> map = data.getMap(db, CreazioneDB.UTENTI_MAP, new SerializerUtente());
 
-        if(checkDuplicato(map) ){
+        if(controlloDuplicato(map) ){
             System.out.println("Utente già inserito!");
             db.close();
             return false;
@@ -62,7 +69,7 @@ public class Utente {
             return true;
         }
     }
-    private boolean checkDuplicato(HTreeMap<String,Utente> map){
+    private boolean controlloDuplicato(HTreeMap<String,Utente> map){
 
         for ( String i: map.getKeys()) {
             if (map.get(i).getUsername().equals(this.username) ){
@@ -72,35 +79,52 @@ public class Utente {
         return false;
 
     }
-    public String getUsernameUtente( ) {
 
+    private void aggiorna(){
         CreazioneDB<Utente> data = new CreazioneDB();
         DB db = data.getDb(CreazioneDB.DB_UTENTI);
         HTreeMap<String, Utente> map = db.hashMap(CreazioneDB.UTENTI_MAP).counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
 
-            for ( String i: map.getKeys()) {
-                if (map.get(i).getUsername().equals(this.username) ){
-                    String username = map.get(i).getUsername();
-                    db.close();
-                    return username;
-                }
+        for ( String i: map.getKeys()) {
+            if(map.get(i).getUsername().equals(this.username)){
+                map.replace(i,this);
             }
-            return "";
+        }
+        db.close();
     }
 
-    public String[] getNomiUtenti(){
+    public static Utente[] getUtenti(){
 
         CreazioneDB<Utente> data = new CreazioneDB();
         DB db = data.getDb(CreazioneDB.DB_UTENTI);
         HTreeMap<String, Utente> map = db.hashMap(CreazioneDB.UTENTI_MAP).counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
-        String[] utenti = new String[map.size()];
+        Utente[] utenti = new Utente[map.size()];
 
         int k = 0;
         for ( String i: map.getKeys()) {
-            utenti[k] = map.get(i).getNome();
+            utenti[k] = map.get(i);
             k++;
         }
+        db.close();
         return utenti;
+
+    }
+
+    public boolean rimuoviUtente(){
+
+        CreazioneDB<Utente> data = new CreazioneDB();
+        DB db = data.getDb(CreazioneDB.DB_UTENTI);
+        HTreeMap<String,Utente> map = data.getMap(db, CreazioneDB.UTENTI_MAP, new SerializerUtente());
+
+        for ( String i: map.getKeys()) {
+            if (map.get(i).getUsername().equals(this.username) ){
+                map.remove(i);
+                db.close();
+                return true;
+            }
+        }
+        return false;
+
 
     }
 }
