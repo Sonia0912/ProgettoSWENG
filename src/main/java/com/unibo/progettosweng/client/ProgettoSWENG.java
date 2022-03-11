@@ -3,11 +3,10 @@
  */
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
@@ -36,58 +35,48 @@ public class ProgettoSWENG implements EntryPoint {
    */
   private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
+  public static void qualcunoHaFattoQualcosa() {
+    Window.alert("Funzionaaa");
+  }
+
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
 
-    final String uniInfoString = "" +
-            "<div class=\"infoUniHomepage\">" +
-            " <div class=\"contenuto\">" +
-            " <span class=\"titoletto\">La nostra storia</span>" +
-            " <p id=\"universitaInfo\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\"" +
-            "   ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex \"" +
-            "   ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\"" +
-            "   Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
-            " </p>" +
-            "</div>"+
-            "</div>";
-    final String infoDipString = "" +
-            "<div id=\"dipartimenti\" class=\"dipartimentiHomepage\">\n" +
-            " <div class=\"contenuto\">" +
-            "   <span class=\"titoletto\">I dipartimenti</span>\n" +
-            "   <div id=\"dipInfo\"></div>\n" +
-            " </div>"+
-            "</div>";
-    final String[] nomiDipartimenti = {"Matematica", "Fisica", "Informatica"};
-    final String[] infoDipartimenti = {"Info 1", "Info 2", "Info 3"};
+    final String[] menuSections = {"Home", "Dipartimenti"};
+    final Button[] menuButtons = new Button[menuSections.length];
     final String testoPulsante = "<span>Il mio portale</span>";
     final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: unitech@mail.com";
 
-    // Informazioni universita'
-    final HTML uniInfo = new HTML(uniInfoString);
-    RootPanel.get("container").add(uniInfo);
-
-    final HTML infoDip = new HTML(infoDipString);
-    RootPanel.get("container").add(infoDip);
-
-    // Dipartimenti
-    TabLayoutPanel tabPanel = new TabLayoutPanel(2.2, Style.Unit.EM);
-    tabPanel.setAnimationDuration(1000);
-    tabPanel.getElement().getStyle().setMarginBottom(10.0, Style.Unit.PX);
-    tabPanel.getElement().getStyle().setHeight(420.0, Style.Unit.PX);
-    tabPanel.getElement().getStyle().setBackgroundColor("white");
-
-    HTML[] infoDipHTML = {};
-    for (int i = 0; i < infoDipartimenti.length; i++) {
-      infoDipHTML[i] = new HTML(infoDipartimenti[i]);
-      tabPanel.add(infoDipHTML[i], nomiDipartimenti[i]);
+    // Menu
+    HorizontalPanel hPanel = new HorizontalPanel();
+    hPanel.setSpacing(5);
+    for (int i = 0; i < menuSections.length; i++) {
+      menuButtons[i] = new Button(menuSections[i]);
+      hPanel.add(menuButtons[i]);
     }
+    RootPanel.get("pannelloMenu").add(hPanel);
 
-    tabPanel.selectTab(0);
-//    RootPanel.get("dipInfo").add(tabPanel);
-    HTMLPanel container = new HTMLPanel("container");
-    container.add(tabPanel, "dipInfo");
+    // Di default mostro il contenuto della homepage
+    Homepage hp = new Homepage();
+    hp.aggiungiContenuto();
+
+    // Se clicco su Home
+    menuButtons[0].addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+        Homepage hp = new Homepage();
+        hp.aggiungiContenuto();
+      }
+    });
+
+    // Se clicco su Dipartimenti
+    menuButtons[1].addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+        Dipartimenti dip = new Dipartimenti();
+        dip.aggiungiContenuto();
+      }
+    });
 
     // Login
     final Button login = new Button(testoPulsante);
@@ -96,7 +85,6 @@ public class ProgettoSWENG implements EntryPoint {
     // Contatti
     final HTML contatti = new HTML(contattiString);
     RootPanel.get("contattiInfo").add(contatti);
-
 
 
 /*    final Button sendButton = new Button("Send");

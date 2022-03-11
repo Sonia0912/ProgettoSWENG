@@ -1,5 +1,3 @@
-/** Add css rules here for your application. */
-
 /*
 COLORI
 Viola scuro: #6439ad
@@ -9,8 +7,10 @@ Arancione pallido: #ffc387
 Arancione acceso: #ffa347
 */
 
+/***************
+    GENERICI
+***************/
 
-/** Example rules used by the template application (remove for your app) */
 html, body {
   margin: 0px;
   height: 100%;
@@ -20,14 +20,24 @@ body {
   margin: 0px !important;
 }
 
+.titoletto {
+    color: #6439ad;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contenuto {
+    padding: 18px;
+}
+
+/***************
+     HEADER
+***************/
+
 .header {
     padding: 20px;
     position: relative;
     height: 80px;
-}
-
-#container {
-    padding: 20px;
 }
 
 .logo {
@@ -99,43 +109,39 @@ body {
     right: 0;
 }
 
-.sendButton{
-    color: #fff;
-    background: #ffc387;
-    padding: 7px 22px;
-    border-radius: 50px;
-    border: 2px solid #ffc387;
-    transition: all ease-in-out 0.3s;
-    font-weight: 500;
-    margin-top: 15px;
-    line-height: 1;
-    font-size: 16px;
-    width: 120px;
- }
+/***************
+      MENU
+***************/
 
- .label{
-    font-size: 16px;
-    margin-bottom: 5px;
- }
-
- .input{
-    margin-bottom: 10px;
-    width: 200px;
-    height: 25px;
- }
-
- .sendButton:hover{
-   background-color: white;
-   color: #ffc387;
-   border: 2px solid #ffc387;
-   cursor: pointer;
- }
-
-.titoletto {
-    color: #6439ad;
-    font-size: 24px;
-    font-weight: bold;
+#pannelloMenu {
+    background: #6439ad;
+    height: 45px;
 }
+
+div#pannelloMenu table {
+    margin: 0 auto;
+    -webkit-border-vertical-spacing: 0px;
+    -webkit-border-horizontal-spacing: 0px;
+}
+
+div#pannelloMenu table tbody tr td button.gwt-Button {
+    width: 100px;
+    height: 45px;
+    background: #6439ad;
+    border-color: #6439ad;
+    color: white;
+    border-radius: 0px;
+}
+
+div#pannelloMenu table tbody tr td button.gwt-Button:hover {
+    background: #1d0645;
+    border-color: #1d0645;
+    color: white;
+}
+
+/***************
+   CHI SIAMO
+***************/
 
 #universitaInfo {
     color: black;
@@ -144,34 +150,21 @@ body {
 }
 
 .infoUniHomepage {
-    width: 30%;
+    width: 100%;
     height: 500px;
-    margin-top: 20px;
     margin-bottom: 20px;
     float:left;
     background-color: #ffc387;
 }
 
-#container{
-    height: 500px;
-}
+/***************
+  DIPARTIMENTI
+***************/
 
 .dipartimentiHomepage {
-    width: 70%;
-    height: 500px;
-    backgroud: red;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    width: 100%;
     float:left;
     background-color: #cfbeed;
-}
-
-.contenuto {
-    padding: 18px;
-}
-
-.contattiHomepage {
-    padding: 20px;
 }
 
 #dipInfo {
@@ -179,28 +172,8 @@ body {
     padding-top: 10px;
 }
 
-#contattiInfo {
-    color: black;
-    font-size: 18px;
-}
-
-
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
-}
-
-.dialogVPanel {
-  margin: 5px;
-}
-
-.serverResponseLabelError {
-  color: red;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.gwt-TabLayoutPanel {
+    padding: 20px;
 }
 
 .gwt-TabLayoutPanelTabs {
@@ -217,4 +190,29 @@ body {
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContentContainer {
     border-color: #cfbeed !important;
+}
+
+/***************
+     FOOTER
+***************/
+
+.footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    float: left;
+    background: #1d0645;
+}
+
+#contattiInfo {
+    color: white;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.titolettoFooter {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 20px;
 }
