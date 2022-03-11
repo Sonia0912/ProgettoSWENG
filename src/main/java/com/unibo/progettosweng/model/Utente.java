@@ -15,7 +15,6 @@ public class Utente implements OperazioniDB<Utente> {
     private String tipo;
 
     public Utente(String nome, String cognome, String username, String password, String tipo ){
-        super();
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;

@@ -5,22 +5,16 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
-public class InserimentoUtente {
+public class InserimentoUtente implements Pagina{
     String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo utente</h2>";
-    HTML title = new HTML(titleString);
-    String formContainerString = "" +
-            "<div id=\"formContainer\"></div>";
-    HTML formContainer = new HTML(formContainerString);
     FormPanel nuovoUtente;
 
-    public InserimentoUtente(){
-    }
-
+    @Override
     public void aggiungiContenuto(){
-        HTMLPanel container = new HTMLPanel("");
-        container.add(title, "formContainer");
+        RootPanel.get("contenuto").clear();
+        RootPanel.get("contenuto").add(new HTML(titleString));
         createForm();
-        container.add(nuovoUtente, "formContainer");
+        RootPanel.get("contenuto").add(nuovoUtente);
     }
 
     private void createForm(){
