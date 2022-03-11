@@ -6,7 +6,7 @@ import org.mapdb.DB;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-public class Utente {
+public class Utente implements OperazioniDB<Utente> {
 
     private String nome;
     private String cognome;
@@ -51,8 +51,8 @@ public class Utente {
         aggiorna();
     }
 
-    public boolean aggiuntiUtente(){
-
+    @Override
+    public boolean add() {
         //creo un riferimento alla classe CreazioneBD e creo la struttura data
         // HTreeeMap per salvare gli utenti
         CreazioneDB<Utente> data = new CreazioneDB();
@@ -69,6 +69,23 @@ public class Utente {
             return true;
         }
     }
+
+    @Override
+    public boolean remove() {
+        CreazioneDB<Utente> data = new CreazioneDB();
+        DB db = data.getDb(CreazioneDB.DB_UTENTI);
+        HTreeMap<String,Utente> map = data.getMap(db, CreazioneDB.UTENTI_MAP, new SerializerUtente());
+
+        for ( String i: map.getKeys()) {
+            if (map.get(i).getUsername().equals(this.username) ){
+                map.remove(i);
+                db.close();
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean controlloDuplicato(HTreeMap<String,Utente> map){
 
         for ( String i: map.getKeys()) {
@@ -77,7 +94,6 @@ public class Utente {
             }
         }
         return false;
-
     }
 
     private void aggiorna(){
@@ -93,8 +109,7 @@ public class Utente {
         db.close();
     }
 
-    public static Utente[] getUtenti(){
-
+    public static Utente[] getCollections() {
         CreazioneDB<Utente> data = new CreazioneDB();
         DB db = data.getDb(CreazioneDB.DB_UTENTI);
         HTreeMap<String, Utente> map = db.hashMap(CreazioneDB.UTENTI_MAP).counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
@@ -107,24 +122,6 @@ public class Utente {
         }
         db.close();
         return utenti;
-
     }
 
-    public boolean rimuoviUtente(){
-
-        CreazioneDB<Utente> data = new CreazioneDB();
-        DB db = data.getDb(CreazioneDB.DB_UTENTI);
-        HTreeMap<String,Utente> map = data.getMap(db, CreazioneDB.UTENTI_MAP, new SerializerUtente());
-
-        for ( String i: map.getKeys()) {
-            if (map.get(i).getUsername().equals(this.username) ){
-                map.remove(i);
-                db.close();
-                return true;
-            }
-        }
-        return false;
-
-
-    }
 }

@@ -4,7 +4,6 @@ import com.unibo.progettosweng.model.Valutazione;
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;
-
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -21,6 +20,6 @@ public class SerializerValutazione implements Serializer<Valutazione>, Serializa
 
     @Override
     public Valutazione deserialize(DataInput2 input, int available) throws IOException {
-        return new Valutazione(input.readUTF(),input.readUTF(),input.readInt() );
+        return new Valutazione(input.readUTF(),input.readUTF(), input.readInt());
     }
 }

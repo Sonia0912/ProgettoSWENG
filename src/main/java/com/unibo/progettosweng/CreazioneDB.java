@@ -22,8 +22,8 @@ public class CreazioneDB<T> {
     public static final String DB_VOTI = "db/voti.db";
     public static final String VOTI_MAP = "votiMap";
 
-    public static final String DB_TITOLARI = "db/titolare.db";
-    public static final String TITOLARE_MAP = "titolareMap";
+    public static final String DB_INSEGNAMENTO = "db/insegnamento.db";
+    public static final String INSEGNAMETO_MAP = "titolareMap";
 
 
     public DB getDb(String nameDB){
