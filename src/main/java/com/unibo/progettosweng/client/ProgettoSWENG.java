@@ -1,22 +1,10 @@
-/**
- * HOMEPAGE
- */
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -35,57 +23,39 @@ public class ProgettoSWENG implements EntryPoint {
    */
   private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
-  public static void qualcunoHaFattoQualcosa() {
-    Window.alert("Funzionaaa");
-  }
-
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
 
-    final String[] menuSections = {"Home", "Dipartimenti"};
-    final Button[] menuButtons = new Button[menuSections.length];
-    final String testoPulsante = "<span>Il mio portale</span>";
-    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: unitech@mail.com";
 
-    // Menu
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(5);
-    for (int i = 0; i < menuSections.length; i++) {
-      menuButtons[i] = new Button(menuSections[i]);
-      hPanel.add(menuButtons[i]);
-    }
-    RootPanel.get("pannelloMenu").add(hPanel);
 
-    // Di default mostro il contenuto della homepage
-    Homepage hp = new Homepage();
-    hp.aggiungiContenuto();
 
-    // Se clicco su Home
-    menuButtons[0].addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        Homepage hp = new Homepage();
-        hp.aggiungiContenuto();
-      }
-    });
+    // Informazioni universita'
+    final String uniInfoString = "Lorem ipsum dolor sit amet, " +
+            "consectetur adipiscing elit, sed do eiusmod tempor incididunt" +
+            " ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
+            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex " +
+            "ea commodo consequat. Duis aute irure dolor in reprehenderit in " +
+            "voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa " +
+            "qui officia deserunt mollit anim id est laborum.";
+    final HTML uniInfo = new HTML(uniInfoString);
+    RootPanel.get("universitaInfo").add(uniInfo);
 
-    // Se clicco su Dipartimenti
-    menuButtons[1].addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        Dipartimenti dip = new Dipartimenti();
-        dip.aggiungiContenuto();
-      }
-    });
-
-    // Login
-    final Button login = new Button(testoPulsante);
-    RootPanel.get("login").add(login);
+    // Informazioni dipartimenti
+    final String dipInfoString = "Qui ci sono i dipartimenti";
+    final HTML dipInfo = new HTML(dipInfoString);
+    RootPanel.get("dipInfo").add(dipInfo);
 
     // Contatti
+    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: uniscientia@mail.com";
     final HTML contatti = new HTML(contattiString);
     RootPanel.get("contattiInfo").add(contatti);
 
+    // Pulsante log in
+    final Button login = new Button("Il mio portale");
+    RootPanel.get("login").add(login);
 
 /*    final Button sendButton = new Button("Send");
     final TextBox nameField = new TextBox();
