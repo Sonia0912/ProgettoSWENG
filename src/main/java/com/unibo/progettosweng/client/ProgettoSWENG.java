@@ -59,19 +59,22 @@ public class ProgettoSWENG implements EntryPoint {
     RootPanel.get("pannelloMenu").add(hPanel);
 
     // Di default mostro il contenuto della homepage
-    Homepage.aggiungiContenuto();
+    Homepage hp = new Homepage();
+    hp.aggiungiContenuto();
 
     // Se clicco su Home
     menuButtons[0].addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
-        Homepage.aggiungiContenuto();
+        Homepage hp = new Homepage();
+        hp.aggiungiContenuto();
       }
     });
 
     // Se clicco su Dipartimenti
     menuButtons[1].addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
-        Dipartimenti.aggiungiContenuto();
+        Dipartimenti dip = new Dipartimenti();
+        dip.aggiungiContenuto();
       }
     });
 

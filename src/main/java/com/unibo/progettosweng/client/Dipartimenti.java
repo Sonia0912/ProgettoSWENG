@@ -7,7 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
-public class Dipartimenti {
+public class Dipartimenti implements Pagina {
 
     final static String dipString = "<div class=\"dipartimentiHomepage\"><div class=\"contenuto\"><span class=\"titoletto\">I dipartimenti</span></div></div>";
     final static String[] nomiDipartimenti = {"Matematica", "Fisica", "Informatica"};
@@ -15,8 +15,8 @@ public class Dipartimenti {
 
     final static Button btnEsempio = new Button("ciao");
 
-
-    public static void aggiungiContenuto() {
+    @Override
+    public void aggiungiContenuto() {
         RootPanel.get("contenuto").clear();
 
         TabLayoutPanel tabPanel = new TabLayoutPanel(2.2, Style.Unit.EM);
