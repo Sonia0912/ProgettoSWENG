@@ -1,10 +1,23 @@
+/**
+ * HOMEPAGE
+ */
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.*;
+import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -15,8 +28,8 @@ public class ProgettoSWENG implements EntryPoint {
    * returns an error.
    */
   private static final String SERVER_ERROR = "An error occurred while "
-      + "attempting to contact the server. Please check your network "
-      + "connection and try again.";
+          + "attempting to contact the server. Please check your network "
+          + "connection and try again.";
 
   /**
    * Create a remote service proxy to talk to the server-side Greeting service.
@@ -28,34 +41,63 @@ public class ProgettoSWENG implements EntryPoint {
    */
   public void onModuleLoad() {
 
-
-
+    final String uniInfoString = "" +
+            "<div class=\"infoUniHomepage\">" +
+            " <div class=\"contenuto\">" +
+            " <span class=\"titoletto\">La nostra storia</span>" +
+            " <p id=\"universitaInfo\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\"" +
+            "   ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex \"" +
+            "   ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\"" +
+            "   Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
+            " </p>" +
+            "</div>"+
+            "</div>";
+    final String infoDipString = "" +
+            "<div id=\"dipartimenti\" class=\"dipartimentiHomepage\">\n" +
+            " <div class=\"contenuto\">" +
+            "   <span class=\"titoletto\">I dipartimenti</span>\n" +
+            "   <div id=\"dipInfo\"></div>\n" +
+            " </div>"+
+            "</div>";
+    final String[] nomiDipartimenti = {"Matematica", "Fisica", "Informatica"};
+    final String[] infoDipartimenti = {"Info 1", "Info 2", "Info 3"};
+    final String testoPulsante = "<span>Il mio portale</span>";
+    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: unitech@mail.com";
 
     // Informazioni universita'
-    final String uniInfoString = "Lorem ipsum dolor sit amet, " +
-            "consectetur adipiscing elit, sed do eiusmod tempor incididunt" +
-            " ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
-            "quis nostrud exercitation ullamco laboris nisi ut aliquip ex " +
-            "ea commodo consequat. Duis aute irure dolor in reprehenderit in " +
-            "voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa " +
-            "qui officia deserunt mollit anim id est laborum.";
     final HTML uniInfo = new HTML(uniInfoString);
-    RootPanel.get("universitaInfo").add(uniInfo);
+    RootPanel.get("container").add(uniInfo);
 
-    // Informazioni dipartimenti
-    final String dipInfoString = "Qui ci sono i dipartimenti";
-    final HTML dipInfo = new HTML(dipInfoString);
-    RootPanel.get("dipInfo").add(dipInfo);
+    final HTML infoDip = new HTML(infoDipString);
+    RootPanel.get("container").add(infoDip);
+
+    // Dipartimenti
+    TabLayoutPanel tabPanel = new TabLayoutPanel(2.2, Style.Unit.EM);
+    tabPanel.setAnimationDuration(1000);
+    tabPanel.getElement().getStyle().setMarginBottom(10.0, Style.Unit.PX);
+    tabPanel.getElement().getStyle().setHeight(420.0, Style.Unit.PX);
+    tabPanel.getElement().getStyle().setBackgroundColor("white");
+
+    HTML[] infoDipHTML = {};
+    for (int i = 0; i < infoDipartimenti.length; i++) {
+      infoDipHTML[i] = new HTML(infoDipartimenti[i]);
+      tabPanel.add(infoDipHTML[i], nomiDipartimenti[i]);
+    }
+
+    tabPanel.selectTab(0);
+//    RootPanel.get("dipInfo").add(tabPanel);
+    HTMLPanel container = new HTMLPanel("container");
+    container.add(tabPanel, "dipInfo");
+
+    // Login
+    final Button login = new Button(testoPulsante);
+    RootPanel.get("login").add(login);
 
     // Contatti
-    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: uniscientia@mail.com";
     final HTML contatti = new HTML(contattiString);
     RootPanel.get("contattiInfo").add(contatti);
 
-    // Pulsante log in
-    final Button login = new Button("Il mio portale");
-    RootPanel.get("login").add(login);
+
 
 /*    final Button sendButton = new Button("Send");
     final TextBox nameField = new TextBox();
@@ -106,15 +148,15 @@ public class ProgettoSWENG implements EntryPoint {
     // Create a handler for the sendButton and nameField
     class MyHandler implements ClickHandler, KeyUpHandler {
       *//**
-       * Fired when the user clicks on the sendButton.
-       *//*
+     * Fired when the user clicks on the sendButton.
+     *//*
       public void onClick(ClickEvent event) {
         sendNameToServer();
       }
 
       *//**
-       * Fired when the user types in the nameField.
-       *//*
+     * Fired when the user types in the nameField.
+     *//*
       public void onKeyUp(KeyUpEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
           sendNameToServer();
@@ -122,8 +164,8 @@ public class ProgettoSWENG implements EntryPoint {
       }
 
       *//**
-       * Send the name from the nameField to the server and wait for a response.
-       *//*
+     * Send the name from the nameField to the server and wait for a response.
+     *//*
       private void sendNameToServer() {
         // First, we validate the input.
         errorLabel.setText("");
