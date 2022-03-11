@@ -6,28 +6,21 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 public class InserimentoUtente {
-    String titleString;
-    HTML title;
-    String formContainerString;
-    HTML formContainer;
+    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo utente</h2>";
+    HTML title = new HTML(titleString);
+    String formContainerString = "" +
+            "<div id=\"formContainer\"></div>";
+    HTML formContainer = new HTML(formContainerString);
     FormPanel nuovoUtente;
 
     public InserimentoUtente(){
-        formContainerString = "" +
-                "<div id=\"formContainer\"></div>";
-        formContainer = new HTML(formContainerString);
-        RootPanel.get("container").add(formContainer);
-        titleString = "<h1 class=\"titoletto\">Inserisci un nuovo utente</h2>";
-        title = new HTML(titleString);
-        createForm();
     }
 
-    public HTMLPanel getFormContainer(){
+    public void aggiungiContenuto(){
         HTMLPanel container = new HTMLPanel("");
         container.add(title, "formContainer");
+        createForm();
         container.add(nuovoUtente, "formContainer");
-
-        return  container;
     }
 
     private void createForm(){
