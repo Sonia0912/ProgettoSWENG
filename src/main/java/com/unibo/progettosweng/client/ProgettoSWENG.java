@@ -35,10 +35,6 @@ public class ProgettoSWENG implements EntryPoint {
    */
   private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
-  public static void qualcunoHaFattoQualcosa() {
-    Window.alert("Funzionaaa");
-  }
-
   /**
    * This is the entry point method.
    */
