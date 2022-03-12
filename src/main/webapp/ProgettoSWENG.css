@@ -24,6 +24,13 @@ body {
     color: #6439ad;
     font-size: 24px;
     font-weight: bold;
+    padding: 30px !important;
+}
+
+.paragrafo {
+    color: #1d0645;
+    font-size: 16px;
+    padding: 30px !important;
 }
 
 .contenuto {
@@ -37,7 +44,7 @@ body {
 .header {
     padding: 20px;
     position: relative;
-    height: 80px;
+    height: 50px;
 }
 
 .logo {
@@ -58,6 +65,7 @@ body {
     position: relative;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+    top: -25%;
 }
 
 .headerButton {
@@ -140,7 +148,7 @@ div#pannelloMenu table tbody tr td button.gwt-Button:hover {
 }
 
 /***************
-   CHI SIAMO
+      HOME
 ***************/
 
 #universitaInfo {
@@ -155,6 +163,15 @@ div#pannelloMenu table tbody tr td button.gwt-Button:hover {
     margin-bottom: 20px;
     float:left;
     background-color: #ffc387;
+}
+
+.uniFoto {
+    width: 800px;
+    padding: 30px;
+}
+
+table.pannelloHP tbody tr td {
+    width: 700px;
 }
 
 /***************
