@@ -26,6 +26,10 @@ body {
     font-weight: bold;
 }
 
+.label {
+    padding-top: 10px;
+}
+
 .contenuto {
     padding: 18px;
 }
