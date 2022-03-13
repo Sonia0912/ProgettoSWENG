@@ -1,11 +1,11 @@
 package com.unibo.progettosweng.client;
 
-import com.unibo.progettosweng.CreazioneDB;
+import com.unibo.progettosweng.shared.CreazioneDB;
 
-import com.unibo.progettosweng.model.Corso;
-import com.unibo.progettosweng.model.Esame;
-import com.unibo.progettosweng.model.Utente;
-import com.unibo.progettosweng.model.Valutazione;
+import com.unibo.progettosweng.shared.model.Corso;
+import com.unibo.progettosweng.shared.model.Esame;
+import com.unibo.progettosweng.shared.model.Utente;
+import com.unibo.progettosweng.shared.model.Valutazione;
 import org.junit.Test;
 import org.mapdb.DB;
 

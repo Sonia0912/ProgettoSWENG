@@ -3,20 +3,11 @@
  */
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.

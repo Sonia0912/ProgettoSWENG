@@ -20,6 +20,10 @@ body {
   margin: 0px !important;
 }
 
+body, table td, select, button {
+    /* font-family: Futura,Trebuchet MS,Arial,sans-serif !important; */
+}
+
 .titoletto {
     color: #6439ad;
     font-size: 24px;
@@ -44,12 +48,13 @@ body {
 .header {
     padding: 20px;
     position: relative;
-    height: 50px;
+    height: 40px;
+    background: #1d0645;
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     position: relative;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -57,15 +62,15 @@ body {
 }
 
 #unitech {
-    font-size: 40px;
-    font-weight: bold;
-    font-family: "Courier New";
-    color: #6439ad;
+    font-size: 36px;
+    font-family: "Arno-Pro-Display", serif;
+    color: white;
     margin-left: 15px;
     position: relative;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    top: -25%;
+    top: -92%;
+    letter-spacing: 5px;
 }
 
 .headerButton {
@@ -80,12 +85,12 @@ body {
     vertical-align: middle;
     display: inline-block;
     border-radius: 30px;
-    background: #6439ad;
+    background: #ffa347;
     border: none;
     color: #FFFFFF;
     text-align: center;
     font-size: 16px;
-    padding: 15px;
+    padding: 13px;
     width: 160px;
     transition: all 0.5s;
     cursor: pointer;
@@ -165,13 +170,116 @@ div#pannelloMenu table tbody tr td button.gwt-Button:hover {
     background-color: #ffc387;
 }
 
-.uniFoto {
-    width: 800px;
+.uniFotoSfondo {
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    vertical-align: top;
+}
+
+.fotoParagrafoHp {
+    width: 600px;
     padding: 30px;
 }
 
-table.pannelloHP tbody tr td {
-    width: 700px;
+table.hPanel4Sezioni {
+    width: 100%;
+}
+
+table.hPanel4Sezioni tbody tr td {
+
+}
+
+#divHp {
+    position: relative;
+    text-align: center;
+    color: white;
+    background: black;
+    overflow: hidden;
+}
+
+.centeredAbove {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  font-family: "Arno-Pro-Display", serif;
+  letter-spacing: 20px;
+  animation: fadeIn 5s;
+}
+
+.centeredBelow {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 45px;
+  font-family: "Arno-Pro-Display", serif;
+  letter-spacing: 5px;
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn{
+  0%, 3% {
+    opacity: 0;
+  }
+  55%, 100% {
+    opacity: 1;
+  }
+}
+
+.hpPanel {
+    width: 100%;
+}
+
+.sezione1 {
+    background: #422f69;
+}
+
+.sezione2 {
+    background: #ffa347;
+}
+
+.sezione3 {
+    background: #4d6f91;
+    height: 439px; /*dato che ha solo due righe di testo serve piu' altezza*/
+}
+
+.sezione4 {
+    background: #5e0626;
+}
+
+.icona {
+    width: 70px;
+    height: 70px;
+    padding: 70px 0px 0px 165px;
+}
+
+.titoloSezione {
+    color: white;
+    text-align: center;
+    padding: 50px 0px 20px 0px;
+    font-size: 20px;
+}
+
+.paragrafoSezione {
+    color: white;
+    padding: 30px 30px 90px 30px;
+    font-size: 17px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.linea {
+    border-bottom: 1px solid white;
+    width: 100px;
+    margin: 0px 0px 0px 150px;
+}
+
+table.hPanel4Sezioni tbody tr td {
+    background: black;
+    width: 25%;
 }
 
 /***************
