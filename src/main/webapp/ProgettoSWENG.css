@@ -1,10 +1,22 @@
 /*
 COLORI
-Viola scuro: #6439ad
-Viola molto scuro: #1d0645
+Viola: #6439ad
+Viola scuro: #1d0645
 Viola chiaro: #cfbeed
 Arancione pallido: #ffc387
 Arancione acceso: #ffa347
+Grigio: #706873
+Grigio chiaro: #bdaec2
+
+FONT
+"Arno-Pro-Display", serif
+Arial Unicode MS, Arial, sans-serif
+'Poppins', sans-serif
+'EB Garamond', serif
+'Libre Baskerville', serif
+'Vollkorn', serif
+'Assistant', sans-serif
+'Libre Caslon Text', serif
 */
 
 /***************
@@ -21,24 +33,7 @@ body {
 }
 
 body, table td, select, button {
-    /* font-family: Futura,Trebuchet MS,Arial,sans-serif !important; */
-}
-
-.titoletto {
-    color: #6439ad;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 30px !important;
-}
-
-.paragrafo {
-    color: #1d0645;
-    font-size: 16px;
-    padding: 30px !important;
-}
-
-.contenuto {
-    padding: 18px;
+    font-family: 'Assistant', sans-serif !important;
 }
 
 /***************
@@ -97,11 +92,16 @@ body, table td, select, button {
     margin: 5px;
 }
 
+.headerButton .gwt-Button:active {
+    background: #cf7e2d;
+}
+
 .headerButton .gwt-Button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.5s;
+    font-weight: 500;
 }
 
 .headerButton .gwt-Button span:after {
@@ -127,7 +127,7 @@ body, table td, select, button {
 ***************/
 
 #pannelloMenu {
-    background: #6439ad;
+    background: white;
     height: 45px;
 }
 
@@ -138,18 +138,39 @@ div#pannelloMenu table {
 }
 
 div#pannelloMenu table tbody tr td button.gwt-Button {
-    width: 100px;
+    width: 120px;
     height: 45px;
-    background: #6439ad;
-    border-color: #6439ad;
-    color: white;
+    background: white;
+    border-color: white;
+    color: #1d0645;
+    font-weight: 400;
+    font-size: 16px;
     border-radius: 0px;
+    display: inline-block;
+    position: relative;
 }
 
-div#pannelloMenu table tbody tr td button.gwt-Button:hover {
-    background: #1d0645;
-    border-color: #1d0645;
-    color: white;
+div#pannelloMenu table tbody tr td button.gwt-Button:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #1d0645;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+div#pannelloMenu table tbody tr td button.gwt-Button:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+div#pannelloMenu table tbody tr td button.gwt-Button:active {
+    border: none;
+    background: #bdaec2;
 }
 
 /***************
@@ -177,17 +198,8 @@ div#pannelloMenu table tbody tr td button.gwt-Button:hover {
     vertical-align: top;
 }
 
-.fotoParagrafoHp {
-    width: 600px;
-    padding: 30px;
-}
-
 table.hPanel4Sezioni {
     width: 100%;
-}
-
-table.hPanel4Sezioni tbody tr td {
-
 }
 
 #divHp {
@@ -237,17 +249,34 @@ table.hPanel4Sezioni tbody tr td {
     background: #422f69;
 }
 
+.sezione1:hover {
+    background: #342652;
+}
+
 .sezione2 {
     background: #ffa347;
 }
 
+.sezione2:hover {
+    background: #d98b3d;
+}
+
 .sezione3 {
     background: #4d6f91;
-    height: 439px; /*dato che ha solo due righe di testo serve piu' altezza*/
+    height: 441px; /*dato che ha solo due righe di testo serve piu' altezza*/
+}
+
+.sezione3:hover {
+    background: #375069;
 }
 
 .sezione4 {
     background: #5e0626;
+    height: 441px; /*dato che ha solo due righe di testo serve piu' altezza*/
+}
+
+.sezione4:hover {
+    background: #330415;
 }
 
 .icona {
@@ -261,14 +290,17 @@ table.hPanel4Sezioni tbody tr td {
     text-align: center;
     padding: 50px 0px 20px 0px;
     font-size: 20px;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bold;
 }
 
 .paragrafoSezione {
     color: white;
     padding: 30px 30px 90px 30px;
-    font-size: 17px;
     text-align: center;
     line-height: 1.6;
+    font-size: 17px;
+    font-family: 'Assistant', sans-serif;
 }
 
 .linea {
@@ -278,8 +310,210 @@ table.hPanel4Sezioni tbody tr td {
 }
 
 table.hPanel4Sezioni tbody tr td {
-    background: black;
     width: 25%;
+}
+
+.titoletto1 {
+    color: #6439ad;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Libre Caslon Text', serif;
+    padding: 160px 150px 0px 30px !important;
+}
+
+.paragrafo1 {
+    color: #706873;
+    font-size: 20px;
+    font-family: 'Assistant', sans-serif;
+    padding: 30px 150px 30px 30px !important;
+}
+
+.titoletto2 {
+    color: #6439ad;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Libre Caslon Text', serif;
+    padding: 160px 10px 0px 180px !important;
+    text-align: right;
+}
+
+.paragrafo2 {
+    color: #706873;
+    font-size: 20px;
+    font-family: 'Assistant', sans-serif;
+    padding: 30px 10px 30px 160px !important;
+    text-align: right;
+}
+
+.fotoParagrafoHp1 {
+    width: 600px;
+    margin: 90px 20px 90px 160px;
+    border-radius: 10px;
+}
+
+.fotoParagrafoHp2 {
+    width: 600px;
+    margin: 90px 160px 90px 40px;
+    border-radius: 10px;
+}
+
+.contenuto {
+    padding: 18px;
+}
+
+.hPanelCifre {
+    background: #1d0645;
+    height: 200px;
+    width: 100%;
+    padding: 50px 0px 0px 140px;
+    /*margin: 10px auto;*/
+    color: white;
+}
+
+table.hPanelCifre tbody tr td {
+    width: 330px;
+}
+
+.numeroContatore {
+    font-size: 50px;
+    font-family: 'Assistant', sans-serif;
+    padding: 0px 0px 0px 20px;
+    position: relative;
+    -webkit-transition: color 0.2s ease-out;
+    -moz-transition: color 0.2s ease-out;
+    -o-transition: color 0.2s ease-out;
+    -ms-transition: color 0.2s ease-out;
+    transition: color 0.2s ease-out;
+}
+
+table.hPanelCifre tbody tr td:hover div.gwt-HTML div.contatore div.contatoreColonne div.colonnaNumeri div.numeroContatore {
+    color: #9e72e8;
+}
+
+.titoloContatore {
+    font-size: 25px;
+    font-family: 'Assistant', sans-serif;
+    padding: 0px 0px 0px 20px;
+}
+
+.contatoreColonne {
+    overflow: hidden;
+}
+
+.iconaContatore {
+    width: 70px;
+    height: 70px;
+    float: left;
+    padding: 10px 10px 0px 0px;
+}
+
+.colonnaNumeri {
+    overflow: hidden;
+}
+
+.titoloStudenti {
+    text-align: center;
+    font-size: 36px;
+    font-family: 'Libre Caslon Text', serif;
+    font-weight: bold;
+    margin: 5px 0px 10px 0px;
+    color: #6439ad;
+}
+
+.sottotitoloStudenti {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Assistant', sans-serif;
+    margin: 5px 0px 10px 0px;
+    color: #706873;
+}
+
+.hPanelStudenti {
+    border-collapse: collapse;
+    margin: 10px auto 100px auto;
+}
+
+.immagineStudenteDiv {
+    position: relative;
+    color: white;
+    font-family: 'Libre Caslon Text', serif;
+    text-align: center;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+}
+
+.immagineStudente {
+    width: 330px;
+    height: 330px;
+    padding: 15px;
+    transition: transform .3s;
+}
+
+.immagineStudente:hover {
+    transform: scale(1.1);
+}
+
+.nomeStudente {
+    font-size: 26px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.facoltaStudente {
+    font-size: 18px;
+    font-style: italic;
+    position: absolute;
+    top: 88%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.motiviTitolo {
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 800;
+    padding: 40px 0px 30px 0px;
+    margin-top: 20px;
+    width: 100%;
+    background: #ffa347;
+    color: white;
+}
+
+.gridMotivi {
+    background: #ffa347;
+    padding: 10px 50px 60px 50px;
+    margin-bottom: 100px;
+}
+
+.motivo {
+    margin: 0px 50px 0px 50px;
+}
+
+.motivoTitolo {
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bold;
+    margin: 5px 0px 10px 0px;
+}
+
+.motivoParagrafo {
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Assistant', sans-serif;
+    margin: 5px 0px 10px 0px;
+}
+
+table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoTitolo {
+    color: #d16302;
+}
+
+table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
+    color: #d16302;
 }
 
 /***************
