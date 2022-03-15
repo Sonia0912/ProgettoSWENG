@@ -593,9 +593,9 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
 .sezioneFooter {
     width: fit-content;
     display: inline-block;
-    margin: 25px 50px 10px 50px;
+    margin: 25px 110px 10px 0px;
     float: right;
-    font-family: "Arno-Pro-Display", serif;
+    font-family: 'Libre Caslon Text', serif;
     letter-spacing: 0.5px;
     line-height: 2.3;
     color: white;
@@ -605,5 +605,8 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
 .titolettoFooter {
     color: white;
     font-size: 17px;
-    font-weight: bold;
+}
+
+.paragrafoFooter {
+    font-size: 14px;
 }
