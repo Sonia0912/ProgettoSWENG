@@ -498,6 +498,7 @@ table.hPanelCifre tbody tr td:hover div.gwt-HTML div.contatore div.contatoreColo
     font-family: 'Assistant', sans-serif;
     font-weight: bold;
     margin: 5px 0px 10px 0px;
+    transition: color 0.4s;
 }
 
 .motivoParagrafo {
@@ -506,6 +507,7 @@ table.hPanelCifre tbody tr td:hover div.gwt-HTML div.contatore div.contatoreColo
     font-size: 20px;
     font-family: 'Assistant', sans-serif;
     margin: 5px 0px 10px 0px;
+    transition: color 0.4s;
 }
 
 table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoTitolo {
@@ -563,15 +565,45 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
     background: #1d0645;
 }
 
-#contattiInfo {
+.logoUnitech {
+    width: 300px;
+    display: inline-block;
+    margin: 10px 10px 10px 50px;
+    float: inherit;
+    position: relative;
+}
+
+.logoFooter {
+    width: 70px;
+    height: 70px;
+}
+
+#unitechFooter {
+    font-size: 36px;
+    font-family: "Arno-Pro-Display", serif;
+    color: white;
+    letter-spacing: 5px;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-left: 15px;
+}
+
+.sezioneFooter {
+    width: fit-content;
+    display: inline-block;
+    margin: 25px 50px 10px 50px;
+    float: right;
+    font-family: "Arno-Pro-Display", serif;
+    letter-spacing: 0.5px;
+    line-height: 2.3;
     color: white;
     font-size: 16px;
-    margin-left: 20px;
 }
 
 .titolettoFooter {
     color: white;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
-    margin-left: 20px;
 }
