@@ -357,10 +357,6 @@ table.hPanel4Sezioni tbody tr td {
     border-radius: 10px;
 }
 
-.contenuto {
-    padding: 18px;
-}
-
 .hPanelCifre {
     background: #1d0645;
     height: 200px;
@@ -522,19 +518,24 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
   DIPARTIMENTI
 ***************/
 
-.dipartimentiHomepage {
+.mainDipartimentiPanel {
     width: 100%;
-    float:left;
-    background-color: #cfbeed;
+    background: #f3edf5;
 }
 
-#dipInfo {
-    color: black;
-    padding-top: 10px;
+.titoloDipartimenti {
+    width: 100%;
+    float: left;
+    font-size: 30px;
+    font-family: 'Libre Caslon Text', serif;
+    color: #1d0645;
+    padding: 45px 0px 10px 43px;
 }
 
-.gwt-TabLayoutPanel {
-    padding: 20px;
+.tabPanelDipartimenti {
+    background: white;
+    margin: 40px;
+    height: 800px;
 }
 
 .gwt-TabLayoutPanelTabs {
@@ -551,6 +552,68 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContentContainer {
     border-color: #cfbeed !important;
+}
+
+.descrizioneDipartimento {
+    font-size: 16px;
+    margin: 30px;
+}
+
+.hPanelDipartimentoCorsi {
+    width: 100%;
+}
+
+.hPanelDipartimentoCorsi > tbody > tr > td {
+    width: 50%;
+}
+
+.titolettoDipartimenti {
+    font-size: 30px;
+    color: #ffa347;
+    font-family: 'Libre Caslon Text', serif;
+    margin: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+}
+
+.titolettoDipartimentiDettagli {
+    font-size: 26px;
+    color: #1d0645;
+    font-family: 'Libre Caslon Text', serif;
+    margin: 0px 0px 30px 20px;
+}
+
+.paragrafroDipartimenti {
+    font-size: 16px;
+    text-align: justify;
+    margin: 20px;
+}
+
+.treeCorsiDipartimento {
+    margin-left: 30px;
+}
+
+/*Corsi e materie*/
+.gwt-TreeItem {
+    font-size: 20px;
+}
+
+/*Corsi*/
+div.gwt-Tree.treeCorsiDipartimento div table tbody tr td div.gwt-TreeItem {
+    font-size: 23px;
+}
+
+/*Materie*/
+div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
+    font-size: 19px;
+}
+
+.gwt-TreeItem:hover {
+    text-decoration: underline;
+}
+
+.gwt-Tree .gwt-TreeItem-selected {
+    background: #ffdcba !important;
 }
 
 /***************
@@ -610,3 +673,26 @@ table.gridMotivi tbody tr td:hover div.gwt-HTML div.motivo div.motivoParagrafo {
 .paragrafoFooter {
     font-size: 14px;
 }
+
+/*
+COLORI
+Viola: #6439ad
+Viola scuro: #1d0645
+Viola chiaro: #cfbeed
+Viola pallidissimo: #f3edf5
+Arancione pallido: #ffc387
+Arancione piu' pallido: #ffdcba
+Arancione acceso: #ffa347
+Grigio: #706873
+Grigio chiaro: #bdaec2
+
+FONT
+"Arno-Pro-Display", serif
+Arial Unicode MS, Arial, sans-serif
+'Poppins', sans-serif
+'EB Garamond', serif
+'Libre Baskerville', serif
+'Vollkorn', serif
+'Assistant', sans-serif
+'Libre Caslon Text', serif
+*/
