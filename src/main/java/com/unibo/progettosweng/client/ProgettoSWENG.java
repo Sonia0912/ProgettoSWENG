@@ -3,20 +3,11 @@
  */
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -43,7 +34,9 @@ public class ProgettoSWENG implements EntryPoint {
     final String[] menuSections = {"Home", "Dipartimenti"};
     final Button[] menuButtons = new Button[menuSections.length];
     final String testoPulsante = "<span>Il mio portale</span>";
-    final String contattiString = "Telefono: 123-456-789 <br /> Indirizzo: Via delle Stelle, 56 Bologna <br /> E-mail: unitech@mail.com";
+    final String contattiString = "123-456-789 <br /> Via delle Stelle, 56 Bologna <br /> unitech@mail.com";
+    final String mappeString = "Mappa del campus <br /> Direzioni <br /> Area circostante <br /> Tour virtuale del campus";
+    final String lavoroString = "Risorse umane";
 
     // Menu
     HorizontalPanel hPanel = new HorizontalPanel();
@@ -80,7 +73,11 @@ public class ProgettoSWENG implements EntryPoint {
 
     // Contatti
     final HTML contatti = new HTML(contattiString);
+    final HTML mappe = new HTML(mappeString);
+    final HTML lavoro = new HTML(lavoroString);
     RootPanel.get("contattiInfo").add(contatti);
+    RootPanel.get("mappeInfo").add(mappe);
+    RootPanel.get("lavoraInfo").add(lavoro);
 
 
 /*    final Button sendButton = new Button("Send");

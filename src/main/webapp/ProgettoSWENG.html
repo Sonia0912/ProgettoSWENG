@@ -1,56 +1,67 @@
 <!doctype html>
-<!-- The DOCTYPE declaration above will set the     -->
-<!-- browser's rendering engine into                -->
-<!-- "Standards Mode". Replacing this declaration   -->
-<!-- with a "Quirks Mode" doctype is not supported. -->
-
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-  <link type="text/css" rel="stylesheet" href="ProgettoSWENG.css">
+    <link type="text/css" rel="stylesheet" href="ProgettoSWENG.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=EB+Garamond&family=Libre+Baskerville&family=Libre+Caslon+Text:ital@0;1&family=Poppins:wght@300&family=Vollkorn&display=swap" rel="stylesheet">
+    <title>Unitech</title>
 
-  <title>Unitech</title>
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="progettosweng/progettosweng.nocache.js"></script>
+  </head>
 
   <!--                                           -->
-  <!-- This script loads your compiled module.   -->
-  <!-- If you add any GWT meta tags, they must   -->
-  <!-- be added before this line.                -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
   <!--                                           -->
-  <script type="text/javascript" language="javascript" src="progettosweng/progettosweng.nocache.js"></script>
-</head>
+  <body>
 
-<!--                                           -->
-<!-- The body can have arbitrary html, or      -->
-<!-- you can leave the body empty if you want  -->
-<!-- to create a completely dynamic UI.        -->
-<!--                                           -->
-<body>
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
 
-<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
-<noscript>
-  <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-    Your web browser must have JavaScript enabled
-    in order for this application to display correctly.
-  </div>
-</noscript>
+    <div class="header">
+      <img class="logo" src=img/logoBianco.png />
+      <span id="unitech">UNITECH</span>
+      <div id="login" class="headerButton"></div>
+    </div>
 
-<div class="header">
-  <img class="logo" src=img/Logo.jpg />
-  <span id="unitech">UNITECH</span>
-  <div id="login" class="headerButton"></div>
-</div>
+    <div class="menu">
+      <div id="pannelloMenu"></div>
+    </div>
 
-<div class="menu">
-  <div id="pannelloMenu"></div>
-</div>
+    <div id="contenuto"></div>
 
-<div id="contenuto"></div>
+    <div class="footer">
+      <div class="logoUnitech">
+        <img class="logoFooter" src=img/logoBianco.png />
+        <span id="unitechFooter">UNITECH</span>
+      </div>
+      <div class="sezioneFooter">
+        <span class="titolettoFooter">PER CONTATTARCI</span>
+        <p class="paragrafoFooter" id="contattiInfo"></p>
+      </div>
+      <div class="sezioneFooter">
+        <span class="titolettoFooter">MAPPE E DIREZIONI</span>
+        <p class="paragrafoFooter" id="mappeInfo"></p>
+      </div>
+      <div class="sezioneFooter">
+        <span class="titolettoFooter">LAVORA CON NOI</span>
+        <p class="paragrafoFooter" id="lavoraInfo"></p>
+      </div>
+    </div>
 
-<div class="footer">
-  <span class="titolettoFooter">PER CONTATTARCI</span>
-  <p id="contattiInfo"></p>
-</div>
-
-</body>
+  </body>
 </html>

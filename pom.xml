@@ -133,6 +133,17 @@
         <version>3.2.2</version>
       </plugin>
 
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>2.5.0</version>
+        <configuration>
+          <compileSourcesArtifacts>
+            <compileSourcesArtifact>com.my.group:my-artifact</compileSourcesArtifact>
+          </compileSourcesArtifacts>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>
