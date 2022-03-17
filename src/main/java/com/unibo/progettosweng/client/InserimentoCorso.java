@@ -54,8 +54,10 @@ public class InserimentoCorso implements Pagina{
         labelDescr.getElement().setClassName("label");
         formPanel.add(labelDescr);
         final TextBox descr = new TextBox();
-        nome.getElement().setClassName("input");
-        nome.setName("Descrizione");
+        descr.getElement().setClassName("input");
+        descr.setName("Descrizione");
+        formPanel.add(descr);
+
 
         final Label labelCoDoc = new Label("Co-docente:");
         labelCoDoc.getElement().setClassName("label");
