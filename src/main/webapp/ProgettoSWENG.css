@@ -617,6 +617,66 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
 }
 
 /***************
+    PORTALE
+***************/
+
+.titolettoPortale {
+    font-size: 30px;
+    color: #1d0645;
+    font-family: 'Libre Caslon Text', serif;
+    margin: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+}
+
+.menuLaterale {
+    width: 250px;
+    height: 600px;
+    background: #ffa347;
+}
+
+table.menuLaterale tbody {
+    float: left;
+}
+
+.spazioDinamico {
+    width: 300%;
+    height: 600px;
+    padding: 0px 20px 20px 20px;
+}
+
+.gwt-Button.buttonMenuLaterale {
+    width: 250px;
+    height: 60px;
+    background: #ffa347;
+    border: 1px solid #ffa347;
+    border-radius: 0px;
+    color: white;
+    font-size: 18px;
+}
+
+.buttonMenuLaterale:hover {
+    background: #ffc387;
+    border: 1px solid #ffc387 !important;
+}
+
+.buttonMenuLaterale:hover:after {
+    content: "";
+    display: inline-block;
+    background-color: #1d0645;
+}
+
+/***********************
+ INFORMAZIONI PERSONALI
+************************/
+
+.infoPersonali {
+    font-size: 18px;
+    line-height: 2;
+    padding-left: 40px;
+}
+
+/***************
      FOOTER
 ***************/
 
@@ -680,9 +740,9 @@ Viola: #6439ad
 Viola scuro: #1d0645
 Viola chiaro: #cfbeed
 Viola pallidissimo: #f3edf5
+Arancione acceso: #ffa347
 Arancione pallido: #ffc387
 Arancione piu' pallido: #ffdcba
-Arancione acceso: #ffa347
 Grigio: #706873
 Grigio chiaro: #bdaec2
 

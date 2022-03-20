@@ -71,6 +71,14 @@ public class ProgettoSWENG implements EntryPoint {
     final Button login = new Button(testoPulsante);
     RootPanel.get("login").add(login);
 
+    login.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+        InfoStudente is = new InfoStudente();
+        is.aggiungiContenuto();
+      }
+    });
+
     // Contatti
     final HTML contatti = new HTML(contattiString);
     final HTML mappe = new HTML(mappeString);
