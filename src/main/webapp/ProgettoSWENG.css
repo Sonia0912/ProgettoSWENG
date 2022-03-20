@@ -3,8 +3,11 @@ COLORI
 Viola: #6439ad
 Viola scuro: #1d0645
 Viola chiaro: #cfbeed
+Viola pallidissimo: #f3edf5
+Arancione: #ffa347
+Arancione scuro: #cf7e2d
 Arancione pallido: #ffc387
-Arancione acceso: #ffa347
+Arancione piu' pallido: #ffdcba
 Grigio: #706873
 Grigio chiaro: #bdaec2
 
@@ -631,7 +634,6 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
 
 .menuLaterale {
     width: 250px;
-    height: 600px;
     background: #ffa347;
 }
 
@@ -640,9 +642,7 @@ table.menuLaterale tbody {
 }
 
 .spazioDinamico {
-    width: 300%;
-    height: 600px;
-    padding: 0px 20px 20px 20px;
+    padding: 0px 20px 60px 20px;
 }
 
 .gwt-Button.buttonMenuLaterale {
@@ -660,20 +660,57 @@ table.menuLaterale tbody {
     border: 1px solid #ffc387 !important;
 }
 
-.buttonMenuLaterale:hover:after {
-    content: "";
-    display: inline-block;
-    background-color: #1d0645;
+.buttonMenuLaterale:active {
+    background-color: #cf7e2d;
+    border: 1px solid #cf7e2d !important;
 }
 
 /***********************
  INFORMAZIONI PERSONALI
 ************************/
 
+table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > td:first-child {
+    background: #ffa347;
+}
+
 .infoPersonali {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 2;
     padding-left: 40px;
+}
+
+/* Tabella i miei corsi */
+
+.tableCorsi {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.tableCorsi thead {
+    background: #f3edf5;
+}
+
+.tableCorsi tbody tr td {
+    font-size: 15px;
+    height: 30px;
+    width: 170px;
+}
+
+/* Tabella i miei esami */
+
+.tableEsami {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.tableEsami thead {
+    background: #f3edf5;
+}
+
+.tableEsami tbody tr td {
+    font-size: 15px;
+    height: 30px;
+    width: 170px;
 }
 
 /***************
@@ -740,7 +777,8 @@ Viola: #6439ad
 Viola scuro: #1d0645
 Viola chiaro: #cfbeed
 Viola pallidissimo: #f3edf5
-Arancione acceso: #ffa347
+Arancione: #ffa347
+Arancione scuro: #cf7e2d
 Arancione pallido: #ffc387
 Arancione piu' pallido: #ffdcba
 Grigio: #706873

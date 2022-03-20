@@ -6,7 +6,7 @@ import org.mapdb.DB;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-public class Corso implements OperazioniDB<Corso> {
+public class Corso {
 
     private String nome;
     private String dataInizio;
@@ -43,7 +43,7 @@ public class Corso implements OperazioniDB<Corso> {
         return dipartimento;
     }
 
-    public void setDipartimento(String dipartimento){
+/*    public void setDipartimento(String dipartimento){
         this.dipartimento = dipartimento;
         aggiorna();
     }
@@ -140,7 +140,7 @@ public class Corso implements OperazioniDB<Corso> {
         }
         db.close();
         return corsi;
-    }
+    }*/
 
 
 }
