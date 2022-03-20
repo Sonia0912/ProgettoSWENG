@@ -67,7 +67,9 @@ public class InfoStudente implements Pagina {
 
         // Informazioni personali
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Informazioni personali</div>"));
-        HTML infoPersonali = new HTML("<div class=\"infoPersonali\">Nome: " + nome + "<br />Cognome: " + cognome + "<br />E-mail: " + email + "</div>");
+        HTML infoPersonali = new HTML("<div class=\"infoPersonali\"><b>Nome: </b>" + nome
+                + "<br /><b>Cognome: </b>" + cognome
+                + "<br /><b>E-mail: </b>" + email + "</div>");
         spazioDinamico.add(infoPersonali);
 
         // I miei corsi
