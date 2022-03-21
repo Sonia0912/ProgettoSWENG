@@ -1,5 +1,6 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,10 +12,12 @@ public class InserimentoUtente implements Pagina{
 
     @Override
     public void aggiungiContenuto(){
-        RootPanel.get("contenuto").clear();
-        RootPanel.get("contenuto").add(new HTML(titleString));
+        VerticalPanel vp = new VerticalPanel();
+        vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
+        vp.add(new HTML(titleString));
         createForm();
-        RootPanel.get("contenuto").add(nuovoUtente);
+        vp.add(nuovoUtente);
+        RootPanel.get("contenuto").add(vp);
     }
 
     private void createForm(){
