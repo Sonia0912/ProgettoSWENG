@@ -8,6 +8,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.unibo.progettosweng.shared.model.Utente;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -71,11 +72,27 @@ public class ProgettoSWENG implements EntryPoint {
     final Button login = new Button(testoPulsante);
     RootPanel.get("login").add(login);
 
+    String tipo = "studente";
+
     login.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        InfoStudente is = new InfoStudente();
-        is.aggiungiContenuto();
+        switch(tipo) {
+          case "studente":
+            PortaleStudente ps = new PortaleStudente();
+            ps.caricaPortale();
+            break;
+          case "docente":
+            PortaleDocente pd = new PortaleDocente();
+            pd.caricaPortale();
+            break;
+          case "admin":
+            //PortaleAdmin portale = new PortaleAdmin();
+            break;
+          case "segreteria":
+            //PortaleSegreteria portale = new PortaleSegreteria();
+            break;
+        }
       }
     });
 

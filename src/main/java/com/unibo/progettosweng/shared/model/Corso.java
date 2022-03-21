@@ -1,5 +1,6 @@
 package com.unibo.progettosweng.shared.model;
 
+import com.google.gwt.view.client.ProvidesKey;
 import com.unibo.progettosweng.shared.CreazioneDB;
 import com.unibo.progettosweng.shared.SerializerCorso;
 import org.mapdb.DB;
@@ -42,6 +43,13 @@ public class Corso {
     public String getDipartimento() {
         return dipartimento;
     }
+
+    public static final ProvidesKey<Corso> KEY_PROVIDER = new ProvidesKey<Corso>() {
+        @Override
+        public Object getKey(Corso item) {
+            return item == null ? null : item.getNomeCorso();
+        }
+    };
 
 /*    public void setDipartimento(String dipartimento){
         this.dipartimento = dipartimento;

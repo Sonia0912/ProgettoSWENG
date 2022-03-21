@@ -31,9 +31,6 @@ public class InfoStudente implements Pagina {
     String nome = "Sonia";
     String cognome = "Nicoletti";
     String email = "sonianicoletti@unitech.com";
-    String[][] esami = {
-            {"Sistemi Operativi", "17/06/2022", "15:30", "Medio", "Aula Tonelli"},
-            {"Analisi I", "22/06/2022", "09:40", "Difficile", "Aula Verdi"}};
 
     @Override
     public void aggiungiContenuto() {
