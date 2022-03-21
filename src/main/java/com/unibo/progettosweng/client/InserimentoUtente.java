@@ -7,11 +7,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 public class InserimentoUtente implements Pagina{
-    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo utente</h2>";
+    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo utente</h1>";
     FormPanel nuovoUtente;
 
     @Override
     public void aggiungiContenuto(){
+        RootPanel.get("contenuto").clear();
         VerticalPanel vp = new VerticalPanel();
         vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
         vp.add(new HTML(titleString));
@@ -53,7 +54,7 @@ public class InserimentoUtente implements Pagina{
         final Label labelTipo = new Label("Tipo di utente*:");
         labelTipo.getElement().setClassName("label");
         formPanel.add(labelTipo);
-        ListBox tipo = new ListBox();
+        final ListBox tipo = new ListBox();
         tipo.getElement().setClassName("input");
         tipo.addItem("");
         tipo.addItem("Docente");
