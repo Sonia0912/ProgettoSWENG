@@ -313,6 +313,12 @@ table.hPanel4Sezioni tbody tr td {
     width: 25%;
 }
 
+.titoletto {
+    color: #6439ad;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .titoletto1 {
     color: #6439ad;
     font-size: 36px;
@@ -729,7 +735,7 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
     padding: 50px 24px 0px;
 }
 
-.btn_login{
+.btn-send{
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -743,11 +749,23 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
     font-size: large;
 }
 
+.label {
+    margin-top: 10px;
+}
+
 input {
     width: 167px;
     border-radius: 5px;
     height: 20px;
     padding: 5px;
+    border: 1px solid black;
+}
+
+select {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid black;
 }
 
 /*

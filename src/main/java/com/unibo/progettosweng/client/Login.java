@@ -61,7 +61,7 @@ public class Login implements Pagina{
         formPanel.add(password);
 
         Button send = new Button("Login");
-        send.getElement().setClassName("btn_login");
+        send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {

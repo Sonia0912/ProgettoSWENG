@@ -72,7 +72,7 @@ public class InserimentoUtente implements Pagina{
         formPanel.add(password);
 
         Button send = new Button("Inserisci");
-        send.getElement().setClassName("sendButton");
+        send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
