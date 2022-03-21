@@ -665,6 +665,27 @@ table.menuLaterale tbody {
     border: 1px solid #cf7e2d !important;
 }
 
+.gwt-Button.btnCreazione {
+    margin: 30px;
+    background: #6439ad;
+    border: 1px solid #6439ad;
+    color: white;
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.btnCreazione:hover {
+    background: #8558d1;
+    border: 1px solid #8558d1 !important;
+}
+
+.btnCreazione:active {
+    background: #48297d;
+    border: 1px solid #48297d !important;
+}
+
 /***********************
  INFORMAZIONI PERSONALI
 ************************/

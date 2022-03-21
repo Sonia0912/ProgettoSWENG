@@ -252,7 +252,7 @@ public class PortaleStudente extends Portale {
         tableEsami.addColumn(diffCol, "Difficoltà");
 
         if(selezionabile) {
-            final SingleSelectionModel<Esame> selectionModelEsami = new SingleSelectionModel<Esame>();
+/*            final SingleSelectionModel<Esame> selectionModelEsami = new SingleSelectionModel<Esame>();
             tableEsami.setSelectionModel(selectionModelEsami);
             selectionModelEsami.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
                 public void onSelectionChange(SelectionChangeEvent event) {
@@ -261,7 +261,7 @@ public class PortaleStudente extends Portale {
                         Window.alert("You selected: " + selected.getNomeCorso());
                     }
                 }
-            });
+            });*/
         }
 
         tableEsami.setRowCount(listaEsami.size(), true);

@@ -72,7 +72,7 @@ public class ProgettoSWENG implements EntryPoint {
     final Button login = new Button(testoPulsante);
     RootPanel.get("login").add(login);
 
-    String tipo = "studente";
+    String tipo = "docente";
 
     login.addClickHandler(new ClickHandler() {
       @Override
