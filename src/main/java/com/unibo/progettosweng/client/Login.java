@@ -52,16 +52,16 @@ public class Login implements Pagina{
         username.setName("Username");
         formPanel.add(username);
 
-        final Label labelPassword = new Label("Cognome*:");
+        final Label labelPassword = new Label("Password:");
         labelPassword.getElement().setClassName("label");
         formPanel.add(labelPassword);
-        final TextBox password = new TextBox();
+        final PasswordTextBox password = new PasswordTextBox();
         password.getElement().setClassName("input");
         password.setName("Password");
         formPanel.add(password);
 
         Button send = new Button("Login");
-        send.getElement().setClassName("sendButton");
+        send.getElement().setClassName("btn_login");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {

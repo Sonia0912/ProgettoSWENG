@@ -708,6 +708,7 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
     height: 90px;
     width: 90px;
     top: -45px;
+    left: 80px;
     border-radius: 50%;
     background: #6439ad;
     padding: 10px;
@@ -724,8 +725,29 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
 .loginContainer{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    height: 100%;
+    padding: 50px 24px 0px;
+}
+
+.btn_login{
+    display: inline-block;
+    font-weight: 400;
     text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    background: #6439ad !important;
+    color: white !important;
+    border: 2px solid #6439ad;
+    margin: 10px 0px 0px 0px;
+    border-radius: 5px;
+    font-size: large;
+}
+
+input {
+    width: 167px;
+    border-radius: 5px;
+    height: 20px;
+    padding: 5px;
 }
 
 /*
