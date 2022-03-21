@@ -12,6 +12,7 @@ public class Login implements Pagina{
 
     @Override
     public void aggiungiContenuto(){
+        RootPanel.get("contenuto").clear();
         VerticalPanel formContainer = new VerticalPanel();
         formContainer.getElement().setClassName("formContainer");
 

@@ -48,11 +48,9 @@ public class ProgettoSWENG implements EntryPoint {
     RootPanel.get("pannelloMenu").add(hPanel);
 
     // Di default mostro il contenuto della homepage
-//    Homepage hp = new Homepage();
-//    hp.aggiungiContenuto();
+    Homepage hp = new Homepage();
+    hp.aggiungiContenuto();
 
-    Login loginPage = new Login();
-    loginPage.aggiungiContenuto();
 
     // Se clicco su Home
     menuButtons[0].addClickHandler(new ClickHandler() {
@@ -73,6 +71,14 @@ public class ProgettoSWENG implements EntryPoint {
     // Login
     final Button login = new Button(testoPulsante);
     RootPanel.get("login").add(login);
+
+    login.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+        Login l = new Login();
+        l.aggiungiContenuto();
+      }
+    });
 
     // Contatti
     final HTML contatti = new HTML(contattiString);
