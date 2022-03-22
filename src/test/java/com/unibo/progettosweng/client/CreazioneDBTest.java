@@ -1,115 +1,56 @@
 package com.unibo.progettosweng.client;
 
-import com.unibo.progettosweng.CreazioneDB;
 
-import com.unibo.progettosweng.model.Corso;
-import com.unibo.progettosweng.model.Esame;
-import com.unibo.progettosweng.model.Utente;
-import com.unibo.progettosweng.model.Valutazione;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import org.junit.Test;
-import org.mapdb.DB;
+
+public class CreazioneDBTest extends GWTTestCase {
 
 
-public class CreazioneDBTest {
-
-    @Test
-    public void test(){
-        CreazioneDB<Utente> db = new CreazioneDB();
-        DB result = db.getDb(CreazioneDB.DB_UTENTI);
-        assert (result.isClosed() != true);
-
-    }
-
-    @Test
-    public void inserimentoUtente(){
-
-        Utente urs1 = new Utente("Gianluca", "Gueli","gianluca.gueli@studio.unibo.it","123","studente");
-        boolean a = urs1.add();
-        assert (a == true);
+    /**
+     * Must refer to a valid module that sources this class.
+     */
+    public String getModuleName() {
+        return "com.unibo.progettosweng.ProgettoSWENGJUnit";
     }
 
 
-    @Test
-    public void getNomiUtentiTest(){
-        Utente urs1 = new Utente("Erika", "Colonna","erika.colonna@studio.unibo","123","studente");
-        urs1.add();
-        Utente[] a =  Utente.getCollections();
-        for (Utente utente : a) {
-            System.out.println("nome -> " + utente.getNome());
-        }
+    public void testUtentiService() {
+        // Create the service that we will test.
+        UtenteServiceAsync utentiServices = GWT.create(UtenteService.class);
+        ServiceDefTarget target = (ServiceDefTarget) utentiServices;
+        target.setServiceEntryPoint(GWT.getModuleBaseURL() + "progettosweng/utenti");
+
+        // Since RPC calls are asynchronous, we will need to wait for a response
+        // after this test method returns. This line tells the test runner to wait
+        // up to 10 seconds before timing out.
+        delayTestFinish(10000);
+
+        // Send a request to the server.
+        String [] info = {"gian", "luca", "g", "123", "studente"};
+        utentiServices.add( info, new AsyncCallback<String>() {
+            public void onFailure(Throwable caught) {
+                // The request resulted in an unexpected error.
+                fail("Request failure: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String info) {
+
+                    System.out.println(info);
+                    assertTrue(info.startsWith("Succ"));
+
+                    // Now that we have received a response, we need to tell the test runner
+                    // that the test is complete. You must call finishTest() after an
+                    // asynchronous test finishes successfully, or the test will time out.
+                    finishTest();
+            }
+
+        });
     }
-
-    @Test
-    public void controlloUtenteDuplicato(){
-
-        Utente urs1 = new Utente("Gianluca", "Gueli","gianluca.gueli@studio.unibo.it","123","studente");
-        urs1.add();
-        //Non posso inserirlo due volte
-        boolean a = urs1.add();
-        assert (a == false);
-    }
-
-    @Test
-    public void rimuoviUtente(){
-
-        Utente urs1 = new Utente("Sonia", "Nicoletti","sonia.nicoletti@studio.unibo.it","123","studente");
-        urs1.add();
-        System.out.println("Prima della rimozione: ");
-        Utente[] lista =  Utente.getCollections();
-        for (Utente nome : lista) {
-            System.out.println("nome -> " + nome.getNome());
-        }
-
-        boolean b = urs1.remove();
-
-        System.out.println("Dopo la rimozione: ");
-        Utente[]  lista1 =  Utente.getCollections();
-        for (Utente nome : lista1) {
-            System.out.println("nome -> " + nome.getNome());
-        }
-
-        assert (b == true);
-    }
-    @Test
-    public void aggiornoValore(){
-
-        Utente urs1 = new Utente("Luca", "Gueli","gianluca.gueli@studio.unibo.it","123","studente");
-        boolean a = urs1.add();
-
-        urs1.setNome("Gian");
-        System.out.println("Dopo la modifica: ");
-        Utente[]  lista1 =  Utente.getCollections();
-        for (Utente nome : lista1) {
-            System.out.println("nome -> " + nome.getNome());
-        }
-
-    }
-
-    @Test
-    public void inserimentoEsame(){
-        Esame urs1 = new Esame("12-01-21", "12:00","media","M1","Algoritmi");
-        boolean a = urs1.add();
-        assert (a == true);
-    }
-
-    @Test
-    public void inserimentoCorso(){
-        Corso corso = new Corso("ING-SOFT","12-12-22","01-02-22","Corso di ingneria del software", "Informatica");
-        boolean a = corso.add();
-        assert (a== true);
-    }
-
-    @Test
-    public void inserimentoValutazione(){
-        Valutazione valutazione = new Valutazione("ING-SOFT","sonia.nicoletti@studio.unibo.it",22);
-        boolean a = valutazione.add();
-        assert (a== true);
-    }
-
-
-
-
-
 
 
 }
