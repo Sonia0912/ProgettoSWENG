@@ -81,6 +81,13 @@ public class PortaleDocente extends Portale {
         CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
         Button btnCreaCorso = new Button("Crea corso");
         btnCreaCorso.addStyleName("btnCreazione");
+        btnCreaCorso.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                InserimentoCorso ic = new InserimentoCorso();
+                ic.aggiungiContenuto();
+            }
+        });
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi</div>"));
         spazioDinamico.add(tableCorsi);
         spazioDinamico.add(btnCreaCorso);
