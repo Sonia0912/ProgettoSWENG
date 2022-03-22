@@ -48,11 +48,8 @@ public class ProgettoSWENG implements EntryPoint {
     RootPanel.get("pannelloMenu").add(hPanel);
 
     // Di default mostro il contenuto della homepage
-//    Homepage hp = new Homepage();
-//    hp.aggiungiContenuto();
-
-    InserimentoEsame ie = new InserimentoEsame();
-    ie.aggiungiContenuto();
+    Homepage hp = new Homepage();
+    hp.aggiungiContenuto();
 
 
     // Se clicco su Home

@@ -40,11 +40,29 @@ public class InserimentoEsame implements Pagina{
         final Label labelOrario = new Label("Orario*:");
         labelOrario.getElement().setClassName("label");
         formPanel.add(labelOrario);
-        final TextBox orario = new TextBox();
+        final ListBox orario = new ListBox();
         orario.getElement().setClassName("input");
-        orario.setName("Orario");
-        formPanel.add(orario);
+        orario.addItem("");
+        for (int h = 0; h < 24; h++){
+            for (int m = 0; m < 60; m+=30){
+                if(h < 10){
+                    if (m < 10){
+                        orario.addItem("0"+h+":0"+m);
+                    }else {
+                        orario.addItem("0" + h + ":" + m);
+                    }
+                }else {
+                    if (m < 10){
+                        orario.addItem(h+":0"+m);
+                    }else {
+                        orario.addItem(h+":"+m);
+                    }
+                }
 
+            }
+        }
+
+        formPanel.add(orario);
 
         final Label labelHardness = new Label("Hardness*:");
         labelHardness.getElement().setClassName("label");
@@ -82,7 +100,7 @@ public class InserimentoEsame implements Pagina{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0) {
+                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
