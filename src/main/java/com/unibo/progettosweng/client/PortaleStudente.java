@@ -40,9 +40,9 @@ public class PortaleStudente extends Portale {
     private static List<Corso> TUTTICORSI = Arrays.asList(
         new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
         new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-        new Corso("abcdefgh", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-        new Corso("qwerty", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-        new Corso("asdfgh", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
+        new Corso("Basi di dati", "13/11/2022", "15/02/2023", "Impareremo i database relazionali e non.", "Informatica"),
+        new Corso("Fisica nucleare", "26/04/2022", "15/06/2022", "Dagli atomi all'universo.", "Fisica"),
+        new Corso("Chimica applicata", "17/02/2022", "29/03/2022", "Lezioni di chimica applicata.", "Chimica"),
         new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica"));
 
     @Override
@@ -188,7 +188,8 @@ public class PortaleStudente extends Portale {
                     return "Iscriviti";
                 }
             };
-            tableCorsi.addColumn(iscrizioneCol, "Azione");
+            tableCorsi.addColumn(iscrizioneCol, "");
+            iscrizioneCol.setCellStyleNames("btnIscrizione");
             iscrizioneCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
                 @Override
                 public void update(int index, Corso object, String value) {

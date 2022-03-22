@@ -740,6 +740,29 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     width: 170px;
 }
 
+.btnIscrizione button {
+    background: #6439ad;
+    color: white;
+    height: 25px;
+    width: 70px;
+    border: none;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #370d80;
+    border-right: 2px solid #370d80;
+}
+
+.btnIscrizione button:hover {
+    background: #563194;
+}
+
+.btnIscrizione button:active {
+    background: #ab8be0;
+    border-top: 2px solid #f3edf5;
+    border-left: 2px solid #f3edf5;
+    border-bottom: 2px solid #6439ad;
+    border-right: 2px solid #6439ad;
+}
+
 /***************
      FOOTER
 ***************/
@@ -889,8 +912,10 @@ select {
 /*
 COLORI
 Viola: #6439ad
+Viola meno scuro: #370d80
 Viola scuro: #1d0645
-Viola chiaro: #cfbeed
+Viola chiaro: #bfa7e8
+Viola più chiaro: #cfbeed
 Viola pallidissimo: #f3edf5
 Arancione: #ffa347
 Arancione scuro: #cf7e2d
