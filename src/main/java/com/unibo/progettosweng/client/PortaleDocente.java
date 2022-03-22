@@ -150,6 +150,7 @@ public class PortaleDocente extends Portale {
             }
         };
         tableCorsi.addColumn(modificaCol, "");
+        modificaCol.setCellStyleNames("btnTableStandard");
         modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
             @Override
             public void update(int index, Corso object, String value) {
@@ -165,6 +166,7 @@ public class PortaleDocente extends Portale {
             }
         };
         tableCorsi.addColumn(eliminaCol, "");
+        eliminaCol.setCellStyleNames("btnElimina");
         eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
             @Override
             public void update(int index, Corso object, String value) {
@@ -231,6 +233,7 @@ public class PortaleDocente extends Portale {
             }
         };
         tableEsami.addColumn(votiCol, "");
+        votiCol.setCellStyleNames("btnTableStandard long");
         votiCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
@@ -246,6 +249,7 @@ public class PortaleDocente extends Portale {
             }
         };
         tableEsami.addColumn(modificaCol, "");
+        modificaCol.setCellStyleNames("btnTableStandard");
         modificaCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
@@ -261,6 +265,7 @@ public class PortaleDocente extends Portale {
             }
         };
         tableEsami.addColumn(eliminaCol, "");
+        eliminaCol.setCellStyleNames("btnElimina");
         eliminaCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {

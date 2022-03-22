@@ -189,7 +189,7 @@ public class PortaleStudente extends Portale {
                 }
             };
             tableCorsi.addColumn(iscrizioneCol, "");
-            iscrizioneCol.setCellStyleNames("btnIscrizione");
+            iscrizioneCol.setCellStyleNames("btnTableStandard");
             iscrizioneCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
                 @Override
                 public void update(int index, Corso object, String value) {
