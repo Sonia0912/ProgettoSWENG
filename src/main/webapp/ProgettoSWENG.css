@@ -316,6 +316,12 @@ table.hPanel4Sezioni tbody tr td {
     width: 25%;
 }
 
+.titoletto {
+    color: #6439ad;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .titoletto1 {
     color: #6439ad;
     font-size: 36px;
@@ -790,6 +796,94 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
 
 .paragrafoFooter {
     font-size: 14px;
+}
+
+.formContainer{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 70px;
+}
+
+.userCard{
+    height: 250px;
+    width: 250px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #ffa347;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.logoContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.brandLogoContainer{
+    position: absolute;
+    height: 90px;
+    width: 90px;
+    top: -45px;
+    left: 80px;
+    border-radius: 50%;
+    background: #6439ad;
+    padding: 10px;
+    text-align: center;
+}
+
+.brandLogo{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.loginContainer{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 50px 24px 0px;
+}
+
+.btn-send{
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    background: #6439ad !important;
+    color: white !important;
+    border: 2px solid #6439ad;
+    margin: 10px 0px 0px 0px;
+    border-radius: 5px;
+    font-size: large;
+}
+
+.label {
+    margin-top: 10px;
+}
+
+input {
+    width: 167px;
+    border-radius: 5px;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+select {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid black;
 }
 
 /*

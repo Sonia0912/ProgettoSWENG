@@ -1,5 +1,6 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,10 +12,12 @@ public class InserimentoUtente implements Pagina{
 
     @Override
     public void aggiungiContenuto(){
-        RootPanel.get("contenuto").clear();
-        RootPanel.get("contenuto").add(new HTML(titleString));
+        VerticalPanel vp = new VerticalPanel();
+        vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
+        vp.add(new HTML(titleString));
         createForm();
-        RootPanel.get("contenuto").add(nuovoUtente);
+        vp.add(nuovoUtente);
+        RootPanel.get("contenuto").add(vp);
     }
 
     private void createForm(){
@@ -60,8 +63,16 @@ public class InserimentoUtente implements Pagina{
 
         formPanel.add(tipo);
 
+        final Label labelPassword = new Label("Password*:");
+        labelPassword.getElement().setClassName("label");
+        formPanel.add(labelPassword);
+        final PasswordTextBox password = new PasswordTextBox();
+        password.getElement().setClassName("input");
+        password.setName("Password");
+        formPanel.add(password);
+
         Button send = new Button("Inserisci");
-        send.getElement().setClassName("sendButton");
+        send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
@@ -75,7 +86,7 @@ public class InserimentoUtente implements Pagina{
         nuovoUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || tipo.getSelectedItemText().equals("") || email.getText().length() == 0) {
+                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || tipo.getSelectedItemText().equals("") || email.getText().length() == 0 || password.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
