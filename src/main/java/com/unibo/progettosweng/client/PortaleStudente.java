@@ -1,7 +1,6 @@
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.*;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -21,6 +20,11 @@ import java.util.List;
 
 public class PortaleStudente extends Portale {
 
+    private Utente studente = null;
+    String nome = null;
+    String cognome = null;
+    String email =null;
+
     private static ArrayList<Corso> CORSI = new ArrayList<Corso>(Arrays.asList(
             new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
             new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
@@ -37,12 +41,6 @@ public class PortaleStudente extends Portale {
             new String[]{"Algebra lineare", "29"}
     ));
 
-    private Utente studente = null;
-    String nome = null;
-    String cognome = null;
-    String email =null;
-
-
     private static List<Corso> TUTTICORSI = Arrays.asList(
         new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
         new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
@@ -58,6 +56,14 @@ public class PortaleStudente extends Portale {
         new Esame("14/07/2022", "10:00", "Facile", "Aula Magna", "Chimica applicata"),
         new Esame("03/04/2022", "09:55", "Difficile", "Aula M1", "Algebra lineare")
     );
+
+    @Override
+    public void salvaCredenziali() {
+        studente = super.utenteLoggato;
+        nome = studente.getNome();
+        cognome = studente.getCognome();
+        email = studente.getUsername();
+    }
 
     @Override
     public void caricaMenu() {
@@ -97,12 +103,6 @@ public class PortaleStudente extends Portale {
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
         menuLaterale.add(btnVoti);
-
-        studente = super.ut;
-        nome = studente.getNome();
-        cognome = studente.getCognome();
-        email = studente.getUsername();
-
     }
 
     @Override

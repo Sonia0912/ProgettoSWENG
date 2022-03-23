@@ -20,11 +20,18 @@ import java.util.List;
 
 public class PortaleSegreteria extends Portale {
 
+    Utente segreteria = null;
+
     private static ArrayList<Utente> listaStudenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
             new Utente("Sofia", "Neri","sofianeri@mail.com","0000","studente"),
             new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
     ));
+
+    @Override
+    public void salvaCredenziali() {
+        segreteria = super.utenteLoggato;
+    }
 
     @Override
     public void caricaMenu() {

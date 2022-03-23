@@ -1,6 +1,5 @@
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -10,7 +9,7 @@ public abstract class Portale {
 
     VerticalPanel menuLaterale;
     VerticalPanel spazioDinamico;
-    Utente ut;
+    Utente utenteLoggato;
 
     public void svuotaPagina() {
         RootPanel.get("contenuto").clear();
@@ -20,12 +19,13 @@ public abstract class Portale {
 
     public abstract void caricaMenu();
     public abstract void caricaDefault();
+    public abstract void salvaCredenziali();
 
 
-    public void caricaPortale( Utente utente) {
+    public void caricaPortale(Utente utenteInserito) {
+        this.utenteLoggato = utenteInserito;
+        salvaCredenziali();
 
-        this.ut = utente;
-        Window.alert("utente username: " + this.ut);
         svuotaPagina();
         HorizontalPanel mainPanel = new HorizontalPanel();
         mainPanel.getElement().setId("mainPanelPortaleId");

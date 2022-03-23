@@ -80,7 +80,7 @@ public class Login implements Pagina{
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
                 if (username.getText().length() == 0 || password.getText().length() == 0) {
-                    Window.alert("Compilare tutti i campi");
+                    Window.alert("Compilare tutti i campi.");
                     submitEvent.cancel();
                 }
             }
@@ -94,17 +94,12 @@ public class Login implements Pagina{
                         AsyncCallback<Utente>() {
                             @Override
                             public void onFailure(Throwable throwable) {
-                                Window.alert("login failure"+ throwable.getMessage());
+                                Window.alert("Login failure: " + throwable.getMessage());
                             }
-
                             @Override
                             public void onSuccess(Utente utente) {
-
                                 if(utente!= null){
-                                    Window.alert("ut type:" + utente.getNome());
-
                                    String tipo =utente.getTipo();
-
                                     switch(tipo) {
                                         case "Studente":
                                             PortaleStudente ps = new PortaleStudente();
@@ -123,7 +118,7 @@ public class Login implements Pagina{
                                             break;
                                     }
                                 }else {
-                                    Window.alert("utente non presente");
+                                    Window.alert("Username o password incorretti.");
                                 }
                             }
                         });

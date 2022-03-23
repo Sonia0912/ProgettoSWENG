@@ -39,6 +39,14 @@ public class PortaleDocente extends Portale {
             new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")));
 
     @Override
+    public void salvaCredenziali() {
+        docente = super.utenteLoggato;
+        nome = docente.getNome();
+        cognome = docente.getCognome();
+        email = docente.getUsername();
+    }
+
+    @Override
     public void caricaMenu() {
         Button btnProfilo = new Button("Profilo");
         Button btnCorsi = new Button("Corsi");
@@ -67,12 +75,6 @@ public class PortaleDocente extends Portale {
         menuLaterale.add(btnProfilo);
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
-
-        docente = super.ut;
-        nome = docente.getNome();
-         cognome = docente.getCognome();
-         email = docente.getUsername();
-
     }
 
     @Override
