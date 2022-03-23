@@ -62,7 +62,7 @@ public class Login implements Pagina{
         formPanel.add(password);
 
         Button send = new Button("Login");
-        send.getElement().setClassName("btn-send");
+        send.getElement().setClassName("btn-login");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
@@ -86,7 +86,7 @@ public class Login implements Pagina{
         login.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String tipo = "docente";
+                String tipo = username.getText();
                 switch(tipo) {
                     case "studente":
                         PortaleStudente ps = new PortaleStudente();

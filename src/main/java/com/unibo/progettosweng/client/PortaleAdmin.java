@@ -9,9 +9,7 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
 import com.unibo.progettosweng.client.model.Utente;
@@ -77,7 +75,9 @@ public class PortaleAdmin extends Portale {
 
     public void caricaCreaAccount() {
         spazioDinamico.clear();
-
+        FormPanel nuovoUtente = createForm();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Inserisci un nuovo utente</div>"));
+        spazioDinamico.add(nuovoUtente);
     }
 
     public CellTable<Utente> creaTabellaStudenti(List<Utente> listaStudenti, String messaggioVuoto) {
@@ -163,5 +163,88 @@ public class PortaleAdmin extends Portale {
         return tableStudenti;
     }
 
+    private FormPanel createForm(){
+        FormPanel nuovoUtente = new FormPanel();
+        nuovoUtente.addStyleName("formCreazioneUtente");
+        nuovoUtente.setAction("/creaNuovoUtente");
+        nuovoUtente.setMethod(FormPanel.METHOD_POST);
+
+        VerticalPanel formPanel = new VerticalPanel();
+        final Label labelNome = new Label("Nome*:");
+        labelNome.getElement().setClassName("label");
+        formPanel.add(labelNome);
+        final TextBox nome = new TextBox();
+        nome.getElement().setClassName("input");
+        nome.setName("Nome");
+        formPanel.add(nome);
+
+        final Label labelCognome = new Label("Cognome*:");
+        labelCognome.getElement().setClassName("label");
+        formPanel.add(labelCognome);
+        final TextBox cognome = new TextBox();
+        cognome.getElement().setClassName("input");
+        cognome.setName("Cognome");
+        formPanel.add(cognome);
+
+        final Label labelEmail = new Label("Email*:");
+        labelEmail.getElement().setClassName("label");
+        formPanel.add(labelEmail);
+        final TextBox email = new TextBox();
+        email.getElement().setClassName("input");
+        email.setName("Email");
+        formPanel.add(email);
+
+        final Label labelTipo = new Label("Tipo di utente*:");
+        labelTipo.getElement().setClassName("label");
+        formPanel.add(labelTipo);
+        ListBox tipo = new ListBox();
+        tipo.getElement().setClassName("input");
+        tipo.addItem("");
+        tipo.addItem("Docente");
+        tipo.addItem("Studente");
+        tipo.addItem("Segreteria");
+        tipo.addItem("Admin");
+
+        formPanel.add(tipo);
+
+        final Label labelPassword = new Label("Password*:");
+        labelPassword.getElement().setClassName("label");
+        formPanel.add(labelPassword);
+        final PasswordTextBox password = new PasswordTextBox();
+        password.getElement().setClassName("input");
+        password.setName("Password");
+        formPanel.add(password);
+
+        Button send = new Button("Inserisci");
+        send.getElement().setClassName("btn-send");
+        send.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                nuovoUtente.submit();
+            }
+        });
+        formPanel.add(send);
+
+        nuovoUtente.add(formPanel);
+
+        nuovoUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
+            @Override
+            public void onSubmit(FormPanel.SubmitEvent submitEvent) {
+                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || tipo.getSelectedItemText().equals("") || email.getText().length() == 0 || password.getText().length() == 0) {
+                    Window.alert("Compilare tutti i campi");
+                    submitEvent.cancel();
+                }
+            }
+        });
+
+        nuovoUtente.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
+            @Override
+            public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
+                //to do
+            }
+        });
+
+        return nuovoUtente;
+    }
 
 }
