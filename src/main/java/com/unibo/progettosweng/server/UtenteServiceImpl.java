@@ -93,6 +93,17 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     }
 
+    @Override
+    public Utente getUtenteByUsername(String username) throws Exception {
+        createOrOpenDB();
+        for (String i : map.getKeys()) {
+            if(map.get(i).getUsername().equals(username)){
+                return map.get(i);
+            }
+        }
+        return null;
+    }
+
 
     private boolean controlloUtenteDuplicato(HTreeMap<String,Utente> map, Utente utente){
         for ( String i: map.getKeys()) {

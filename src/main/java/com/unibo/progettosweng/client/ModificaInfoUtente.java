@@ -5,16 +5,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.unibo.progettosweng.client.model.Utente;
 
-public class InserimentoUtente implements Form{
-    FormPanel nuovoUtente;
+public class ModificaInfoUtente implements Form{
+    Utente utente;
+    FormPanel editUtente;
+
+    public ModificaInfoUtente(Utente utente){
+        this.utente = utente;
+    }
 
     @Override
     public FormPanel getForm(){
-        nuovoUtente = new FormPanel();
-        nuovoUtente.addStyleName("formCreazioneUtente");
-        nuovoUtente.setAction("/creaNuovoUtente");
-        nuovoUtente.setMethod(FormPanel.METHOD_POST);
+        editUtente = new FormPanel();
+        editUtente.addStyleName("formCreazioneUtente");
+        editUtente.setAction("/modificaUtente");
+        editUtente.setMethod(FormPanel.METHOD_POST);
 
         VerticalPanel formPanel = new VerticalPanel();
         final Label labelNome = new Label("Nome*:");
@@ -22,6 +28,7 @@ public class InserimentoUtente implements Form{
         formPanel.add(labelNome);
         final TextBox nome = new TextBox();
         nome.getElement().setClassName("input");
+        nome.setValue(utente.getNome());
         nome.setName("Nome");
         formPanel.add(nome);
 
@@ -30,6 +37,7 @@ public class InserimentoUtente implements Form{
         formPanel.add(labelCognome);
         final TextBox cognome = new TextBox();
         cognome.getElement().setClassName("input");
+        cognome.setValue(utente.getCognome());
         cognome.setName("Cognome");
         formPanel.add(cognome);
 
@@ -38,9 +46,10 @@ public class InserimentoUtente implements Form{
         formPanel.add(labelEmail);
         final TextBox email = new TextBox();
         email.getElement().setClassName("input");
+        email.setValue(utente.getUsername());
         email.setName("Email");
         formPanel.add(email);
-
+/*
         final Label labelTipo = new Label("Tipo di utente*:");
         labelTipo.getElement().setClassName("label");
         formPanel.add(labelTipo);
@@ -60,37 +69,37 @@ public class InserimentoUtente implements Form{
         final PasswordTextBox password = new PasswordTextBox();
         password.getElement().setClassName("input");
         password.setName("Password");
-        formPanel.add(password);
+        formPanel.add(password);*/
 
-        Button send = new Button("Inserisci");
+        Button send = new Button("Modifica");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                nuovoUtente.submit();
+                editUtente.submit();
             }
         });
         formPanel.add(send);
 
-        nuovoUtente.add(formPanel);
+        editUtente.add(formPanel);
 
-        nuovoUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
+        editUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || tipo.getSelectedItemText().equals("") || email.getText().length() == 0 || password.getText().length() == 0) {
+                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || email.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
             }
         });
 
-        nuovoUtente.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
+        editUtente.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
                 //to do
             }
         });
-        return nuovoUtente;
+        return editUtente;
     }
 
 

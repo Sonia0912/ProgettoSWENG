@@ -14,4 +14,5 @@ public interface UtenteService extends RemoteService {
     Utente[] getUtenti() throws Exception;
     Utente login(String username, String password) ;
     void aggiorna(Utente utente) throws Exception;
+    Utente getUtenteByUsername(String username) throws Exception;
 }

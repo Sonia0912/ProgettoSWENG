@@ -63,7 +63,11 @@ public class PortaleAdmin extends Portale {
         btnCreaAccount.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaCreaAccount();
+                try {
+                    caricaCreaAccount();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         menuLaterale.add(btnStudenti);
@@ -90,11 +94,11 @@ public class PortaleAdmin extends Portale {
         spazioDinamico.add(tableDocenti);
     }
 
-    public void caricaCreaAccount() {
+    public void caricaCreaAccount() throws Exception {
         spazioDinamico.clear();
-        FormPanel nuovoUtente = createForm();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Inserisci un nuovo utente</div>"));
-        spazioDinamico.add(nuovoUtente);
+        spazioDinamico.add((new InserimentoUtente()).getForm());
+
     }
 
     public CellTable<Utente> creaTabellaUtenti(List<Utente> listaUtenti, String messaggioVuoto) {
@@ -171,7 +175,10 @@ public class PortaleAdmin extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi modificare i dati di " + object.getUsername());
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica info utente</div>"));
+                spazioDinamico.add((new ModificaInfoUtente(object)).getForm());
+
             }
         });
 
@@ -182,7 +189,7 @@ public class PortaleAdmin extends Portale {
 
 
 
-    private FormPanel createForm(){
+    /*private FormPanel createForm(){
         FormPanel nuovoUtente = new FormPanel();
         nuovoUtente.addStyleName("formCreazioneUtente");
         nuovoUtente.setAction("/creaNuovoUtente");
@@ -275,6 +282,6 @@ public class PortaleAdmin extends Portale {
         });
 
         return nuovoUtente;
-    }
+    }*/
 
 }

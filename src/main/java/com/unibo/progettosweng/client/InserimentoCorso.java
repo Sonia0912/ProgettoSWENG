@@ -7,23 +7,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
-public class InserimentoCorso implements Pagina{
-    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo corso</h1>";
+public class InserimentoCorso implements Form{
     FormPanel nuovoCorso;
 
     @Override
-    public void aggiungiContenuto(){
-        RootPanel.get("contenuto").clear();
-        VerticalPanel vp = new VerticalPanel();
-        vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
-        vp.add(new HTML(titleString));
-        createForm();
-        vp.add(nuovoCorso);
-        RootPanel.get("contenuto").add(vp);
-    }
-
-    private void createForm(){
+    public FormPanel getForm(){
         nuovoCorso = new FormPanel();
+        nuovoCorso.addStyleName("formCreazioneUtente");
         nuovoCorso.setAction("/creaNuovoCorso");
         nuovoCorso.setMethod(FormPanel.METHOD_POST);
 
@@ -98,6 +88,7 @@ public class InserimentoCorso implements Pagina{
                 //to do
             }
         });
+        return nuovoCorso;
     }
 
 

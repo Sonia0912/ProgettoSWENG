@@ -13,4 +13,5 @@ public interface UtenteServiceAsync {
     void getUtenti(AsyncCallback<Utente[]> callback) throws Exception;
     void login(String username, String password, AsyncCallback<Utente> callback);
     void aggiorna(Utente utente, AsyncCallback<Utente> callback) throws Exception;
+    void getUtenteByUsername(String username, AsyncCallback<Utente> callback) throws Exception;
 }

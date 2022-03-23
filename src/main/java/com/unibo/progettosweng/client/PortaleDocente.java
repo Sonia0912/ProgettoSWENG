@@ -99,8 +99,9 @@ public class PortaleDocente extends Portale {
         btnCreaCorso.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                InserimentoCorso ic = new InserimentoCorso();
-                ic.aggiungiContenuto();
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo corso</div>"));
+                spazioDinamico.add((new InserimentoCorso()).getForm());
             }
         });
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi</div>"));
@@ -112,6 +113,14 @@ public class PortaleDocente extends Portale {
         spazioDinamico.clear();
         CellTable<Esame> tableEsami = creaTabellaEsami(listaEsami, "Non hai ancora creato nessun esame.");
         Button btnCreaEsame = new Button("Crea esame");
+        btnCreaEsame.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
+                spazioDinamico.add((new InserimentoEsame().getForm()));
+            }
+        });
         btnCreaEsame.addStyleName("btnCreazione");
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami</div>"));
         spazioDinamico.add(tableEsami);

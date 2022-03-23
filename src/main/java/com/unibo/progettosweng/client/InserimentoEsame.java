@@ -8,23 +8,13 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import sun.tools.jconsole.TimeComboBox;
 
-public class InserimentoEsame implements Pagina{
-    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo esame</h1>";
+public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;
 
     @Override
-    public void aggiungiContenuto(){
-        RootPanel.get("contenuto").clear();
-        VerticalPanel vp = new VerticalPanel();
-        vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
-        vp.add(new HTML(titleString));
-        createForm();
-        vp.add(nuovoEsame);
-        RootPanel.get("contenuto").add(vp);
-    }
-
-    private void createForm(){
+    public FormPanel getForm(){
         nuovoEsame = new FormPanel();
+        nuovoEsame.addStyleName("formCreazioneUtente");
         nuovoEsame.setAction("/creaNuovoCorso");
         nuovoEsame.setMethod(FormPanel.METHOD_POST);
 
@@ -113,6 +103,7 @@ public class InserimentoEsame implements Pagina{
                 //to do
             }
         });
+        return nuovoEsame;
     }
 
 
