@@ -86,7 +86,7 @@ public class Login implements Pagina{
         login.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String tipo = "docente";
+                String tipo = "admin";
                 switch(tipo) {
                     case "studente":
                         PortaleStudente ps = new PortaleStudente();
@@ -97,8 +97,8 @@ public class Login implements Pagina{
                         pd.caricaPortale();
                         break;
                     case "admin":
-                        //PortaleAdmin pa = new PortaleAdmin();
-                        //pa.caricaPortale();
+                        PortaleAdmin pa = new PortaleAdmin();
+                        pa.caricaPortale();
                         break;
                     case "segreteria":
                         //PortaleSegreteria portale = new PortaleSegreteria();

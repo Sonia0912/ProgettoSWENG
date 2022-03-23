@@ -6,7 +6,7 @@ import org.mapdb.DB;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-public class Utente implements OperazioniDB<Utente> {
+public class Utente /*implements OperazioniDB<Utente>*/ {
 
     private String nome;
     private String cognome;
@@ -38,7 +38,7 @@ public class Utente implements OperazioniDB<Utente> {
     public String getPassword(){return password;}
     public String getTipo(){return tipo;}
 
-    public void setNome(String nome){
+/*    public void setNome(String nome){
         this.nome = nome;
         aggiorna();
     }
@@ -124,6 +124,6 @@ public class Utente implements OperazioniDB<Utente> {
         }
         db.close();
         return utenti;
-    }
+    }*/
 
 }

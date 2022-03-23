@@ -1,3 +1,4 @@
+/*
 package com.unibo.progettosweng.client;
 
 import com.unibo.progettosweng.shared.CreazioneDB;
@@ -113,3 +114,4 @@ public class CreazioneDBTest {
 
 
 }
+*/
