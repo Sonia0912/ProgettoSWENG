@@ -1,14 +1,18 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.unibo.progettosweng.client.model.Utente;
 
 public class Login implements Pagina{
     FormPanel login;
     Image logo = new Image();
+    private final UtenteServiceAsync utente = GWT.create(UtenteService.class);
 
     @Override
     public void aggiungiContenuto(){
@@ -86,24 +90,39 @@ public class Login implements Pagina{
         login.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String tipo = "docente";
-                switch(tipo) {
-                    case "studente":
-                        PortaleStudente ps = new PortaleStudente();
-                        ps.caricaPortale();
-                        break;
-                    case "docente":
-                        PortaleDocente pd = new PortaleDocente();
-                        pd.caricaPortale();
-                        break;
-                    case "admin":
-                        PortaleAdmin pa = new PortaleAdmin();
-                        pa.caricaPortale();
-                        break;
-                    case "segreteria":
-                        //PortaleSegreteria portale = new PortaleSegreteria();
-                        break;
-                }
+
+                utente.login(username.getText(), password.getText(), new
+                        AsyncCallback<Utente>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                Window.alert("login falure "+ throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(Utente utente) {
+                                String tipo = utente.getTipo();
+                                switch(tipo) {
+                                    case "studente":
+                                        PortaleStudente ps = new PortaleStudente();
+                                        ps.caricaPortale();
+                                        break;
+                                    case "docente":
+                                        PortaleDocente pd = new PortaleDocente();
+                                        pd.caricaPortale();
+                                        break;
+                                    case "admin":
+                                        PortaleAdmin pa = new PortaleAdmin();
+                                        pa.caricaPortale();
+                                        break;
+                                    case "segreteria":
+                                        //PortaleSegreteria portale = new PortaleSegreteria();
+                                        break;
+                                }
+
+                            }
+                        });
+
+
             }
         });
     }

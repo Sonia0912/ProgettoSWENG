@@ -69,14 +69,14 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     @Override
-    public Boolean login(String username, String password) throws Exception {
+    public Utente login(String username, String password)  {
         createOrOpenDB();
         for (String i : map.getKeys()) {
             if(map.get(i).getUsername().equals(username) && map.get(i).getPassword().equals(password)){
-                return true;
+                return map.get(i);
             }
         }
-        return false;
+        return null;
     }
 
 
