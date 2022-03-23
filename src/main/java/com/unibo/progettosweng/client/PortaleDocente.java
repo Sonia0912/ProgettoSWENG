@@ -2,7 +2,6 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -16,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
+import com.unibo.progettosweng.client.model.Utente;
 
 
 import java.util.ArrayList;
@@ -24,9 +24,10 @@ import java.util.List;
 
 public class PortaleDocente extends Portale {
 
-    String nome = "Mario";
-    String cognome = "Rossi";
-    String email = "mariorossi@unitech.com";
+    Utente docente = null;
+    String nome = null;
+    String cognome = null;
+    String email = null;
 
     private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
             new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
@@ -66,6 +67,12 @@ public class PortaleDocente extends Portale {
         menuLaterale.add(btnProfilo);
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
+
+        docente = super.ut;
+        nome = docente.getNome();
+         cognome = docente.getCognome();
+         email = docente.getUsername();
+
     }
 
     @Override
@@ -77,6 +84,8 @@ public class PortaleDocente extends Portale {
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Informazioni personali</div>"));
         spazioDinamico.add(infoPersonali);
     }
+
+
 
     public void caricaCorsi() {
         spazioDinamico.clear();

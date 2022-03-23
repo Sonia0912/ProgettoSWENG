@@ -4,19 +4,15 @@ import com.google.gwt.cell.client.*;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
-import com.google.gwt.text.shared.SafeHtmlRenderer;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.view.client.*;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
+import com.unibo.progettosweng.client.model.Utente;
 
 
 import java.util.ArrayList;
@@ -34,9 +30,11 @@ public class PortaleStudente extends Portale {
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
             new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I"));
 
-    String nome = "Sonia";
-    String cognome = "Nicoletti";
-    String email = "sonianicoletti@unitech.com";
+    private Utente studente = null;
+    String nome = null;
+    String cognome = null;
+    String email =null;
+
 
     private static List<Corso> TUTTICORSI = Arrays.asList(
         new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
@@ -84,6 +82,12 @@ public class PortaleStudente extends Portale {
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
         menuLaterale.add(btnVoti);
+
+        studente = super.ut;
+        nome = studente.getNome();
+        cognome = studente.getCognome();
+        email = studente.getUsername();
+
     }
 
     @Override
@@ -108,6 +112,8 @@ public class PortaleStudente extends Portale {
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami</div>"));
         spazioDinamico.add(tableEsami);
     }
+
+
 
     private void caricaEsploraCorsi() {
         List<Corso> corsiVisibili = new ArrayList<>(TUTTICORSI);

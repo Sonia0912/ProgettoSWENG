@@ -12,6 +12,6 @@ public interface UtenteService extends RemoteService {
     String add(String[] input) throws IllegalArgumentException;
     String remove(String key) throws IllegalArgumentException;
     Utente[] getUtenti() throws Exception;
-    Utente login(String username, String password);
+    Utente login(String username, String password) ;
     void aggiorna(Utente utente) throws Exception;
 }

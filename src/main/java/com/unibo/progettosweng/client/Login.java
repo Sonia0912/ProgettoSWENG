@@ -66,7 +66,7 @@ public class Login implements Pagina{
         formPanel.add(password);
 
         Button send = new Button("Login");
-        send.getElement().setClassName("btn-send");
+        send.getElement().setClassName("btn-login");
         send.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
@@ -91,34 +91,61 @@ public class Login implements Pagina{
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
 
+//                String tipo = "admin";
+//                switch(tipo) {
+//                    case "studente":
+//                        PortaleStudente ps = new PortaleStudente();
+//                        ps.caricaPortale();
+//                        break;
+//                    case "docente":
+//                        PortaleDocente pd = new PortaleDocente();
+//                        pd.caricaPortale();
+//                        break;
+//                    case "admin":
+//                        PortaleAdmin pa = new PortaleAdmin();
+//                        pa.caricaPortale();
+//                        break;
+//                    case "segreteria":
+//                        //PortaleSegreteria portale = new PortaleSegreteria();
+//                        break;
+//                }
+
+
                 utente.login(username.getText(), password.getText(), new
                         AsyncCallback<Utente>() {
                             @Override
                             public void onFailure(Throwable throwable) {
-                                Window.alert("login falure "+ throwable.getMessage());
+                                Window.alert("login failure"+ throwable.getMessage());
                             }
 
                             @Override
                             public void onSuccess(Utente utente) {
-                                String tipo = utente.getTipo();
-                                switch(tipo) {
-                                    case "studente":
-                                        PortaleStudente ps = new PortaleStudente();
-                                        ps.caricaPortale();
-                                        break;
-                                    case "docente":
-                                        PortaleDocente pd = new PortaleDocente();
-                                        pd.caricaPortale();
-                                        break;
-                                    case "admin":
-                                        PortaleAdmin pa = new PortaleAdmin();
-                                        pa.caricaPortale();
-                                        break;
-                                    case "segreteria":
-                                        //PortaleSegreteria portale = new PortaleSegreteria();
-                                        break;
-                                }
 
+                                if(utente!= null){
+                                    Window.alert("ut type:" + utente.getNome());
+
+                                   String tipo =utente.getTipo();
+
+                                    switch(tipo) {
+                                        case "Studente":
+                                            PortaleStudente ps = new PortaleStudente();
+                                            ps.caricaPortale(utente);
+                                            break;
+                                        case "Docente":
+                                            PortaleDocente pd = new PortaleDocente();
+                                            pd.caricaPortale(utente);
+                                            break;
+                                        case "Admin":
+                                            PortaleAdmin pa = new PortaleAdmin();
+                                            pa.caricaPortale(utente);
+                                            break;
+                                        case "Segreteria":
+                                            //PortaleSegreteria portale = new PortaleSegreteria();
+                                            break;
+                                    }
+                                }else {
+                                    Window.alert("utente non presente");
+                                }
                             }
                         });
 
