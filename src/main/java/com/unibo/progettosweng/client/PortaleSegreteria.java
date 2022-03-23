@@ -147,7 +147,7 @@ public class PortaleSegreteria extends Portale {
         corsiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi vedere i corsi di " + object.getUsername());
+                visualizzaCorsi(object.getUsername());
             }
         });
 
@@ -163,7 +163,7 @@ public class PortaleSegreteria extends Portale {
         esamiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi vedere gli esami di " + object.getUsername());
+                visualizzaEsami(object.getUsername());
             }
         });
 
@@ -179,7 +179,7 @@ public class PortaleSegreteria extends Portale {
         votiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi visualizzare i voti di " + object.getUsername());
+                visualizzaVoti(object.getUsername());
             }
         });
 
@@ -261,6 +261,37 @@ public class PortaleSegreteria extends Portale {
         tableVoti.setRowCount(listaVoti.size(), true);
         tableVoti.setRowData(0, listaVoti);
         return tableVoti;
+    }
+
+    private void visualizzaCorsi(String username) {
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Corsi</div>"));
+        spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è iscritto/a ai seguenti corsi: </div>"));
+        String[] corsi = {"Algebra", "Analisi I", "Sistemi Operativi"};
+        for(int i = 0; i < corsi.length; i++) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + corsi[i] + "</div>"));
+        }
+        spazioDinamico.add(new HTML("</div>"));
+    }
+
+    private void visualizzaEsami(String username) {
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esami</div>"));
+        spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> si è registrato/a ai seguenti esami: </div>"));
+        String[] esami = {"Algebra", "Sistemi Operativi"};
+        for(int i = 0; i < esami.length; i++) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + esami[i] + "</div>"));
+        }
+    }
+
+    private void visualizzaVoti(String username) {
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti</div>"));
+        spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> ha ottenuto i seguenti voti: </div>"));
+        String[][] voti = {{"Algebra", "18"}, {"Sistemi Operativi", "23"}};
+        for(int i = 0; i < voti.length; i++) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + voti[i][0] + ": " + voti[i][1] + "</div>"));
+        }
     }
 
 }
