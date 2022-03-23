@@ -26,6 +26,13 @@ public class PortaleAdmin extends Portale {
             new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
     ));
 
+    private static ArrayList<Utente>  listaDocenti = new ArrayList<Utente>(Arrays.asList(
+            new Utente("Mario", "Rossi","mariorossi@mail.com","5678","docente"),
+            new Utente("Giulia", "Gallo","giuliagallo@mail.com","acbde","docente"),
+            new Utente("Tommaso", "Neri","tommasoneri@mail.com","asdfg","docente")
+    ));
+
+
     @Override
     public void caricaMenu() {
         Button btnStudenti = new Button("Studenti");
@@ -64,13 +71,16 @@ public class PortaleAdmin extends Portale {
 
     public void caricaStudenti() {
         spazioDinamico.clear();
-        CellTable<Utente> tableStudenti = creaTabellaStudenti(listaStudenti, "Non ci sono studenti registrati.");
+        CellTable<Utente> tableStudenti = creaTabellaUtenti(listaStudenti, "Non ci sono studenti registrati.");
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Studenti</div>"));
         spazioDinamico.add(tableStudenti);
     }
 
     public void caricaDocenti() {
         spazioDinamico.clear();
+        CellTable<Utente> tableDocenti = creaTabellaUtenti(listaDocenti, "Non ci sono docenti registrati.");
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Docenti</div>"));
+        spazioDinamico.add(tableDocenti);
     }
 
     public void caricaCreaAccount() {
@@ -80,7 +90,7 @@ public class PortaleAdmin extends Portale {
         spazioDinamico.add(nuovoUtente);
     }
 
-    public CellTable<Utente> creaTabellaStudenti(List<Utente> listaStudenti, String messaggioVuoto) {
+    public CellTable<Utente> creaTabellaUtenti(List<Utente> listaUtenti, String messaggioVuoto) {
         CellTable<Utente> tableStudenti = new CellTable<Utente>();
         tableStudenti.addStyleName("tablePortale");
         tableStudenti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
@@ -158,8 +168,8 @@ public class PortaleAdmin extends Portale {
             }
         });
 
-        tableStudenti.setRowCount(listaStudenti.size(), true);
-        tableStudenti.setRowData(0, listaStudenti);
+        tableStudenti.setRowCount(listaUtenti.size(), true);
+        tableStudenti.setRowData(0, listaUtenti);
         return tableStudenti;
     }
 
