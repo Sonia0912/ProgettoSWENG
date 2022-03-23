@@ -28,11 +28,13 @@ public class PortaleStudente extends Portale {
     private static ArrayList<Corso> CORSI = new ArrayList<Corso>(Arrays.asList(
             new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
             new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")));
+            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")
+    ));
 
-    private static List<Esame> ESAMI = Arrays.asList(
+    private static ArrayList<Esame> ESAMI = new ArrayList<Esame>(Arrays.asList(
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
-            new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I"));
+            new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")
+    ));
 
     String nome = "Sonia";
     String cognome = "Nicoletti";
@@ -44,7 +46,15 @@ public class PortaleStudente extends Portale {
         new Corso("Basi di dati", "13/11/2022", "15/02/2023", "Impareremo i database relazionali e non.", "Informatica"),
         new Corso("Fisica nucleare", "26/04/2022", "15/06/2022", "Dagli atomi all'universo.", "Fisica"),
         new Corso("Chimica applicata", "17/02/2022", "29/03/2022", "Lezioni di chimica applicata.", "Chimica"),
-        new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica"));
+        new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")
+    );
+
+    private static List<Esame> TUTTIESAMI = Arrays.asList(
+        new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
+        new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I"),
+        new Esame("14/07/2022", "10:00", "Facile", "Aula Magna", "Chimica applicata"),
+        new Esame("03/04/2022", "09:55", "Difficile", "Aula M1", "Algebra lineare")
+    );
 
     @Override
     public void caricaMenu() {
@@ -88,19 +98,16 @@ public class PortaleStudente extends Portale {
 
     @Override
     public void caricaDefault() {
-        spazioDinamico.clear();
+        caricaProfilo();
+    }
 
-        // Informazioni personali
+    private void caricaProfilo() {
         HTML infoPersonali = new HTML("<div class=\"infoPersonali\"><b>Nome: </b>" + nome
                 + "<br /><b>Cognome: </b>" + cognome
                 + "<br /><b>E-mail: </b>" + email + "</div>");
-
-        // I miei corsi
-        CellTable<Corso> tableCorsi = creaTabellaCorsi(CORSI, "Non sei iscritto ad nessun corso.", false);
-
-        // I miei esami
+        CellTable<Corso> tableCorsi = creaTabellaCorsi(CORSI, "Non sei iscritto a nessun corso.", false);
         CellTable<Esame> tableEsami = creaTabellaEsami(ESAMI, "Non hai prenotato nessun esame.", false);
-
+        spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Informazioni personali</div>"));
         spazioDinamico.add(infoPersonali);
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi</div>"));
@@ -119,20 +126,31 @@ public class PortaleStudente extends Portale {
                 }
             }
         }
-        spazioDinamico.clear();
         CellTable<Corso> tableCorsi = creaTabellaCorsi(corsiVisibili, "Non sono presenti corsi a cui puoi iscriverti.", true);
+        spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esplora i corsi</div>"));
         spazioDinamico.add(tableCorsi);
     }
 
     private void caricaPrenotaEsame() {
+        List<Esame> esamiVisibili = new ArrayList<>(TUTTIESAMI);
+        for(int i = 0; i < TUTTIESAMI.size(); i++) {
+            for(int j = 0; j < ESAMI.size(); j++) {
+                if(ESAMI.get(j).getNomeCorso().equals(TUTTIESAMI.get(i).getNomeCorso())) {
+                    String daRimuovere = TUTTIESAMI.get(i).getNomeCorso();
+                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+                }
+            }
+        }
+        CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
         spazioDinamico.clear();
-        spazioDinamico.add(new HTML("Sono negli esami"));
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
+        spazioDinamico.add(tableEsami);
     }
 
     private void caricaVoti() {
         spazioDinamico.clear();
-        spazioDinamico.add(new HTML("Sono nei voti"));
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei voti</div>"));
     }
 
     private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean selezionabile) {
@@ -199,7 +217,6 @@ public class PortaleStudente extends Portale {
                     caricaEsploraCorsi();
                 }
             });
-            tableCorsi.setColumnWidth(iscrizioneCol, 130, Style.Unit.PX);
         }
 
         tableCorsi.setRowCount(LISTCORSI.size(), true);
@@ -254,16 +271,23 @@ public class PortaleStudente extends Portale {
         tableEsami.addColumn(diffCol, "Difficoltà");
 
         if(selezionabile) {
-/*            final SingleSelectionModel<Esame> selectionModelEsami = new SingleSelectionModel<Esame>();
-            tableEsami.setSelectionModel(selectionModelEsami);
-            selectionModelEsami.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-                public void onSelectionChange(SelectionChangeEvent event) {
-                    Esame selected = selectionModelEsami.getSelectedObject();
-                    if (selected != null) {
-                        Window.alert("You selected: " + selected.getNomeCorso());
-                    }
+            ButtonCell prenotazioneCell = new ButtonCell();
+            Column<Esame, String> prenotazioneCol = new Column<Esame, String>(prenotazioneCell) {
+                @Override
+                public String getValue(Esame object) {
+                    return "Prenota";
                 }
-            });*/
+            };
+            tableEsami.addColumn(prenotazioneCol, "");
+            prenotazioneCol.setCellStyleNames("btnTableStandard");
+            prenotazioneCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
+                @Override
+                public void update(int index, Esame object, String value) {
+                    Window.alert("Hai prenotato con successo l'esame di " + object.getNomeCorso());
+                    ESAMI.add(object);
+                    caricaPrenotaEsame();
+                }
+            });
         }
 
         tableEsami.setRowCount(listaEsami.size(), true);
