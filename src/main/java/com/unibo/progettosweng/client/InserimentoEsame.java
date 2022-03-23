@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
-import sun.tools.jconsole.TimeComboBox;
 
 public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;

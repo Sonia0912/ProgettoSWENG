@@ -10,6 +10,6 @@
   <inherits name='com.unibo.progettosweng.ProgettoSWENG'/>
 
   <!-- Specify the path to any remote services.                   -->
-  <servlet path="/progettosweng/greet" class="com.unibo.progettosweng.server.GreetingServiceImpl" />
+  <servlet path="/progettosweng/utenti" class="com.unibo.progettosweng.server.UtenteServiceImpl" />
 
 </module>

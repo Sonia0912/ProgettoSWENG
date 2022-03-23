@@ -23,6 +23,8 @@ import java.util.List;
 
 public class PortaleAdmin extends Portale {
 
+    Utente admin = null;
+
     private static ArrayList<Utente>  listaStudenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
             new Utente("Sofia", "Neri","sofianeri@mail.com","0000","studente"),
@@ -31,14 +33,16 @@ public class PortaleAdmin extends Portale {
 
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
-    private Utente admin = null;
-
     private static ArrayList<Utente>  listaDocenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Mario", "Rossi","mariorossi@mail.com","5678","docente"),
             new Utente("Giulia", "Gallo","giuliagallo@mail.com","acbde","docente"),
             new Utente("Tommaso", "Neri","tommasoneri@mail.com","asdfg","docente")
     ));
 
+    @Override
+    public void salvaCredenziali() {
+        admin = super.utenteLoggato;
+    }
 
     @Override
     public void caricaMenu() {
