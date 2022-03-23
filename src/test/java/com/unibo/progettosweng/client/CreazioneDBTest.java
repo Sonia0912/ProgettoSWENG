@@ -6,8 +6,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import org.junit.Test;
-import org.mapdb.DB;
 
 
 public class CreazioneDBTest extends GWTTestCase {
