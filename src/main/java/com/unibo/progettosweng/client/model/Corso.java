@@ -2,6 +2,8 @@ package com.unibo.progettosweng.client.model;
 
 import com.google.gwt.view.client.ProvidesKey;
 
+import java.text.SimpleDateFormat;
+
 public class Corso {
 
     private String nome;
@@ -13,8 +15,8 @@ public class Corso {
     public Corso(String nome, String inizio, String fine, String descrizione, String dipartimento) {
 
         this.nome = nome;
-        this.dataInizio = inizio;
-        this.dataFine = fine;
+        this.dataInizio = inizio ;
+        this.dataFine =  fine;
         this.descrizione = descrizione;
         this.dipartimento = dipartimento;
     }
