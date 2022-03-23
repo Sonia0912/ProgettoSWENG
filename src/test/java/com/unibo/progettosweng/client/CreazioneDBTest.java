@@ -1,3 +1,4 @@
+/*
 package com.unibo.progettosweng.client;
 
 
@@ -10,3 +11,4 @@ public class CreazioneDBTest {
 
 
 }
+*/

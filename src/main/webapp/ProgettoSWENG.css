@@ -708,33 +708,16 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
 
 /* Tabella i miei corsi */
 
-.tableCorsi {
+.tablePortale {
     font-size: 16px;
     margin-left: 30px;
 }
 
-.tableCorsi thead {
+.tablePortale thead {
     background: #f3edf5;
 }
 
-.tableCorsi tbody tr td {
-    font-size: 15px;
-    height: 30px;
-    width: 170px;
-}
-
-/* Tabella i miei esami */
-
-.tableEsami {
-    font-size: 16px;
-    margin-left: 30px;
-}
-
-.tableEsami thead {
-    background: #f3edf5;
-}
-
-.tableEsami tbody tr td {
+.tablePortale tbody tr td {
     font-size: 15px;
     height: 30px;
     width: 170px;

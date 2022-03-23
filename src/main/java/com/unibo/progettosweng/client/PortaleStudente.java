@@ -137,7 +137,7 @@ public class PortaleStudente extends Portale {
 
     private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean selezionabile) {
         CellTable<Corso> tableCorsi = new CellTable<Corso>();
-        tableCorsi.addStyleName("tableCorsi");
+        tableCorsi.addStyleName("tablePortale");
         tableCorsi.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
         tableCorsi.setEmptyTableWidget(new Label(messaggioVuoto));
 
@@ -209,7 +209,7 @@ public class PortaleStudente extends Portale {
 
     private CellTable<Esame> creaTabellaEsami(List<Esame> listaEsami, String messaggioVuoto, boolean selezionabile) {
         CellTable<Esame> tableEsami = new CellTable<Esame>();
-        tableEsami.addStyleName("tableEsami");
+        tableEsami.addStyleName("tablePortale");
         tableEsami.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
         tableEsami.setEmptyTableWidget(new Label(messaggioVuoto));
 
