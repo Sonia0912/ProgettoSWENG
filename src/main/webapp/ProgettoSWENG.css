@@ -751,6 +751,10 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     width: 90px;
 }
 
+.btnTableStandard.longer button {
+    width: 110px;
+}
+
 .btnTableStandard button:after {
     content: '';
     position: absolute;

@@ -118,7 +118,7 @@ public class PortaleAdmin extends Portale {
             }
         };
         tableStudenti.addColumn(corsiCol, "");
-        corsiCol.setCellStyleNames("btnTableStandard long");
+        corsiCol.setCellStyleNames("btnTableStandard longer");
         corsiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
@@ -134,7 +134,7 @@ public class PortaleAdmin extends Portale {
             }
         };
         tableStudenti.addColumn(esamiCol, "");
-        esamiCol.setCellStyleNames("btnTableStandard long");
+        esamiCol.setCellStyleNames("btnTableStandard longer");
         esamiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
