@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class InserimentoCorso implements Pagina{
-    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo corso</h2>";
+    String titleString = "<h1 class=\"titoletto\">Inserisci un nuovo corso</h1>";
     FormPanel nuovoCorso;
 
     @Override
