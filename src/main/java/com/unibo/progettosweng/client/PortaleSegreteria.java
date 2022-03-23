@@ -26,6 +26,21 @@ public class PortaleSegreteria extends Portale {
             new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
     ));
 
+    private static ArrayList<String[]> listaDaInserire = new ArrayList<String[]>(Arrays.asList(
+            new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
+            new String[]{"Sistemi Operativi", "sofianeri@mail.com", "25"},
+            new String[]{"Sistemi Operativi", "francescoverdi@mail.com", "30"},
+            new String[]{"Algebra lineare", "lucabianchi@mail.com", "19"},
+            new String[]{"Algebra lineare", "francescoverdi@mail.com", "23"}
+    ));
+
+    private static ArrayList<String[]> listaDaPubblicare = new ArrayList<String[]>(Arrays.asList(
+            new String[]{"Chimica", "lucabianchi@mail.com", "24"},
+            new String[]{"Chimica", "francescoverdi@mail.com", "24"},
+            new String[]{"Chimica", "sofianeri@mail.com", "24"},
+            new String[]{"Algebra lineare", "sofianeri@mail.com", "26"}
+    ));
+
     @Override
     public void caricaMenu() {
         Button btnStudenti = new Button("Studenti");
@@ -70,13 +85,17 @@ public class PortaleSegreteria extends Portale {
     }
 
     private void caricaInserimento() {
+        CellTable<String[]> tableVotiDaInserire = creaTabellaVoti(listaDaInserire, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
+        spazioDinamico.add(tableVotiDaInserire);
     }
 
     private void caricaPubblicazione() {
+        CellTable<String[]> tableVotiDaPubblicare = creaTabellaVoti(listaDaPubblicare, "Non ci sono voti da pubblicare, ricordati che prima devi inserirli.", false);
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da pubblicare</div>"));
+        spazioDinamico.add(tableVotiDaPubblicare);
     }
 
     public CellTable<Utente> creaTabellaStudenti(List<Utente> listaUtenti, String messaggioVuoto) {
@@ -162,6 +181,81 @@ public class PortaleSegreteria extends Portale {
         return tableStudenti;
     }
 
+    // Da modificare quando avremo l'oggetto Voto
+    private CellTable<String[]> creaTabellaVoti(List<String[]> listaVoti, String messaggioVuoto, boolean daInserire) {
+        CellTable<String[]> tableVoti = new CellTable<String[]>();
+        tableVoti.addStyleName("tablePortale");
+        tableVoti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
+        tableVoti.setEmptyTableWidget(new Label(messaggioVuoto));
 
+        TextColumn<String[]> corsoCol = new TextColumn<String[]>() {
+            @Override
+            public String getValue(String[] object) {
+                return object[0];
+            }
+        };
+        tableVoti.addColumn(corsoCol, "Nome del corso");
+
+        TextColumn<String[]> studenteCol = new TextColumn<String[]>() {
+            @Override
+            public String getValue(String[] object) {
+                return object[1];
+            }
+        };
+        tableVoti.addColumn(studenteCol, "Username studente");
+
+        TextColumn<String[]> votoCol = new TextColumn<String[]>() {
+            @Override
+            public String getValue(String[] object) {
+                return object[2];
+            }
+        };
+        tableVoti.addColumn(votoCol, "Voto");
+
+        if(daInserire) {
+            ButtonCell azioneCell = new ButtonCell();
+            Column<String[], String> azioneCol = new Column<String[], String>(azioneCell) {
+                @Override
+                public String getValue(String[] object) {
+                    return "Inserisci";
+                }
+            };
+            tableVoti.addColumn(azioneCol, "");
+            azioneCol.setCellStyleNames("btnTableStandard");
+            azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
+                @Override
+                public void update(int index, String[] object, String value) {
+                    //Window.alert("Vuoi inserire il voto di " + object[1] + " per l'esame di " + object[0]);
+                    String[] selezionato = {object[0], object[1], object[2]};
+                    listaDaInserire.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
+                    listaDaPubblicare.add(selezionato);
+                    caricaInserimento();
+                }
+            });
+        } else {
+            ButtonCell azioneCell = new ButtonCell();
+            Column<String[], String> azioneCol = new Column<String[], String>(azioneCell) {
+                @Override
+                public String getValue(String[] object) {
+                    return "Pubblica";
+                }
+            };
+            tableVoti.addColumn(azioneCol, "");
+            azioneCol.setCellStyleNames("btnTableStandard");
+            azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
+                @Override
+                public void update(int index, String[] object, String value) {
+                    //Window.alert("Vuoi pubblicare il voto di " + object[1] + " per l'esame di " + object[0]);
+                    String[] selezionato = {object[0], object[1], object[2]};
+                    listaDaPubblicare.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
+                    caricaPubblicazione();
+                }
+            });
+        }
+
+        tableVoti.setRowCount(listaVoti.size(), true);
+        tableVoti.setRowData(0, listaVoti);
+        return tableVoti;
+    }
 
 }
