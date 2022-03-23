@@ -97,7 +97,8 @@ public class Login implements Pagina{
                         pd.caricaPortale();
                         break;
                     case "admin":
-                        //PortaleAdmin portale = new PortaleAdmin();
+                        //PortaleAdmin pa = new PortaleAdmin();
+                        //pa.caricaPortale();
                         break;
                     case "segreteria":
                         //PortaleSegreteria portale = new PortaleSegreteria();
