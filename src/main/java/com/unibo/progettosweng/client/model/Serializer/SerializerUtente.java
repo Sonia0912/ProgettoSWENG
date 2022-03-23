@@ -1,7 +1,7 @@
-package com.unibo.progettosweng.shared;
+package com.unibo.progettosweng.client.model.Serializer;
 
 
-import com.unibo.progettosweng.shared.model.Utente;
+import com.unibo.progettosweng.client.model.Utente;
 import java.io.IOException;
 import java.io.Serializable;
 import org.mapdb.DataInput2;
