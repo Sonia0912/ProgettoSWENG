@@ -12,6 +12,7 @@ public class InserimentoUtente implements Pagina{
 
     @Override
     public void aggiungiContenuto(){
+        RootPanel.get("contenuto").clear();
         VerticalPanel vp = new VerticalPanel();
         vp.getElement().getStyle().setPadding(18, Style.Unit.PX);
         vp.add(new HTML(titleString));
