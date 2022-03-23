@@ -10,7 +10,7 @@
     <servlet-name>utenteServlet</servlet-name>
     <servlet-class>com.unibo.progettosweng.server.UtenteServiceImpl</servlet-class>
   </servlet>
-
+  
   <servlet-mapping>
     <servlet-name>utenteServlet</servlet-name>
     <url-pattern>/progettosweng/utenti</url-pattern>

@@ -12,9 +12,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import com.unibo.progettosweng.shared.model.Corso;
-import com.unibo.progettosweng.shared.model.Esame;
-import com.unibo.progettosweng.shared.model.Utente;
+import com.unibo.progettosweng.client.model.Corso;
+import com.unibo.progettosweng.client.model.Esame;
+import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
 import java.util.Arrays;
