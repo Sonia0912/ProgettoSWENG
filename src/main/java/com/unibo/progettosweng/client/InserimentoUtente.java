@@ -1,13 +1,16 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class InserimentoUtente implements Form{
     FormPanel nuovoUtente;
+    private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
     @Override
     public FormPanel getForm(){
@@ -87,7 +90,17 @@ public class InserimentoUtente implements Form{
         nuovoUtente.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+                String [] info = {nome.getText(), cognome.getText(), email.getText(),password.getText(),tipo.getSelectedItemText()};
+                service.add(info, new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("faluire to create user " + throwable.getMessage());
+                    }
+                    @Override
+                    public void onSuccess(String s) {
+                        Window.alert(s);
+                    }
+                });
             }
         });
         return nuovoUtente;
