@@ -3,8 +3,11 @@ COLORI
 Viola: #6439ad
 Viola scuro: #1d0645
 Viola chiaro: #cfbeed
+Viola pallidissimo: #f3edf5
+Arancione: #ffa347
+Arancione scuro: #cf7e2d
 Arancione pallido: #ffc387
-Arancione acceso: #ffa347
+Arancione piu' pallido: #ffdcba
 Grigio: #706873
 Grigio chiaro: #bdaec2
 
@@ -623,6 +626,233 @@ div.gwt-Tree.treeCorsiDipartimento div div div div.gwt-TreeItem {
 }
 
 /***************
+    PORTALE
+***************/
+
+.titolettoPortale {
+    font-size: 30px;
+    color: #1d0645;
+    font-family: 'Libre Caslon Text', serif;
+    margin: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+}
+
+.menuLaterale {
+    width: 250px;
+    background: #ffa347;
+}
+
+table.menuLaterale tbody {
+    float: left;
+}
+
+.spazioDinamico {
+    padding: 0px 20px 60px 20px;
+}
+
+.gwt-Button.buttonMenuLaterale {
+    width: 250px;
+    height: 60px;
+    background: #ffa347;
+    border: 1px solid #ffa347;
+    border-radius: 0px;
+    color: white;
+    font-size: 18px;
+}
+
+.buttonMenuLaterale:hover {
+    background: #ffc387;
+    border: 1px solid #ffc387 !important;
+}
+
+.buttonMenuLaterale:active {
+    background-color: #cf7e2d;
+    border: 1px solid #cf7e2d !important;
+}
+
+.gwt-Button.btnCreazione {
+    margin: 30px;
+    background: #6439ad;
+    border: 1px solid #6439ad;
+    color: white;
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.btnCreazione:hover {
+    background: #8558d1;
+    border: 1px solid #8558d1 !important;
+}
+
+.btnCreazione:active {
+    background: #48297d;
+    border: 1px solid #48297d !important;
+}
+
+/***********************
+ INFORMAZIONI PERSONALI
+************************/
+
+table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > td:first-child {
+    background: #ffa347;
+}
+
+.infoPersonali {
+    font-size: 16px;
+    line-height: 2;
+    padding-left: 40px;
+}
+
+/* Tabella i miei corsi */
+
+.tableCorsi {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.tableCorsi thead {
+    background: #f3edf5;
+}
+
+.tableCorsi tbody tr td {
+    font-size: 15px;
+    height: 30px;
+    width: 170px;
+}
+
+/* Tabella i miei esami */
+
+.tableEsami {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.tableEsami thead {
+    background: #f3edf5;
+}
+
+.tableEsami tbody tr td {
+    font-size: 15px;
+    height: 30px;
+    width: 170px;
+}
+
+/*.btnTableStandard {
+    width: fit-content !important;
+    padding: 0px 15px 0px 15px !important;
+}
+
+.btnElimina {
+    width: fit-content !important;
+    padding: 0px 15px 0px 15px !important;
+}*/
+
+.btnTableStandard button {
+    background: #6439ad;
+    color: white;
+    height: 25px;
+    width: 70px;
+    border: none;
+    letter-spacing: 0.3px;
+    border-radius: 3px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btnTableStandard.long button {
+    width: 90px;
+}
+
+.btnTableStandard button:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #6439ad;
+    z-index: -2;
+}
+
+.btnTableStandard button:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #482a7a;
+    transition: all .3s;
+    z-index: -1;
+}
+
+.btnTableStandard button:hover {
+    background: #482a7a;
+}
+
+.btnTableStandard button:hover:before {
+    width: 100%;
+}
+
+.btnTableStandard button:active {
+    background: #936bd6;
+}
+
+.btnElimina button {
+    background: #bf1f3c;
+    color: white;
+    height: 25px;
+    width: 70px;
+    border: none;
+    letter-spacing: 0.3px;
+    border-radius: 3px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btnElimina button:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #bf1f3c;
+    z-index: -2;
+}
+
+.btnElimina button:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #871328;
+    transition: all .3s;
+    z-index: -1;
+}
+
+.btnElimina button:hover {
+    background: #871328;
+}
+
+.btnElimina button:hover:before {
+    width: 100%;
+}
+
+.btnElimina button:active {
+    background: #d14d65;
+}
+
+/***************
      FOOTER
 ***************/
 
@@ -771,12 +1001,15 @@ select {
 /*
 COLORI
 Viola: #6439ad
+Viola meno scuro: #370d80
 Viola scuro: #1d0645
-Viola chiaro: #cfbeed
+Viola chiaro: #bfa7e8
+Viola più chiaro: #cfbeed
 Viola pallidissimo: #f3edf5
+Arancione: #ffa347
+Arancione scuro: #cf7e2d
 Arancione pallido: #ffc387
 Arancione piu' pallido: #ffdcba
-Arancione acceso: #ffa347
 Grigio: #706873
 Grigio chiaro: #bdaec2
 

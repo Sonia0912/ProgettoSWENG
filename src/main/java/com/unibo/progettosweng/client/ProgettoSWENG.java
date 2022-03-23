@@ -51,7 +51,6 @@ public class ProgettoSWENG implements EntryPoint {
     Homepage hp = new Homepage();
     hp.aggiungiContenuto();
 
-
     // Se clicco su Home
     menuButtons[0].addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {

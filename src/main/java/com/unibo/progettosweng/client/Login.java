@@ -86,7 +86,23 @@ public class Login implements Pagina{
         login.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+                String tipo = "docente";
+                switch(tipo) {
+                    case "studente":
+                        PortaleStudente ps = new PortaleStudente();
+                        ps.caricaPortale();
+                        break;
+                    case "docente":
+                        PortaleDocente pd = new PortaleDocente();
+                        pd.caricaPortale();
+                        break;
+                    case "admin":
+                        //PortaleAdmin portale = new PortaleAdmin();
+                        break;
+                    case "segreteria":
+                        //PortaleSegreteria portale = new PortaleSegreteria();
+                        break;
+                }
             }
         });
     }
