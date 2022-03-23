@@ -91,26 +91,6 @@ public class Login implements Pagina{
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
 
-//                String tipo = "admin";
-//                switch(tipo) {
-//                    case "studente":
-//                        PortaleStudente ps = new PortaleStudente();
-//                        ps.caricaPortale();
-//                        break;
-//                    case "docente":
-//                        PortaleDocente pd = new PortaleDocente();
-//                        pd.caricaPortale();
-//                        break;
-//                    case "admin":
-//                        PortaleAdmin pa = new PortaleAdmin();
-//                        pa.caricaPortale();
-//                        break;
-//                    case "segreteria":
-//                        //PortaleSegreteria portale = new PortaleSegreteria();
-//                        break;
-//                }
-
-
                 utente.login(username.getText(), password.getText(), new
                         AsyncCallback<Utente>() {
                             @Override
