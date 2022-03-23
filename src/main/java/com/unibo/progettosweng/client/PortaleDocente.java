@@ -70,10 +70,14 @@ public class PortaleDocente extends Portale {
 
     @Override
     public void caricaDefault() {
-        spazioDinamico.clear();
+        caricaProfilo();
+    }
+
+    public void caricaProfilo() {
         HTML infoPersonali = new HTML("<div class=\"infoPersonali\"><b>Nome: </b>" + nome
                 + "<br /><b>Cognome: </b>" + cognome
                 + "<br /><b>E-mail: </b>" + email + "</div>");
+        spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Informazioni personali</div>"));
         spazioDinamico.add(infoPersonali);
     }

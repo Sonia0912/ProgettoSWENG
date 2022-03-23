@@ -36,6 +36,11 @@ public class PortaleStudente extends Portale {
             new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")
     ));
 
+    private static ArrayList<String[]> listaVoti = new ArrayList<String[]>(Arrays.asList(
+            new String[]{"Sistemi Operativi", "28"},
+            new String[]{"Algebra lineare", "29"}
+    ));
+
     String nome = "Sonia";
     String cognome = "Nicoletti";
     String email = "sonianicoletti@unitech.com";
@@ -149,8 +154,10 @@ public class PortaleStudente extends Portale {
     }
 
     private void caricaVoti() {
+        CellTable<String[]> tableVoti = creaTabellaVoti(listaVoti, "Non hai ancora nessun voto.");
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei voti</div>"));
+        spazioDinamico.add(tableVoti);
     }
 
     private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean selezionabile) {
@@ -293,6 +300,34 @@ public class PortaleStudente extends Portale {
         tableEsami.setRowCount(listaEsami.size(), true);
         tableEsami.setRowData(0, listaEsami);
         return tableEsami;
+    }
+
+    // Da modificare quando avremo l'oggetto Voto
+    private CellTable<String[]> creaTabellaVoti(List<String[]> listaVoti, String messaggioVuoto) {
+        CellTable<String[]> tableVoti = new CellTable<String[]>();
+        tableVoti.addStyleName("tablePortale");
+        tableVoti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
+        tableVoti.setEmptyTableWidget(new Label(messaggioVuoto));
+
+        TextColumn<String[]> corsoCol = new TextColumn<String[]>() {
+            @Override
+            public String getValue(String[] object) {
+                return object[0];
+            }
+        };
+        tableVoti.addColumn(corsoCol, "Nome del corso");
+
+        TextColumn<String[]> votoCol = new TextColumn<String[]>() {
+            @Override
+            public String getValue(String[] object) {
+                return object[1];
+            }
+        };
+        tableVoti.addColumn(votoCol, "Voto");
+
+        tableVoti.setRowCount(listaVoti.size(), true);
+        tableVoti.setRowData(0, listaVoti);
+        return tableVoti;
     }
 
 }
