@@ -1,6 +1,6 @@
-package com.unibo.progettosweng.shared;
+package com.unibo.progettosweng.client.model.Serializer;
 
-import com.unibo.progettosweng.shared.model.Corso;
+import com.unibo.progettosweng.client.model.Corso;
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;

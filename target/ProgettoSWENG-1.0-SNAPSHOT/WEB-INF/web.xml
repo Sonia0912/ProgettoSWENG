@@ -6,23 +6,17 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-
   <servlet>
     <servlet-name>utenteServlet</servlet-name>
     <servlet-class>com.unibo.progettosweng.server.UtenteServiceImpl</servlet-class>
   </servlet>
-
-
+  
   <servlet-mapping>
     <servlet-name>utenteServlet</servlet-name>
     <url-pattern>/progettosweng/utenti</url-pattern>
   </servlet-mapping>
-
-
-
-
-
-<!-- Default page to serve -->
+  
+  <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>ProgettoSWENG.html</welcome-file>
   </welcome-file-list>

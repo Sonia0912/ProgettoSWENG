@@ -8,8 +8,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.unibo.progettosweng.shared.model.Corso;
-import com.unibo.progettosweng.shared.model.Esame;
+
+import com.unibo.progettosweng.client.model.Corso;
+import com.unibo.progettosweng.client.model.Esame;
+
 
 import java.util.Arrays;
 import java.util.Comparator;

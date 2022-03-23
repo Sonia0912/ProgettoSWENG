@@ -13,79 +13,74 @@ import com.google.gwt.event.dom.client.ClickHandler;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class ProgettoSWENG implements EntryPoint {
-  /**
-   * The message displayed to the user when the server cannot be reached or
-   * returns an error.
-   */
-  private static final String SERVER_ERROR = "An error occurred while "
-          + "attempting to contact the server. Please check your network "
-          + "connection and try again.";
+    /**
+     * The message displayed to the user when the server cannot be reached or
+     * returns an error.
+     */
+    private static final String SERVER_ERROR = "An error occurred while "
+            + "attempting to contact the server. Please check your network "
+            + "connection and try again.";
 
-  /**
-   * Create a remote service proxy to talk to the server-side Greeting service.
-   */
-  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+    /**
+     * This is the entry point method.
+     */
+    public void onModuleLoad() {
 
-  /**
-   * This is the entry point method.
-   */
-  public void onModuleLoad() {
+        final String[] menuSections = {"Home", "Dipartimenti"};
+        final Button[] menuButtons = new Button[menuSections.length];
+        final String testoPulsante = "<span>Il mio portale</span>";
+        final String contattiString = "123-456-789 <br /> Via delle Stelle, 56 Bologna <br /> unitech@mail.com";
+        final String mappeString = "Mappa del campus <br /> Direzioni <br /> Area circostante <br /> Tour virtuale del campus";
+        final String lavoroString = "Risorse umane";
 
-    final String[] menuSections = {"Home", "Dipartimenti"};
-    final Button[] menuButtons = new Button[menuSections.length];
-    final String testoPulsante = "<span>Il mio portale</span>";
-    final String contattiString = "123-456-789 <br /> Via delle Stelle, 56 Bologna <br /> unitech@mail.com";
-    final String mappeString = "Mappa del campus <br /> Direzioni <br /> Area circostante <br /> Tour virtuale del campus";
-    final String lavoroString = "Risorse umane";
+        // Menu
+        HorizontalPanel hPanel = new HorizontalPanel();
+        hPanel.setSpacing(5);
+        for (int i = 0; i < menuSections.length; i++) {
+            menuButtons[i] = new Button(menuSections[i]);
+            hPanel.add(menuButtons[i]);
+        }
+        RootPanel.get("pannelloMenu").add(hPanel);
 
-    // Menu
-    HorizontalPanel hPanel = new HorizontalPanel();
-    hPanel.setSpacing(5);
-    for (int i = 0; i < menuSections.length; i++) {
-      menuButtons[i] = new Button(menuSections[i]);
-      hPanel.add(menuButtons[i]);
-    }
-    RootPanel.get("pannelloMenu").add(hPanel);
-
-    // Di default mostro il contenuto della homepage
-    Homepage hp = new Homepage();
-    hp.aggiungiContenuto();
-
-    // Se clicco su Home
-    menuButtons[0].addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
+        // Di default mostro il contenuto della homepage
         Homepage hp = new Homepage();
         hp.aggiungiContenuto();
-      }
-    });
 
-    // Se clicco su Dipartimenti
-    menuButtons[1].addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        Dipartimenti dip = new Dipartimenti();
-        dip.aggiungiContenuto();
-      }
-    });
+        // Se clicco su Home
+        menuButtons[0].addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                Homepage hp = new Homepage();
+                hp.aggiungiContenuto();
+            }
+        });
 
-    // Login
-    final Button login = new Button(testoPulsante);
-    RootPanel.get("login").add(login);
+        // Se clicco su Dipartimenti
+        menuButtons[1].addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                Dipartimenti dip = new Dipartimenti();
+                dip.aggiungiContenuto();
+            }
+        });
 
-    login.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent clickEvent) {
-        Login l = new Login();
-        l.aggiungiContenuto();
-      }
-    });
+        // Login
+        final Button login = new Button(testoPulsante);
+        RootPanel.get("login").add(login);
 
-    // Contatti
-    final HTML contatti = new HTML(contattiString);
-    final HTML mappe = new HTML(mappeString);
-    final HTML lavoro = new HTML(lavoroString);
-    RootPanel.get("contattiInfo").add(contatti);
-    RootPanel.get("mappeInfo").add(mappe);
-    RootPanel.get("lavoraInfo").add(lavoro);
+        login.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                Login l = new Login();
+                l.aggiungiContenuto();
+            }
+        });
+
+        // Contatti
+        final HTML contatti = new HTML(contattiString);
+        final HTML mappe = new HTML(mappeString);
+        final HTML lavoro = new HTML(lavoroString);
+        RootPanel.get("contattiInfo").add(contatti);
+        RootPanel.get("mappeInfo").add(mappe);
+        RootPanel.get("lavoraInfo").add(lavoro);
 
 
 /*    final Button sendButton = new Button("Send");
@@ -137,15 +132,15 @@ public class ProgettoSWENG implements EntryPoint {
     // Create a handler for the sendButton and nameField
     class MyHandler implements ClickHandler, KeyUpHandler {
       *//**
-     * Fired when the user clicks on the sendButton.
-     *//*
+         * Fired when the user clicks on the sendButton.
+         *//*
       public void onClick(ClickEvent event) {
         sendNameToServer();
       }
 
       *//**
-     * Fired when the user types in the nameField.
-     *//*
+         * Fired when the user types in the nameField.
+         *//*
       public void onKeyUp(KeyUpEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
           sendNameToServer();
@@ -153,8 +148,8 @@ public class ProgettoSWENG implements EntryPoint {
       }
 
       *//**
-     * Send the name from the nameField to the server and wait for a response.
-     *//*
+         * Send the name from the nameField to the server and wait for a response.
+         *//*
       private void sendNameToServer() {
         // First, we validate the input.
         errorLabel.setText("");
@@ -193,5 +188,5 @@ public class ProgettoSWENG implements EntryPoint {
     MyHandler handler = new MyHandler();
     sendButton.addClickHandler(handler);
     nameField.addKeyUpHandler(handler);*/
-  }
+    }
 }
