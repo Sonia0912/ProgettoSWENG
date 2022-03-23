@@ -232,7 +232,6 @@ public class PortaleSegreteria extends Portale {
             azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
                 @Override
                 public void update(int index, String[] object, String value) {
-                    //Window.alert("Vuoi inserire il voto di " + object[1] + " per l'esame di " + object[0]);
                     String[] selezionato = {object[0], object[1], object[2]};
                     listaDaInserire.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
                     listaDaPubblicare.add(selezionato);
@@ -252,7 +251,6 @@ public class PortaleSegreteria extends Portale {
             azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
                 @Override
                 public void update(int index, String[] object, String value) {
-                    //Window.alert("Vuoi pubblicare il voto di " + object[1] + " per l'esame di " + object[0]);
                     String[] selezionato = {object[0], object[1], object[2]};
                     listaDaPubblicare.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
                     caricaPubblicazione();

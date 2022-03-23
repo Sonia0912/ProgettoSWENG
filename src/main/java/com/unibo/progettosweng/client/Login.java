@@ -114,7 +114,8 @@ public class Login implements Pagina{
                                             pa.caricaPortale(utente);
                                             break;
                                         case "Segreteria":
-                                            //PortaleSegreteria portale = new PortaleSegreteria();
+                                            PortaleSegreteria psg = new PortaleSegreteria();
+                                            psg.caricaPortale(utente);
                                             break;
                                     }
                                 }else {
