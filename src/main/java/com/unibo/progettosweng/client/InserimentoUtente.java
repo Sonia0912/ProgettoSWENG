@@ -8,12 +8,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
-public class InserimentoUtente implements Form{
+public class InserimentoUtente implements Form {
+
     FormPanel nuovoUtente;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm() {
         nuovoUtente = new FormPanel();
         nuovoUtente.addStyleName("formCreazioneUtente");
         nuovoUtente.setAction("/creaNuovoUtente");
@@ -105,9 +106,5 @@ public class InserimentoUtente implements Form{
         });
         return nuovoUtente;
     }
-
-
-
-
 
 }
