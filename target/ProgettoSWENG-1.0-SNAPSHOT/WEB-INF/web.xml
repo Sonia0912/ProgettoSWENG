@@ -15,6 +15,16 @@
     <servlet-name>utenteServlet</servlet-name>
     <url-pattern>/progettosweng/utenti</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>corsoServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.CorsoServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>corsoServlet</servlet-name>
+    <url-pattern>/progettosweng/corsi</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
