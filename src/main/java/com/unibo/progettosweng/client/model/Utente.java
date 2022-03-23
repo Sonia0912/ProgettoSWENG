@@ -18,7 +18,7 @@ public class Utente implements Serializable {
 
     }
 
-    public Utente(String nome, String cognome, String username, String password, String tipo ){
+    public Utente(String nome, String cognome, String username, String password, String tipo){
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;

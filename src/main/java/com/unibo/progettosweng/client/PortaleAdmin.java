@@ -146,7 +146,7 @@ public class PortaleAdmin extends Portale {
         corsiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi vedere i corsi di " + object.getUsername());
+                visualizzaCorsi(object.getUsername(), object.getTipo());
             }
         });
 
@@ -162,7 +162,7 @@ public class PortaleAdmin extends Portale {
         esamiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                Window.alert("Vuoi vedere gli esami di " + object.getUsername());
+                visualizzaEsami(object.getUsername(), object.getTipo());
             }
         });
 
@@ -285,5 +285,38 @@ public class PortaleAdmin extends Portale {
 
         return nuovoUtente;
     }*/
+
+    private void visualizzaCorsi(String username, String tipo) {
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Corsi</div>"));
+        String[] corsi;
+        if(tipo.equalsIgnoreCase("studente")) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è iscritto/a ai seguenti corsi: </div>"));
+            corsi = new String[]{"Algebra", "Analisi I", "Sistemi Operativi"};
+        } else {
+            spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è un docente dei seguenti corsi: </div>"));
+            corsi = new String[]{"Basi di dati", "Sistemi Operativi"};
+        }
+        for(int i = 0; i < corsi.length; i++) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + corsi[i] + "</div>"));
+        }
+        spazioDinamico.add(new HTML("</div>"));
+    }
+
+    private void visualizzaEsami(String username, String tipo) {
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esami</div>"));
+        String[] esami;
+        if(tipo.equalsIgnoreCase("studente")) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> si è registrato/a ai seguenti esami: </div>"));
+            esami = new String[]{"Chimica", "Fisica nucleare", "Sistemi Operativi"};
+        } else {
+            spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> ha creato i seguenti esami: </div>"));
+            esami = new String[]{"Fisica nucleare", "Sistemi Operativi"};
+        }
+        for(int i = 0; i < esami.length; i++) {
+            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + esami[i] + "</div>"));
+        }
+    }
 
 }
