@@ -22,8 +22,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     private void createOrOpenDB(){
         this.db = getDb("utenti.db");
-        this.map = this.db.hashMap("utentiMap").counterEnable().keySerializer(Serializer.STRING)
-                .valueSerializer(new SerializerUtente()).createOrOpen();
+        this.map = this.db.hashMap("utentiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
     }
 
     @Override
@@ -69,14 +68,14 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     @Override
-    public Boolean login(String username, String password) throws Exception {
+    public Utente login(String username, String password) {
         createOrOpenDB();
         for (String i : map.getKeys()) {
-            if(map.get(i).getUsername().equals(username) && map.get(i).getPassword().equals(password)){
-                return true;
+            if(map.get(i).getUsername().equals(username) & map.get(i).getPassword().equals(password)){
+                return map.get(i);
             }
         }
-        return false;
+        return null;
     }
 
 
