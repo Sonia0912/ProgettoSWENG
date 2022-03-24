@@ -1,7 +1,6 @@
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
 
 public interface EsameServiceAsync {

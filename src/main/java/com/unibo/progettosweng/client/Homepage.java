@@ -1,7 +1,5 @@
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.dom.client.*;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.*;
 
 public class Homepage implements Pagina {

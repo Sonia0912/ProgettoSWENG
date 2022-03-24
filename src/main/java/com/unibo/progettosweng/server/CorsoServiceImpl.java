@@ -3,7 +3,6 @@ package com.unibo.progettosweng.server;
 import com.unibo.progettosweng.client.CorsoService;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Serializer.SerializerCorso;
-import com.unibo.progettosweng.client.model.Utente;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;

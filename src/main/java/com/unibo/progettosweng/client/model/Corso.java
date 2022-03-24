@@ -2,8 +2,6 @@ package com.unibo.progettosweng.client.model;
 
 import com.google.gwt.view.client.ProvidesKey;
 
-import java.text.SimpleDateFormat;
-
 public class Corso {
 
     private String nome;

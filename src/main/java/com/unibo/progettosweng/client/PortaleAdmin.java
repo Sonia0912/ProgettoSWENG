@@ -9,12 +9,7 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.client.model.Corso;
-import com.unibo.progettosweng.client.model.Esame;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
