@@ -122,6 +122,36 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return codocenti;
     }
 
+    @Override
+    public ArrayList<Utente> getStudenti() throws Exception {
+        createOrOpenDB();
+        ArrayList<Utente> studenti = new ArrayList<>();
+
+        int k = 0;
+        for (String i: map.getKeys()) {
+            if(map.get(i).getTipo().equals("Studente")){
+                studenti.add(map.get(i));
+            }
+            k++;
+        }
+        return studenti;
+    }
+
+    @Override
+    public ArrayList<Utente> getDocenti() throws Exception {
+        createOrOpenDB();
+        ArrayList<Utente> docenti = new ArrayList<>();
+
+        int k = 0;
+        for (String i: map.getKeys()) {
+            if(map.get(i).getTipo().equals("Docente")){
+                docenti.add(map.get(i));
+            }
+            k++;
+        }
+        return docenti;
+    }
+
 
     private boolean controlloUtenteDuplicato(HTreeMap<String,Utente> map, Utente utente){
         for ( String i: map.getKeys()) {

@@ -9,6 +9,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.Utente;
 
@@ -19,20 +21,18 @@ import java.util.List;
 public class PortaleAdmin extends Portale {
 
     Utente admin = null;
+    private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
-    private static ArrayList<Utente>  listaStudenti = new ArrayList<Utente>(Arrays.asList(
+    /*private static ArrayList<Utente>  listaStudenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
             new Utente("Sofia", "Neri","sofianeri@mail.com","0000","studente"),
             new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
     ));
-
-    private static UtenteServiceAsync service = GWT.create(UtenteService.class);
-
     private static ArrayList<Utente>  listaDocenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Mario", "Rossi","mariorossi@mail.com","5678","docente"),
             new Utente("Giulia", "Gallo","giuliagallo@mail.com","acbde","docente"),
             new Utente("Tommaso", "Neri","tommasoneri@mail.com","asdfg","docente")
-    ));
+    ));*/
 
     @Override
     public void salvaCredenziali() {
@@ -56,7 +56,11 @@ public class PortaleAdmin extends Portale {
         btnDocenti.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaDocenti();
+                try {
+                    caricaDocenti();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnCreaAccount.addClickHandler(new ClickHandler() {
@@ -76,21 +80,45 @@ public class PortaleAdmin extends Portale {
 
     @Override
     public void caricaDefault() {
-        caricaStudenti();
+        try {
+            caricaStudenti();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void caricaStudenti() {
+    public void caricaStudenti() throws Exception {
         spazioDinamico.clear();
-        CellTable<Utente> tableStudenti = creaTabellaUtenti(listaStudenti, "Non ci sono studenti registrati.");
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Studenti</div>"));
-        spazioDinamico.add(tableStudenti);
+        service.getStudenti(new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Utente> studenti) {
+                CellTable<Utente> tableStudenti = creaTabellaUtenti(studenti, "Non ci sono studenti registrati.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Studenti</div>"));
+                spazioDinamico.add(tableStudenti);
+            }
+        });
     }
 
-    public void caricaDocenti() {
+    public void caricaDocenti() throws Exception {
         spazioDinamico.clear();
-        CellTable<Utente> tableDocenti = creaTabellaUtenti(listaDocenti, "Non ci sono docenti registrati.");
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Docenti</div>"));
-        spazioDinamico.add(tableDocenti);
+        service.getDocenti(new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Utente> docenti) {
+                CellTable<Utente> tableDocenti = creaTabellaUtenti(docenti, "Non ci sono docenti registrati.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Docenti</div>"));
+                spazioDinamico.add(tableDocenti);
+            }
+        });
     }
 
     public void caricaCreaAccount() throws Exception {
