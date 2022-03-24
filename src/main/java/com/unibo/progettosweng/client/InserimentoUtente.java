@@ -8,7 +8,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
-public class InserimentoUtente implements Form{
+public class InserimentoUtente implements Form {
+
     FormPanel nuovoUtente;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
@@ -94,7 +95,7 @@ public class InserimentoUtente implements Form{
                 service.add(info, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Window.alert("failure to create user " + throwable.getMessage());
+                        Window.alert("faluire to create user " + throwable.getMessage());
                     }
                     @Override
                     public void onSuccess(String s) {

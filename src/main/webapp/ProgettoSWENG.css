@@ -843,6 +843,18 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     margin-left: 50px;
 }
 
+.listaPortaleIntro {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.listaPortale {
+    margin-left: 40px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
 /***************
      FOOTER
 ***************/
@@ -900,6 +912,10 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
 .paragrafoFooter {
     font-size: 14px;
 }
+
+/***************
+      ALTRO
+***************/
 
 .formContainer{
     display: flex;
@@ -965,7 +981,7 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     height: 35px;
     background: #6439ad !important;
     color: white !important;
-    margin: 10px 0px 0px 0px;
+    color: white !important;
     border-radius: 5px;
     font-size: 18px;
     margin-top: 30px;
