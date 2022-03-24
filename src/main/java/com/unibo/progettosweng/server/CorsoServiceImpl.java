@@ -82,8 +82,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     }
 
 
-
-
     private boolean controlloUtenteDuplicato(HTreeMap<String, Corso> map, Corso utente){
         for ( String i: map.getKeys()) {
             if (map.get(i).getNomeCorso().equals(utente.getNomeCorso()) ){

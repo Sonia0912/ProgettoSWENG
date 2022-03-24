@@ -13,7 +13,7 @@ public class InserimentoUtente implements Form {
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
     @Override
-    public FormPanel getForm() {
+    public FormPanel getForm(String input){
         nuovoUtente = new FormPanel();
         nuovoUtente.addStyleName("formCreazioneUtente");
         nuovoUtente.setAction("/creaNuovoUtente");
@@ -105,5 +105,9 @@ public class InserimentoUtente implements Form {
         });
         return nuovoUtente;
     }
+
+
+
+
 
 }

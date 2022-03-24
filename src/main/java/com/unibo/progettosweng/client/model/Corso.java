@@ -2,7 +2,10 @@ package com.unibo.progettosweng.client.model;
 
 import com.google.gwt.view.client.ProvidesKey;
 
-public class Corso {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
+public class Corso implements Serializable {
 
     private String nome;
     private String dataInizio;
@@ -18,6 +21,11 @@ public class Corso {
         this.descrizione = descrizione;
         this.dipartimento = dipartimento;
     }
+
+    public Corso(){
+
+    }
+
 
     public String getDataInizio() {
         return dataInizio;

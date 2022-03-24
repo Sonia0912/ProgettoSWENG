@@ -1,16 +1,22 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;
 
+    private final EsameServiceAsync serice = GWT.create(EsameService.class);
+    private String usernameDocente;
+
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm(String input){
+        this.usernameDocente = input;
         nuovoEsame = new FormPanel();
         nuovoEsame.addStyleName("formCreazioneUtente");
         nuovoEsame.setAction("/creaNuovoCorso");
@@ -73,6 +79,17 @@ public class InserimentoEsame implements Form{
         aula.setName("Aula");
         formPanel.add(aula);
 
+        final Label labelNomeCorso = new Label("Corso*:");
+        labelNomeCorso.getElement().setClassName("label");
+        formPanel.add(labelNomeCorso);
+        formPanel.add(labelNomeCorso);
+        final TextBox corso = new TextBox();
+        corso.getElement().setClassName("input");
+        corso.setName("Corso");
+        formPanel.add(corso);
+
+
+
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
@@ -88,7 +105,7 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0) {
+                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -98,7 +115,18 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+                String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getText()};
+                serice.add(input, new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Errore nell'insimento esame: "+ throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        Window.alert("user docente: " + usernameDocente + " " + s);
+                    }
+                });
             }
         });
         return nuovoEsame;

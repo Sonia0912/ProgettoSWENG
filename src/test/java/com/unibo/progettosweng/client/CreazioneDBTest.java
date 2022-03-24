@@ -34,7 +34,6 @@ public class CreazioneDBTest extends GWTTestCase {
                 // Verify that the response is correct.
                 System.out.println(result);
                 assertTrue(result.startsWith("succ"));
-
                 // Now that we have received a response, we need to tell the test runner
                 // that the test is complete. You must call finishTest() after an
                 // asynchronous test finishes successfully, or the test will time out.

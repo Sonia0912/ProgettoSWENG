@@ -15,7 +15,7 @@ public class ModificaInfoUtente implements Form{
     }
 
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm(String input){
         editUtente = new FormPanel();
         editUtente.addStyleName("formCreazioneUtente");
         editUtente.setAction("/modificaUtente");

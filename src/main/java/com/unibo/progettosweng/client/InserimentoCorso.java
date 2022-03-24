@@ -10,7 +10,7 @@ public class InserimentoCorso implements Form{
     FormPanel nuovoCorso;
 
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm(String input){
         nuovoCorso = new FormPanel();
         nuovoCorso.addStyleName("formCreazioneUtente");
         nuovoCorso.setAction("/creaNuovoCorso");
