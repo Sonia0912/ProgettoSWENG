@@ -7,16 +7,20 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.unibo.progettosweng.client.model.Utente;
 
 public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;
 
     private final EsameServiceAsync serice = GWT.create(EsameService.class);
-    private String usernameDocente;
+    private Utente docente;
+
+    public InserimentoEsame(Utente docente){
+        this.docente = docente;
+    }
 
     @Override
-    public FormPanel getForm(String input){
-        this.usernameDocente = input;
+    public FormPanel getForm(){
         nuovoEsame = new FormPanel();
         nuovoEsame.addStyleName("formCreazioneUtente");
         nuovoEsame.setAction("/creaNuovoCorso");
@@ -124,7 +128,7 @@ public class InserimentoEsame implements Form{
 
                     @Override
                     public void onSuccess(String s) {
-                        Window.alert("user docente: " + usernameDocente + " " + s);
+                        Window.alert("user docente: " + docente.getUsername() + " " + s);
                     }
                 });
             }

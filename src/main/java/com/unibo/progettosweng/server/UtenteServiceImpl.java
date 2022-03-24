@@ -10,6 +10,9 @@ import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import javax.servlet.ServletContext;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * The server-side implementation of the RPC service.
@@ -102,6 +105,21 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
             }
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<Utente> getCodocenti(String username) throws Exception {
+        createOrOpenDB();
+        ArrayList<Utente> codocenti = new ArrayList<>();
+
+        int k = 0;
+        for (String i: map.getKeys()) {
+            if(!map.get(i).getUsername().equals(username) && map.get(i).getTipo().equals("Docente")){
+                codocenti.add(map.get(i));
+            }
+            k++;
+        }
+        return codocenti;
     }
 
 

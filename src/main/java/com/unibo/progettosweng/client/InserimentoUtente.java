@@ -13,7 +13,7 @@ public class InserimentoUtente implements Form {
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
     @Override
-    public FormPanel getForm(String input){
+    public FormPanel getForm(){
         nuovoUtente = new FormPanel();
         nuovoUtente.addStyleName("formCreazioneUtente");
         nuovoUtente.setAction("/creaNuovoUtente");
@@ -94,7 +94,7 @@ public class InserimentoUtente implements Form {
                 service.add(info, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Window.alert("faluire to create user " + throwable.getMessage());
+                        Window.alert("Failuire to create user " + throwable.getMessage());
                     }
                     @Override
                     public void onSuccess(String s) {

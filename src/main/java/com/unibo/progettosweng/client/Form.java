@@ -5,6 +5,5 @@ import com.google.gwt.user.client.ui.FormPanel;
 public interface Form {
 
     //metodo per ottenere il form
-    public FormPanel getForm( String input);
-
+    public FormPanel getForm() throws Exception;
 }

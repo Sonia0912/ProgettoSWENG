@@ -1,16 +1,27 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.unibo.progettosweng.client.model.Utente;
+
+import java.util.ArrayList;
 
 public class InserimentoCorso implements Form{
     FormPanel nuovoCorso;
+    Utente docente;
+    private static UtenteServiceAsync service = GWT.create(UtenteService.class);
+
+    public InserimentoCorso(Utente docente){
+        this.docente = docente;
+    }
 
     @Override
-    public FormPanel getForm(String input){
+    public FormPanel getForm() throws Exception {
         nuovoCorso = new FormPanel();
         nuovoCorso.addStyleName("formCreazioneUtente");
         nuovoCorso.setAction("/creaNuovoCorso");
@@ -52,12 +63,24 @@ public class InserimentoCorso implements Form{
         labelCoDoc.getElement().setClassName("label");
         formPanel.add(labelCoDoc);
         formPanel.add(labelCoDoc);
-        ListBox tipo = new ListBox();
-        tipo.getElement().setClassName("input");
-        tipo.addItem("");
-        //prendere i nomi dei docenti dal db
+        ListBox codoc = new ListBox();
+        codoc.getElement().setClassName("input");
+        codoc.addItem("");
+        service.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
 
-        formPanel.add(tipo);
+            @Override
+            public void onSuccess(ArrayList<Utente> codocenti) {
+                for (int i = 0; i < codocenti.size(); i++){
+                    codoc.addItem(codocenti.get(i).getUsername());
+                }
+            }
+        });
+
+        formPanel.add(codoc);
 
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
