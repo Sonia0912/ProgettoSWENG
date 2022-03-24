@@ -25,6 +25,16 @@
     <servlet-name>corsoServlet</servlet-name>
     <url-pattern>/progettosweng/corsi</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>esameServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.EsameServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>esameServlet</servlet-name>
+    <url-pattern>/progettosweng/esami</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

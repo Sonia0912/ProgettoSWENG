@@ -1,7 +1,10 @@
 package com.unibo.progettosweng.client.model;
 
-public class Esame {
+import java.io.Serializable;
 
+public class Esame implements Serializable {
+
+   // private static final long serialVersionUID = 6920443223422767550L;
     private String data;
     private String ora;
     private String difficolta;
@@ -15,6 +18,10 @@ public class Esame {
         this.difficolta = difficolta;
         this.aula = aula;
         this.nomeCorso = nomeCorso;
+    }
+
+    public Esame(){
+
     }
 
     public String getData() {

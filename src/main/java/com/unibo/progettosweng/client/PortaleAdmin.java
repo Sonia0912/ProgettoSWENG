@@ -101,7 +101,7 @@ public class PortaleAdmin extends Portale {
     public void caricaCreaAccount() throws Exception {
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Inserisci un nuovo utente</div>"));
-        spazioDinamico.add((new InserimentoUtente()).getForm());
+        spazioDinamico.add((new InserimentoUtente()).getForm(admin.getUsername()));
 
     }
 
@@ -181,7 +181,7 @@ public class PortaleAdmin extends Portale {
             public void update(int index, Utente object, String value) {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica info utente</div>"));
-                spazioDinamico.add((new ModificaInfoUtente(object)).getForm());
+                spazioDinamico.add((new ModificaInfoUtente(object)).getForm(admin.getUsername()));
 
             }
         });

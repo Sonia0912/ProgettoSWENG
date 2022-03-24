@@ -103,7 +103,7 @@ public class PortaleDocente extends Portale {
             public void onClick(ClickEvent clickEvent) {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo corso</div>"));
-                spazioDinamico.add((new InserimentoCorso()).getForm());
+                spazioDinamico.add((new InserimentoCorso()).getForm(docente.getUsername()));
             }
         });
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi</div>"));
@@ -120,7 +120,7 @@ public class PortaleDocente extends Portale {
             public void onClick(ClickEvent clickEvent) {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
-                spazioDinamico.add((new InserimentoEsame().getForm()));
+                spazioDinamico.add((new InserimentoEsame().getForm(docente.getUsername())));
             }
         });
         btnCreaEsame.addStyleName("btnCreazione");

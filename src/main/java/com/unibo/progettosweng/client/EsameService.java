@@ -2,8 +2,8 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
+
 
 @RemoteServiceRelativePath("esami")
 public interface EsameService extends RemoteService {
