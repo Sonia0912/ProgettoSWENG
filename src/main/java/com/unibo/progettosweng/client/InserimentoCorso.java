@@ -11,7 +11,7 @@ import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
 
-public class InserimentoCorso implements Form{
+public class InserimentoCorso implements Form {
     FormPanel nuovoCorso;
     Utente docente;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);

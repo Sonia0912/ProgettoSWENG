@@ -56,10 +56,9 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     }
 
     @Override
-    public Corso[] getCorsi() throws Exception{
+    public Corso[] getCorsi() throws Exception {
         createOrOpenDB();
         Corso[] corsi = new Corso[map.size()];
-
         int k = 0;
         for ( String i: map.getKeys()) {
             corsi[k] = map.get(i);

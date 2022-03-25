@@ -8,5 +8,6 @@ public interface CorsoServiceAsync {
     void remove(String key, AsyncCallback<String> callback) throws IllegalArgumentException;
     void add(String[] input, AsyncCallback<String> callback) throws IllegalArgumentException;
     void getCorso(AsyncCallback<Corso[]> callback) throws Exception;
+    void getCorsi(AsyncCallback<Corso[]> callback) throws Exception;
     void aggiorna(Corso corso, AsyncCallback<Corso> callback) throws Exception;
 }
