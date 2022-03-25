@@ -191,7 +191,10 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
             @Override
             public void update(int index, Corso object, String value) {
-                Window.alert("Vuoi modificare il corso di " + object.getNomeCorso());
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica info utente</div>"));
+                spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
+
             }
         });
 
