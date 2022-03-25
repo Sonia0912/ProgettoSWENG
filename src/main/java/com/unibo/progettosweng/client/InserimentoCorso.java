@@ -10,14 +10,18 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class InserimentoCorso implements Form{
     FormPanel nuovoCorso;
     Utente docente;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
+    private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
+    VerticalPanel spazioDinamico ;
 
-    public InserimentoCorso(Utente docente){
+    public InserimentoCorso(Utente docente, VerticalPanel spazioDinamico){
         this.docente = docente;
+        this.spazioDinamico = spazioDinamico;
     }
 
     @Override
@@ -82,6 +86,12 @@ public class InserimentoCorso implements Form{
 
         formPanel.add(codoc);
 
+        final CheckBox checkBoxEsame = new CheckBox("CreaEsame");
+        formPanel.add(checkBoxEsame);
+
+
+
+
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
@@ -97,7 +107,7 @@ public class InserimentoCorso implements Form{
         nuovoCorso.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || inizio.getValue().toString().length() == 0 || fine.getValue().toString().length() == 0 || descr.getText().length() == 0) {
+                if (nome.getText().trim().length() == 0 || inizio.getValue().toString().trim().length() == 0 || fine.getValue().toString().trim().length() == 0 || descr.getText().trim().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -107,7 +117,29 @@ public class InserimentoCorso implements Form{
         nuovoCorso.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+
+                String[] info = {nome.getText(), inizio.getValue().toString(), fine.getValue().toString(),descr.getText(),docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
+                serviceCorso.add(info, new AsyncCallback<String>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore nell'inserimento Corso "+ throwable.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(String s) {
+                            Window.alert(s);
+                            if( checkBoxEsame.getValue() ){
+                                spazioDinamico.clear();
+                                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\"> Inserisci esame </div>"));
+                                try {
+                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText() )).getForm());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
+
             }
         });
         return nuovoCorso;

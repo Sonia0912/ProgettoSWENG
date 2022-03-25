@@ -30,9 +30,9 @@ public class PortaleDocente extends Portale {
     String email = null;
 
     private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
-            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
-            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")));
+            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","co-doc"),
+            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","co-doc"),
+            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","co-doc")));
 
     private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
@@ -104,7 +104,7 @@ public class PortaleDocente extends Portale {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo corso</div>"));
                 try {
-                    spazioDinamico.add((new InserimentoCorso(docente)).getForm());
+                    spazioDinamico.add((new InserimentoCorso(docente, spazioDinamico)).getForm());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -124,7 +124,11 @@ public class PortaleDocente extends Portale {
             public void onClick(ClickEvent clickEvent) {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
-                spazioDinamico.add((new InserimentoEsame(docente).getForm()));
+                try {
+                    spazioDinamico.add((new InserimentoEsame(docente, "").getForm()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnCreaEsame.addStyleName("btnCreazione");
@@ -171,13 +175,13 @@ public class PortaleDocente extends Portale {
         };
         tableCorsi.addColumn(descrizioneCol, "Descrizione");
 
-        TextColumn<Corso> dipCol = new TextColumn<Corso>() {
+        TextColumn<Corso> codocCol = new TextColumn<Corso>() {
             @Override
             public String getValue(Corso object) {
-                return object.getDipartimento();
+                return object.getCodocente();
             }
         };
-        tableCorsi.addColumn(dipCol, "Dipartimento");
+        tableCorsi.addColumn(codocCol, "Co-Docente");
 
         ButtonCell modificaCell = new ButtonCell();
         Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
