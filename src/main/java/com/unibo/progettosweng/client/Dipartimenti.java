@@ -93,24 +93,19 @@ public class Dipartimenti implements Pagina {
     @Override
     public void aggiungiContenuto() throws Exception {
         RootPanel.get("contenuto").clear();
-        suddividiCorsiPerDipartimento(CORSI);
-
-        ArrayList<Corso> arr = new ArrayList<>();
-        arr.add(new Corso("Matematica Applicata", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica"));
-        arr.add(new Corso("Matematica Applicata2", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica"));
-        arr.add(new Corso("Matematica Applicata3", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica"));
 
 /*        service.getCorsi(new AsyncCallback<Corso[]>() {
             @Override
             public void onFailure(Throwable throwable) {
-                corsi = new Corso[]{};
-                Window.alert("Errore in getCorsi: " + throwable.getMessage());
+                Window.alert("Errore getCorsi: " + throwable.getMessage());
             }
             @Override
             public void onSuccess(Corso[] output) {
-                corsi = output;
+                CORSI = output;
             }
         });*/
+
+        suddividiCorsiPerDipartimento(CORSI);
 
         VerticalPanel mainPanel = new VerticalPanel();
         mainPanel.addStyleName("mainDipartimentiPanel");

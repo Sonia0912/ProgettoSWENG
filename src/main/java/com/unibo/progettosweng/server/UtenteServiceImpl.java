@@ -61,7 +61,6 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     public Utente[] getUtenti() throws Exception{
         createOrOpenDB();
         Utente[] utenti = new Utente[map.size()];
-
         int k = 0;
         for ( String i: map.getKeys()) {
             utenti[k] = map.get(i);
@@ -111,13 +110,10 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     public ArrayList<Utente> getCodocenti(String username) throws Exception {
         createOrOpenDB();
         ArrayList<Utente> codocenti = new ArrayList<>();
-
-        int k = 0;
         for (String i: map.getKeys()) {
             if(!map.get(i).getUsername().equals(username) && map.get(i).getTipo().equals("Docente")){
                 codocenti.add(map.get(i));
             }
-            k++;
         }
         return codocenti;
     }
@@ -126,13 +122,10 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     public ArrayList<Utente> getStudenti() throws Exception {
         createOrOpenDB();
         ArrayList<Utente> studenti = new ArrayList<>();
-
-        int k = 0;
         for (String i: map.getKeys()) {
             if(map.get(i).getTipo().equals("Studente")){
                 studenti.add(map.get(i));
             }
-            k++;
         }
         return studenti;
     }
@@ -141,13 +134,10 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     public ArrayList<Utente> getDocenti() throws Exception {
         createOrOpenDB();
         ArrayList<Utente> docenti = new ArrayList<>();
-
-        int k = 0;
         for (String i: map.getKeys()) {
             if(map.get(i).getTipo().equals("Docente")){
                 docenti.add(map.get(i));
             }
-            k++;
         }
         return docenti;
     }
