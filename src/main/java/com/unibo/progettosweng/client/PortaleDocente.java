@@ -290,7 +290,9 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
-                Window.alert("Vuoi modificare l'esame di " + object.getNomeCorso());
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica esame</div>"));
+                spazioDinamico.add((new ModificaEsame(object)).getForm());
             }
         });
 
