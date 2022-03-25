@@ -192,7 +192,7 @@ public class PortaleDocente extends Portale {
             @Override
             public void update(int index, Corso object, String value) {
                 spazioDinamico.clear();
-                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica info utente</div>"));
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
                 spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
 
             }

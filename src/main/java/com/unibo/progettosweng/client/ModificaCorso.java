@@ -86,7 +86,9 @@ public class ModificaCorso implements Form{
                 @Override
                 public void onSuccess(ArrayList<Utente> codocenti) {
                     for (int i = 0; i < codocenti.size(); i++){
-                        codoc.addItem(codocenti.get(i).getUsername());
+                        String nomeCodocente = codocenti.get(i).getUsername();
+                        codoc.addItem(nomeCodocente);
+                        //if(corso.getCodocente().equals(nomeCodocente)){codoc.setItemSelected(i+1,true);
                     }
                 }
             });
@@ -96,7 +98,7 @@ public class ModificaCorso implements Form{
 
         formPanel.add(codoc);
 
-        Button send = new Button("Inserisci");
+        Button send = new Button("Modifica");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
             @Override
