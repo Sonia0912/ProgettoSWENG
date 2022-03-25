@@ -102,20 +102,36 @@ public class Login implements Pagina{
                                    String tipo =utente.getTipo();
                                     switch(tipo) {
                                         case "Studente":
-                                            PortaleStudente ps = new PortaleStudente();
-                                            ps.caricaPortale(utente);
+                                            try {
+                                                PortaleStudente ps = new PortaleStudente();
+                                                ps.caricaPortale(utente);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                             break;
                                         case "Docente":
-                                            PortaleDocente pd = new PortaleDocente();
-                                            pd.caricaPortale(utente);
+                                            try {
+                                                PortaleDocente pd = new PortaleDocente();
+                                                pd.caricaPortale(utente);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                             break;
                                         case "Admin":
-                                            PortaleAdmin pa = new PortaleAdmin();
-                                            pa.caricaPortale(utente);
+                                            try {
+                                                PortaleAdmin pa = new PortaleAdmin();
+                                                pa.caricaPortale(utente);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                             break;
                                         case "Segreteria":
-                                            PortaleSegreteria psg = new PortaleSegreteria();
-                                            psg.caricaPortale(utente);
+                                            try {
+                                                PortaleSegreteria psg = new PortaleSegreteria();
+                                                psg.caricaPortale(utente);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                             break;
                                     }
                                 }else {

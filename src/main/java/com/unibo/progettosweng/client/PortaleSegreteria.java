@@ -2,12 +2,15 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
@@ -20,12 +23,13 @@ import java.util.List;
 public class PortaleSegreteria extends Portale {
 
     Utente segreteria = null;
+    private static UtenteServiceAsync service = GWT.create(UtenteService.class);
 
-    private static ArrayList<Utente> listaStudenti = new ArrayList<Utente>(Arrays.asList(
+/*    private static ArrayList<Utente> listaStudenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
             new Utente("Sofia", "Neri","sofianeri@mail.com","0000","studente"),
             new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
-    ));
+    ));*/
 
     private static ArrayList<String[]> listaDaInserire = new ArrayList<String[]>(Arrays.asList(
             new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
@@ -58,7 +62,11 @@ public class PortaleSegreteria extends Portale {
         btnStudenti.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaDefault();
+                try {
+                    caricaDefault();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnInserimento.addClickHandler(new ClickHandler() {
@@ -79,15 +87,25 @@ public class PortaleSegreteria extends Portale {
     }
 
     @Override
-    public void caricaDefault() {
+    public void caricaDefault() throws Exception {
         caricaStudenti();
     }
 
-    private void caricaStudenti() {
-        CellTable<Utente> tableStudenti = creaTabellaStudenti(listaStudenti, "Non ci sono studenti registrati.");
+    private void caricaStudenti() throws Exception {
         spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Studenti</div>"));
-        spazioDinamico.add(tableStudenti);
+        service.getStudenti(new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Utente> studenti) {
+                CellTable<Utente> tableStudenti = creaTabellaStudenti(studenti, "Non ci sono studenti registrati.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Studenti</div>"));
+                spazioDinamico.add(tableStudenti);
+            }
+        });
     }
 
     private void caricaInserimento() {

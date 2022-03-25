@@ -18,11 +18,11 @@ public abstract class Portale {
     }
 
     public abstract void caricaMenu();
-    public abstract void caricaDefault();
+    public abstract void caricaDefault() throws Exception;
     public abstract void salvaCredenziali();
 
 
-    public void caricaPortale(Utente utenteInserito) {
+    public void caricaPortale(Utente utenteInserito) throws Exception {
         this.utenteLoggato = utenteInserito;
         salvaCredenziali();
 
