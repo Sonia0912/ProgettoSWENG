@@ -15,7 +15,7 @@ public interface UtenteServiceAsync {
     void add(String[] input, AsyncCallback<String> callback) throws IllegalArgumentException;
     void getUtenti(AsyncCallback<Utente[]> callback) throws Exception;
     void login(String username, String password, AsyncCallback<Utente> callback);
-    void aggiorna(Utente utente, AsyncCallback<Utente> callback) throws Exception;
+    void aggiorna(Utente utente, String usernameOriginale, AsyncCallback<Utente> callback) throws Exception;
     void getUtenteByUsername(String username, AsyncCallback<Utente> callback) throws Exception;
     void getCodocenti(String username, AsyncCallback<ArrayList<Utente>> callback) throws Exception;
     void getStudenti(AsyncCallback<ArrayList<Utente>> callback) throws Exception;
