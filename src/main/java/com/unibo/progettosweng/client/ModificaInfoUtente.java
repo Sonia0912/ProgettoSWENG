@@ -98,7 +98,7 @@ public class ModificaInfoUtente implements Form {
         editUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || cognome.getText().length() == 0 || email.getText().length() == 0 || password.getText().length() == 0) {
+                if (nome.getText().trim().length() == 0 || cognome.getText().trim().length() == 0 || email.getText().trim().length() == 0 || password.getText().trim().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
