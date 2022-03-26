@@ -88,7 +88,7 @@ public class ModificaCorso implements Form{
                     for (int i = 0; i < codocenti.size(); i++){
                         String nomeCodocente = codocenti.get(i).getUsername();
                         codoc.addItem(nomeCodocente);
-                        //if(corso.getCodocente().equals(nomeCodocente)){codoc.setItemSelected(i+1,true);
+                        if(corso.getCodocente().equals(nomeCodocente)){codoc.setItemSelected(i+1,true);}
                     }
                 }
             });
