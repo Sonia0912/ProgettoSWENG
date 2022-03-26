@@ -1,11 +1,8 @@
 package com.unibo.progettosweng.client.model.Serializer;
 
-
 import com.unibo.progettosweng.client.model.Utente;
-
 import java.io.IOException;
 import java.io.Serializable;
-
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;

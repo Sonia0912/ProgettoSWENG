@@ -7,20 +7,27 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
+
+import java.util.ArrayList;
 
 public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;
 
-    private final EsameServiceAsync serice = GWT.create(EsameService.class);
-    private Utente docente;
+    private final EsameServiceAsync sericeEsami = GWT.create(EsameService.class);
+    private final CorsoServiceAsync serviceCorsi = GWT.create(CorsoService.class);
 
-    public InserimentoEsame(Utente docente){
+    private Utente docente;
+    private String nomeCorso;
+
+    public InserimentoEsame(Utente docente, String nomeCorso){
         this.docente = docente;
+        this.nomeCorso = nomeCorso;
     }
 
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm() throws Exception {
         nuovoEsame = new FormPanel();
         nuovoEsame.addStyleName("formCreazioneUtente");
         nuovoEsame.setAction("/creaNuovoCorso");
@@ -89,8 +96,29 @@ public class InserimentoEsame implements Form{
         formPanel.add(labelNomeCorso);
         final TextBox corso = new TextBox();
         corso.getElement().setClassName("input");
+        //corso.setName(this.nomeCorso);
         corso.setName("Corso");
+        corso.setValue(this.nomeCorso);
+
+        /*
+        serviceCorsi.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Errore in getCorsiDocente: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Corso> corsiDocente) {
+                for (int i = 0; i < corsiDocente.size(); i++){
+                    corso.addItem(corsiDocente.get(i).getNomeCorso());
+                }
+            }
+        });
+
+         */
+
         formPanel.add(corso);
+
 
 
 
@@ -120,7 +148,7 @@ public class InserimentoEsame implements Form{
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
                 String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getText()};
-                serice.add(input, new AsyncCallback<String>() {
+                sericeEsami.add(input, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         Window.alert("Errore nell'insimento esame: "+ throwable.getMessage());

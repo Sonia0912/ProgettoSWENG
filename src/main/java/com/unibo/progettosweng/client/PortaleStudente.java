@@ -26,9 +26,9 @@ public class PortaleStudente extends Portale {
     String email =null;
 
     private static ArrayList<Corso> CORSI = new ArrayList<Corso>(Arrays.asList(
-            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
-            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")
+            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info", "doc","c", false),
+            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
+            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","info","doc","c", false)
     ));
 
     private static ArrayList<Esame> ESAMI = new ArrayList<Esame>(Arrays.asList(
@@ -42,12 +42,12 @@ public class PortaleStudente extends Portale {
     ));
 
     private static List<Corso> TUTTICORSI = Arrays.asList(
-        new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
-        new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-        new Corso("Basi di dati", "13/11/2022", "15/02/2023", "Impareremo i database relazionali e non.", "Informatica"),
-        new Corso("Fisica nucleare", "26/04/2022", "15/06/2022", "Dagli atomi all'universo.", "Fisica"),
-        new Corso("Chimica applicata", "17/02/2022", "29/03/2022", "Lezioni di chimica applicata.", "Chimica"),
-        new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")
+        new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info","doc","c", false),
+        new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
+        new Corso("Basi di dati", "13/11/2022", "15/02/2023", "Impareremo i database relazionali e non.","info","doc","c", false),
+        new Corso("Fisica nucleare", "26/04/2022", "15/06/2022", "Dagli atomi all'universo.","info", "doc","c", false),
+        new Corso("Chimica applicata", "17/02/2022", "29/03/2022", "Lezioni di chimica applicata.","info","doc","c", false),
+        new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "info","doc","c", false)
     );
 
     private static List<Esame> TUTTIESAMI = Arrays.asList(
@@ -207,7 +207,7 @@ public class PortaleStudente extends Portale {
         TextColumn<Corso> dipCol = new TextColumn<Corso>() {
             @Override
             public String getValue(Corso object) {
-                return object.getDipartimento();
+                return object.getCodocente();
             }
         };
         tableCorsi.addColumn(dipCol, "Dipartimento");

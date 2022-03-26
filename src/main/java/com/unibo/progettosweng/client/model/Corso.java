@@ -3,7 +3,6 @@ package com.unibo.progettosweng.client.model;
 import com.google.gwt.view.client.ProvidesKey;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 public class Corso implements Serializable {
 
@@ -11,22 +10,30 @@ public class Corso implements Serializable {
     private String dataInizio;
     private String dataFine;
     private String descrizione;
+    private String docente;
+    private String codocente;
+    private boolean esameCreato;
     private String dipartimento;
 
-    public Corso(String nome, String inizio, String fine, String descrizione, String dipartimento) {
 
+    public Corso(String nome, String inizio, String fine, String descrizione, String dipartimento, String docente,  String codocente, Boolean esameCreato) {
         this.nome = nome;
         this.dataInizio = inizio ;
         this.dataFine =  fine;
         this.descrizione = descrizione;
+        this.docente =  docente;
+        this.codocente = codocente;
         this.dipartimento = dipartimento;
+        this.esameCreato = esameCreato;
     }
 
     public Corso(){
 
     }
 
-
+public String getDipartimento(){
+        return dipartimento;
+}
     public String getDataInizio() {
         return dataInizio;
     }
@@ -43,9 +50,16 @@ public class Corso implements Serializable {
         return nome;
     }
 
-    public String getDipartimento() {
-        return dipartimento;
+    public String getDocente(){return docente;}
+
+    public String getCodocente() {
+        return codocente;
     }
+
+    public boolean getEsameCreato() {
+        return esameCreato;
+    }
+
 
     public static final ProvidesKey<Corso> KEY_PROVIDER = new ProvidesKey<Corso>() {
         @Override
@@ -54,8 +68,8 @@ public class Corso implements Serializable {
         }
     };
 
-    public void setDipartimento(String dipartimento) {
-        this.dipartimento = dipartimento;
+    public void setCodocente(String codocente) {
+        this.codocente = codocente;
 
     }
 
@@ -73,5 +87,9 @@ public class Corso implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setEsameCreato(Boolean value){
+        this.esameCreato = value;
     }
 }
