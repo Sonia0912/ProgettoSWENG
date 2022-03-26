@@ -5,7 +5,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * The client-side stub for the RPC service.
@@ -16,7 +15,7 @@ public interface UtenteService extends RemoteService {
     String remove(String key) throws IllegalArgumentException;
     Utente[] getUtenti() throws Exception;
     Utente login(String username, String password) ;
-    void aggiorna(Utente utente) throws Exception;
+    Utente aggiorna(Utente utente, String usernameOriginale) throws Exception;
     Utente getUtenteByUsername(String username) throws Exception;
     ArrayList<Utente> getCodocenti(String username) throws Exception;
     ArrayList<Utente> getStudenti() throws Exception;

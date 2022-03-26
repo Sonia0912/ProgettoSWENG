@@ -56,8 +56,12 @@ public class ProgettoSWENG implements EntryPoint {
         // Se clicco su Dipartimenti
         menuButtons[1].addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                Dipartimenti dip = new Dipartimenti();
-                dip.aggiungiContenuto();
+                try {
+                    Dipartimenti dip = new Dipartimenti();
+                    dip.aggiungiContenuto();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
