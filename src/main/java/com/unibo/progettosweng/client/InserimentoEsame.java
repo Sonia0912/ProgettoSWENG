@@ -69,7 +69,7 @@ public class InserimentoEsame implements Form{
 
         formPanel.add(orario);
 
-        final Label labelHardness = new Label("Hardness*:");
+        final Label labelHardness = new Label("Difficoltà*:");
         labelHardness.getElement().setClassName("label");
         formPanel.add(labelHardness);
         final ListBox hardness = new ListBox();

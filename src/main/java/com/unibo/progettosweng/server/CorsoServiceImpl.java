@@ -35,7 +35,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         }
 
         //if(input.length == 6){
-            Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4]); //Boolean.valueOf(input[6]));
+            Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4], input[5], input[6],Boolean.valueOf(input[7]));
             if(controlloCorsoDuplicato( map,corso)){
                 return "Corso già inserito!";
             }else {
@@ -63,10 +63,9 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     }
 
     @Override
-    public Corso[] getCorsi() throws Exception{
+    public Corso[] getCorsi() throws Exception {
         createOrOpenDB();
         Corso[] corsi = new Corso[map.size()];
-
         int k = 0;
         for ( String i: map.getKeys()) {
             corsi[k] = map.get(i);
@@ -124,10 +123,10 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     private DB getDb(String nameDB){
         ServletContext context = this.getServletContext();
         synchronized (context) {
-            DB db = (DB)context.getAttribute("DB");
+            DB db = (DB)context.getAttribute("DB_Corsi");
             if(db == null) {
                 db = DBMaker.fileDB(nameDB).make();
-                context.setAttribute("DB", db);
+                context.setAttribute("DB_Corsi", db);
             }
             return db;
         }

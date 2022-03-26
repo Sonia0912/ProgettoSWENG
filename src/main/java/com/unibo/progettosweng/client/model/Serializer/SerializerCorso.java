@@ -18,13 +18,14 @@ public class SerializerCorso implements Serializer<Corso>, Serializable {
         out.writeUTF(value.getDataInizio());
         out.writeUTF(value.getDataFine());
         out.writeUTF(value.getDescrizione());
-        //out.writeUTF(value.getDocente());
+        out.writeUTF(value.getDipartimento());
+        out.writeUTF(value.getDocente());
         out.writeUTF(value.getCodocente());
-       // out.writeBoolean(value.getEsameCreato());
+        out.writeBoolean(value.getEsameCreato());
     }
 
     @Override
     public Corso deserialize(DataInput2 input, int available) throws IOException {
-        return new Corso(input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF());
+        return new Corso(input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(), input.readUTF(),input.readUTF(), input.readBoolean());
     }
 }

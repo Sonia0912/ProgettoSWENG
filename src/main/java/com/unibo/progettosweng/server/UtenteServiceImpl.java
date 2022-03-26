@@ -86,14 +86,14 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     //metodo che viene invocato quando vengono modificato le informazioni degli utenti
     @Override
-    public void aggiorna(Utente ut){
+    public Utente aggiorna(Utente ut, String usernameOriginale){
         createOrOpenDB();
-        for ( String i: map.getKeys()) {
-            if(map.get(i).getUsername().equals(ut.getUsername())){
+        for (String i: map.getKeys()) {
+            if(map.get(i).getUsername().equals(usernameOriginale)){
                 map.replace(i,ut);
             }
         }
-
+        return ut;
     }
 
     @Override

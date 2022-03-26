@@ -30,9 +30,9 @@ public class PortaleDocente extends Portale {
     String email = null;
 
     private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
-            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","co-doc"),
-            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","co-doc"),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","co-doc")));
+            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info","doc","c", false),
+            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
+            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","info","doc","c", false)));
 
     private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),

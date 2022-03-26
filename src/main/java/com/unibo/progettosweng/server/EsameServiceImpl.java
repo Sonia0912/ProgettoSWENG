@@ -27,10 +27,10 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     private DB getDb(String nameDB) {
         ServletContext context = this.getServletContext();
         synchronized (context) {
-            DB db = (DB)context.getAttribute("DB");
+            DB db = (DB)context.getAttribute("DB_Esami");
             if(db == null) {
                 db = DBMaker.fileDB(nameDB).make();
-                context.setAttribute("DB", db);
+                context.setAttribute("DB_Esami", db);
             }
             return db;
         }

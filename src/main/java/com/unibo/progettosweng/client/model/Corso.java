@@ -13,23 +13,27 @@ public class Corso implements Serializable {
     private String docente;
     private String codocente;
     private boolean esameCreato;
+    private String dipartimento;
 
 
-    public Corso(String nome, String inizio, String fine, String descrizione,  String codocente) {
+    public Corso(String nome, String inizio, String fine, String descrizione, String dipartimento, String docente,  String codocente, Boolean esameCreato) {
         this.nome = nome;
         this.dataInizio = inizio ;
         this.dataFine =  fine;
         this.descrizione = descrizione;
         this.docente =  docente;
         this.codocente = codocente;
-        //this.esameCreato = esameCreato;
+        this.dipartimento = dipartimento;
+        this.esameCreato = esameCreato;
     }
 
     public Corso(){
 
     }
 
-
+public String getDipartimento(){
+        return dipartimento;
+}
     public String getDataInizio() {
         return dataInizio;
     }
