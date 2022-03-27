@@ -2,12 +2,16 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.unibo.progettosweng.client.model.Esame;
 import com.unibo.progettosweng.client.model.Utente;
+
+import java.util.Date;
 
 public class ModificaEsame implements Form{
     FormPanel editEsame;
@@ -29,7 +33,11 @@ public class ModificaEsame implements Form{
         final Label labelData = new Label("Data*:");
         labelData.getElement().setClassName("label");
         formPanel.add(labelData);
-        final DatePicker data = new DatePicker();
+        final DateBox data = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        data.setFormat(new DateBox.DefaultFormat(format));
+        Date dataEsame = format.parse(esame.getData());
+        data.setValue(dataEsame);
         data.getElement().setClassName("input");
         formPanel.add(data);
 
