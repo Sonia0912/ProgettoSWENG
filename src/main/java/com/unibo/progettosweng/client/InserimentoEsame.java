@@ -95,13 +95,13 @@ public class InserimentoEsame implements Form{
         labelNomeCorso.getElement().setClassName("label");
         formPanel.add(labelNomeCorso);
         formPanel.add(labelNomeCorso);
-        final TextBox corso = new TextBox();
+        final ListBox corso = new ListBox();
         corso.getElement().setClassName("input");
-        //corso.setName(this.nomeCorso);
+        corso.setName(this.nomeCorso);
         corso.setName("Corso");
-        corso.setValue(this.nomeCorso);
+        //corso.setValue(this.nomeCorso);
 
-        /*
+
         serviceCorsi.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
             public void onFailure(Throwable throwable) {
@@ -116,11 +116,8 @@ public class InserimentoEsame implements Form{
             }
         });
 
-         */
 
         formPanel.add(corso);
-
-
 
 
         Button send = new Button("Inserisci");
@@ -138,9 +135,15 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getText().length() == 0) {
-                    Window.alert("Compilare tutti i campi");
-                    submitEvent.cancel();
+                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getItemCount() == 0) {
+                    if(corso.getItemCount() == 0){
+                        Window.alert("Devi prima creare un corso per registrare l'esame ");
+                        submitEvent.cancel();
+                    }else {
+                        Window.alert("Compilare tutti i campi");
+                        submitEvent.cancel();
+                    }
+
                 }
             }
         });
@@ -148,7 +151,7 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getText()};
+                String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getSelectedItemText()};
                 sericeEsami.add(input, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
