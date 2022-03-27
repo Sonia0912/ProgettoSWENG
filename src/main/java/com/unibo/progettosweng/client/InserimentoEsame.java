@@ -151,7 +151,7 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String[] input ={data.getValue().toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(), aula.getText(), corso.getSelectedItemText()};
+                String[] input ={format.format(data.getValue()).toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(), aula.getText(), corso.getSelectedItemText()};
                 sericeEsami.add(input, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {

@@ -16,4 +16,5 @@ public interface CorsoService extends RemoteService {
         Corso[] getCorsi() throws Exception;
         void aggiorna(Corso corso) throws Exception;
         ArrayList<Corso> getCorsiDocente(String usernameDocente) throws Exception;
+        ArrayList<Corso> getCorsiCoDocente(String usernameDocente) throws Exception;
 }

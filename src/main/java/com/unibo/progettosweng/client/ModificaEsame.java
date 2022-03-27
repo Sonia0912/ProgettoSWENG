@@ -45,7 +45,6 @@ public class ModificaEsame implements Form{
         labelOrario.getElement().setClassName("label");
         formPanel.add(labelOrario);
         final ListBox orario = new ListBox();
-        orario.getElement().setClassName("input");
         orario.addItem("");
         int i = 0;
         for (int h = 0; h < 24; h++){

@@ -99,6 +99,18 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
       return corsiDocente;
     }
 
+    @Override
+    public ArrayList<Corso> getCorsiCoDocente(String usernameDocente) throws Exception {
+        createOrOpenDB();
+        ArrayList<Corso> corsiCoDocente = new ArrayList<>();
+        for (String i: map.getKeys()){
+            if(map.get(i).getCodocente().equals(usernameDocente)){
+                corsiCoDocente.add(map.get(i));
+            }
+        }
+        return corsiCoDocente;
+    }
+
 
     private boolean controlloCorsoDuplicato(HTreeMap<String, Corso> map, Corso corso){
         for ( String i: map.getKeys()) {

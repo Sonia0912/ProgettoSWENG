@@ -83,10 +83,9 @@ public class ModificaCorso implements Form{
         formPanel.add(labelCoDoc);
         formPanel.add(labelCoDoc);
         ListBox codoc = new ListBox();
-        codoc.getElement().setClassName("input");
         codoc.addItem("");
         try {
-            serviceUtente.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
+            serviceUtente.getCodocenti(corso.getDocente(), new AsyncCallback<ArrayList<Utente>>() {
                 @Override
                 public void onFailure(Throwable throwable) {
                     Window.alert("Failure: " + throwable.getMessage());

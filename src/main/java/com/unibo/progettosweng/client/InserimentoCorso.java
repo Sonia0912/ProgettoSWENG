@@ -128,7 +128,7 @@ public class InserimentoCorso implements Form {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
 
-                String[] info = {nome.getText(), inizio.getValue().toString(), fine.getValue().toString(),dipdescr.getText(), dip.getText(), docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
+                String[] info = {nome.getText(), format.format(inizio.getValue()).toString(), format.format(fine.getValue()).toString(),dipdescr.getText(), dip.getText(), docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
                 serviceCorso.add(info, new AsyncCallback<String>() {
                         @Override
                         public void onFailure(Throwable throwable) {
