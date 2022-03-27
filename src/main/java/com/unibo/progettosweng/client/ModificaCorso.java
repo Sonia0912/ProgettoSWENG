@@ -3,9 +3,11 @@ package com.unibo.progettosweng.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
@@ -48,14 +50,21 @@ public class ModificaCorso implements Form{
         final Label labelInizio = new Label("Data di inizio*:");
         labelInizio.getElement().setClassName("label");
         formPanel.add(labelInizio);
-        final DatePicker inizio = new DatePicker();
+        final DateBox inizio = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        inizio.setFormat(new DateBox.DefaultFormat(format));
+        Date dataInizio = format.parse(corso.getDataInizio());
+        inizio.setValue(dataInizio);
         inizio.getElement().setClassName("input");
         formPanel.add(inizio);
 
         final Label labelFine = new Label("Data di fine*:");
         labelFine.getElement().setClassName("label");
         formPanel.add(labelFine);
-        final DatePicker fine = new DatePicker();
+        final DateBox fine = new DateBox();
+        fine.setFormat(new DateBox.DefaultFormat(format));
+        Date dataEsame = format.parse(corso.getDataFine());
+        fine.setValue(dataEsame);
         fine.getElement().setClassName("input");
         formPanel.add(fine);
 
