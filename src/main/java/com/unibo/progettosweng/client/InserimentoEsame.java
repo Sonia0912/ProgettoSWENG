@@ -96,9 +96,9 @@ public class InserimentoEsame implements Form{
         formPanel.add(labelNomeCorso);
         formPanel.add(labelNomeCorso);
         final ListBox corso = new ListBox();
-        corso.getElement().setClassName("input");
         corso.setName(this.nomeCorso);
         corso.setName("Corso");
+        corso.addItem("");
         //corso.setValue(this.nomeCorso);
 
 
@@ -135,9 +135,9 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getItemCount() == 0) {
-                    if(corso.getItemCount() == 0){
-                        Window.alert("Devi prima creare un corso per registrare l'esame ");
+                if (data.getValue() == null || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getItemCount() == 0) {
+                    if(corso.getSelectedItemText().equals("")){
+                        Window.alert("Devi prima selezionare un corso per registrare l'esame ");
                         submitEvent.cancel();
                     }else {
                         Window.alert("Compilare tutti i campi");
@@ -151,11 +151,11 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getSelectedItemText()};
+                String[] input ={data.getValue().toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(), aula.getText(), corso.getSelectedItemText()};
                 sericeEsami.add(input, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Window.alert("Errore nell'insimento esame: "+ throwable.getMessage());
+                        Window.alert("Errore nell'inserimento dell'esame: "+ throwable.getMessage());
                     }
 
                     @Override

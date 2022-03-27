@@ -117,7 +117,7 @@ public class InserimentoCorso implements Form {
         nuovoCorso.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().trim().length() == 0 || inizio.getValue().toString().trim().length() == 0 || fine.getValue().toString().trim().length() == 0 || dipdescr.getText().trim().length() == 0 || dip.getText().trim().length() == 0) {
+                if (nome.getText().trim().length() == 0 || inizio.getValue() == null || fine.getValue() == null || dipdescr.getText().trim().length() == 0 || dip.getText().trim().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -141,7 +141,7 @@ public class InserimentoCorso implements Form {
                                 spazioDinamico.clear();
                                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\"> Inserisci esame </div>"));
                                 try {
-                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText())).getForm());
+                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText() )).getForm());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
