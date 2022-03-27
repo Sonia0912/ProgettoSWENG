@@ -1025,7 +1025,7 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     margin-top: 10px;
 }
 
-input {
+.input {
     width: 93.5%;
     border-radius: 5px;
     height: 20px;
@@ -1038,6 +1038,10 @@ select {
     border-radius: 5px;
     padding: 5px;
     border: 1px solid black;
+}
+
+.checkbox {
+    padding-top: 5px;
 }
 
 /*

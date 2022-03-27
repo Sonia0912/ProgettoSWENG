@@ -3,10 +3,11 @@ package com.unibo.progettosweng.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
@@ -43,14 +44,17 @@ public class InserimentoCorso implements Form {
         final Label labelInizio = new Label("Data di inizio*:");
         labelInizio.getElement().setClassName("label");
         formPanel.add(labelInizio);
-        final DatePicker inizio = new DatePicker();
+        final DateBox inizio = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        inizio.setFormat(new DateBox.DefaultFormat(format));
         inizio.getElement().setClassName("input");
         formPanel.add(inizio);
 
         final Label labelFine = new Label("Data di fine*:");
         labelFine.getElement().setClassName("label");
         formPanel.add(labelFine);
-        final DatePicker fine = new DatePicker();
+        final DateBox fine = new DateBox();
+        fine.setFormat(new DateBox.DefaultFormat(format));
         fine.getElement().setClassName("input");
         formPanel.add(fine);
 
@@ -76,7 +80,6 @@ public class InserimentoCorso implements Form {
         formPanel.add(labelCoDoc);
         formPanel.add(labelCoDoc);
         ListBox codoc = new ListBox();
-        codoc.getElement().setClassName("input");
         codoc.addItem("");
         service.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
             @Override
@@ -94,10 +97,9 @@ public class InserimentoCorso implements Form {
 
         formPanel.add(codoc);
 
-        final CheckBox checkBoxEsame = new CheckBox("CreaEsame");
+        final CheckBox checkBoxEsame = new CheckBox("Crea esame");
+        checkBoxEsame.getElement().setClassName("checkbox");
         formPanel.add(checkBoxEsame);
-
-
 
 
         Button send = new Button("Inserisci");
@@ -130,7 +132,7 @@ public class InserimentoCorso implements Form {
                 serviceCorso.add(info, new AsyncCallback<String>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            Window.alert("Errore nell'inserimento Corso "+ throwable.getMessage());
+                            Window.alert("Errore nell'inserimento del corso "+ throwable.getMessage());
                         }
                         @Override
                         public void onSuccess(String s) {
@@ -139,7 +141,7 @@ public class InserimentoCorso implements Form {
                                 spazioDinamico.clear();
                                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\"> Inserisci esame </div>"));
                                 try {
-                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText() )).getForm());
+                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText())).getForm());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

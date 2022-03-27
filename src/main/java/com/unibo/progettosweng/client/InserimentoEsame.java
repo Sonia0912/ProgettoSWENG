@@ -3,10 +3,11 @@ package com.unibo.progettosweng.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
 
@@ -38,7 +39,9 @@ public class InserimentoEsame implements Form{
         final Label labelData = new Label("Data*:");
         labelData.getElement().setClassName("label");
         formPanel.add(labelData);
-        final DatePicker data = new DatePicker();
+        final DateBox data = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        data.setFormat(new DateBox.DefaultFormat(format));
         data.getElement().setClassName("input");
         formPanel.add(data);
 
@@ -46,7 +49,6 @@ public class InserimentoEsame implements Form{
         labelOrario.getElement().setClassName("label");
         formPanel.add(labelOrario);
         final ListBox orario = new ListBox();
-        orario.getElement().setClassName("input");
         orario.addItem("");
         for (int h = 0; h < 24; h++){
             for (int m = 0; m < 60; m+=30){
@@ -73,7 +75,6 @@ public class InserimentoEsame implements Form{
         labelHardness.getElement().setClassName("label");
         formPanel.add(labelHardness);
         final ListBox hardness = new ListBox();
-        hardness.getElement().setClassName("input");
         hardness.addItem("");
         hardness.addItem("Facile");
         hardness.addItem("Medio");
