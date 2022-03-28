@@ -13,6 +13,7 @@ import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 
 public class EsameServiceImpl extends RemoteServiceServlet implements EsameService {
 
@@ -97,6 +98,21 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
             }
         }
     }
+
+    @Override
+    public ArrayList<Esame> getEsamiFromCorsi(ArrayList<Corso> corsi) throws Exception {
+        createOrOpenDB();
+        ArrayList<Esame> esami = new ArrayList<>();
+        for (int c = 0; c < corsi.size(); c++){
+            for (String i: map.getKeys()){
+                if(map.get(i).getNomeCorso().equals(corsi.get(c).getNomeCorso())){
+                    esami.add(map.get(i));
+                }
+            }
+        }
+        return esami;
+    }
+
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
         if (html == null) {

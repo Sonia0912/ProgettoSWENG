@@ -80,7 +80,6 @@ public class ModificaEsame implements Form{
         labelHardness.getElement().setClassName("label");
         formPanel.add(labelHardness);
         final ListBox hardness = new ListBox();
-        hardness.getElement().setClassName("input");
         hardness.addItem("");
         hardness.addItem("Facile");
         hardness.addItem("Medio");
