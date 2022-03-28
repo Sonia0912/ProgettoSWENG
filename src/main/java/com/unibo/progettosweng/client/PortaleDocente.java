@@ -2,6 +2,7 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -9,6 +10,7 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
@@ -29,11 +31,13 @@ public class PortaleDocente extends Portale {
     String cognome = null;
     String email = null;
 
-    private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
-            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.", "Informatica"),
-            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.", "Matematica"),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.", "Matematica")));
+    private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 
+    /*private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
+            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info","doc","c", false),
+            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
+            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","info","doc","c", false)));
+*/
     private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
             new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")));
@@ -63,7 +67,11 @@ public class PortaleDocente extends Portale {
         btnCorsi.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaCorsi();
+                try {
+                    caricaCorsi();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnEsami.addClickHandler(new ClickHandler() {
@@ -93,26 +101,55 @@ public class PortaleDocente extends Portale {
 
 
 
-    public void caricaCorsi() {
+    public void caricaCorsi() throws Exception {
         spazioDinamico.clear();
-        CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
-        Button btnCreaCorso = new Button("Crea corso");
-        btnCreaCorso.addStyleName("btnCreazione");
-        btnCreaCorso.addClickHandler(new ClickHandler() {
+        serviceCorso.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
-            public void onClick(ClickEvent clickEvent) {
-                spazioDinamico.clear();
-                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo corso</div>"));
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Corso> listaCorsi) {
+                CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi da docente</div>"));
+                spazioDinamico.add(tableCorsi);
                 try {
-                    spazioDinamico.add((new InserimentoCorso(docente)).getForm());
+                    serviceCorso.getCorsiCoDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Failure: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(ArrayList<Corso> listaCorsi) {
+                            CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
+                            Button btnCreaCorso = new Button("Crea corso");
+                            btnCreaCorso.addStyleName("btnCreazione");
+                            btnCreaCorso.addClickHandler(new ClickHandler() {
+                                @Override
+                                public void onClick(ClickEvent clickEvent) {
+                                    spazioDinamico.clear();
+                                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo corso</div>"));
+                                    try {
+                                        spazioDinamico.add((new InserimentoCorso(docente, spazioDinamico)).getForm());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi da co-docente</div>"));
+                            spazioDinamico.add(tableCorsi);
+                            spazioDinamico.add(btnCreaCorso);
+
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi</div>"));
-        spazioDinamico.add(tableCorsi);
-        spazioDinamico.add(btnCreaCorso);
+
     }
 
     public void caricaEsami() {
@@ -124,7 +161,11 @@ public class PortaleDocente extends Portale {
             public void onClick(ClickEvent clickEvent) {
                 spazioDinamico.clear();
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
-                spazioDinamico.add((new InserimentoEsame(docente).getForm()));
+                try {
+                    spazioDinamico.add((new InserimentoEsame(docente, "").getForm()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnCreaEsame.addStyleName("btnCreazione");
@@ -171,13 +212,13 @@ public class PortaleDocente extends Portale {
         };
         tableCorsi.addColumn(descrizioneCol, "Descrizione");
 
-        TextColumn<Corso> dipCol = new TextColumn<Corso>() {
+        TextColumn<Corso> codocCol = new TextColumn<Corso>() {
             @Override
             public String getValue(Corso object) {
-                return object.getDipartimento();
+                return object.getCodocente();
             }
         };
-        tableCorsi.addColumn(dipCol, "Dipartimento");
+        tableCorsi.addColumn(codocCol, "Co-Docente");
 
         ButtonCell modificaCell = new ButtonCell();
         Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
@@ -191,7 +232,10 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
             @Override
             public void update(int index, Corso object, String value) {
-                Window.alert("Vuoi modificare il corso di " + object.getNomeCorso());
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
+                spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
+
             }
         });
 
@@ -290,7 +334,9 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
-                Window.alert("Vuoi modificare l'esame di " + object.getNomeCorso());
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica esame</div>"));
+                spazioDinamico.add((new ModificaEsame(object)).getForm());
             }
         });
 

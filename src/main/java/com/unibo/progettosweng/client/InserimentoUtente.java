@@ -48,7 +48,6 @@ public class InserimentoUtente implements Form {
         labelTipo.getElement().setClassName("label");
         formPanel.add(labelTipo);
         ListBox tipo = new ListBox();
-        tipo.getElement().setClassName("input");
         tipo.addItem("");
         tipo.addItem("Docente");
         tipo.addItem("Studente");

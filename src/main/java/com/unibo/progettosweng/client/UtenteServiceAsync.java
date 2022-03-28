@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 /**
  * The async counterpart of <code>GreetingService</code>.

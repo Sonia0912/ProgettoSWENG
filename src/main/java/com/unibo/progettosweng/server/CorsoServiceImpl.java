@@ -10,6 +10,7 @@ import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 
 /**
  * The server-side implementation of the RPC service.
@@ -32,14 +33,20 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         for(int i = 0; i < input.length; i++) {
             input[i] = escapeHtml(input[i]);
         }
-        Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4]);
-        if(controlloUtenteDuplicato( map,corso)){
-            return "Utente già inserito!";
-        }else {
-            map.put(String.valueOf(map.size() + 1), corso);
-            db.commit();
-            return "(size: " + map.size()+ ") L'utente " + corso.getNomeCorso() + ", inzio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
-        }
+
+        //if(input.length == 6){
+            Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4], input[5], input[6],Boolean.valueOf(input[7]));
+            if(controlloCorsoDuplicato( map,corso)){
+                return "Corso già inserito!";
+            }else {
+                map.put(String.valueOf(map.size() + 1), corso);
+                db.commit();
+                return "(size: " + map.size()+ ") Il corso " + corso.getNomeCorso() + ", inzio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
+            }
+//        }else {
+//            return "Errore lunghezza input array";
+//        }
+
     }
 
     @Override
@@ -80,10 +87,34 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
 
     }
 
+    @Override
+    public ArrayList<Corso> getCorsiDocente(String usernameDocente) throws Exception {
+      createOrOpenDB();
+      ArrayList<Corso> corsiDocente = new ArrayList<>();
+      for (String i: map.getKeys()){
+          if(map.get(i).getDocente().equals(usernameDocente)){
+              corsiDocente.add(map.get(i));
+          }
+      }
+      return corsiDocente;
+    }
 
-    private boolean controlloUtenteDuplicato(HTreeMap<String, Corso> map, Corso utente){
+    @Override
+    public ArrayList<Corso> getCorsiCoDocente(String usernameDocente) throws Exception {
+        createOrOpenDB();
+        ArrayList<Corso> corsiCoDocente = new ArrayList<>();
+        for (String i: map.getKeys()){
+            if(map.get(i).getCodocente().equals(usernameDocente)){
+                corsiCoDocente.add(map.get(i));
+            }
+        }
+        return corsiCoDocente;
+    }
+
+
+    private boolean controlloCorsoDuplicato(HTreeMap<String, Corso> map, Corso corso){
         for ( String i: map.getKeys()) {
-            if (map.get(i).getNomeCorso().equals(utente.getNomeCorso()) ){
+            if (map.get(i).getNomeCorso().equals(corso.getNomeCorso()) ){
                 return true;
             }
         }
@@ -104,10 +135,10 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     private DB getDb(String nameDB){
         ServletContext context = this.getServletContext();
         synchronized (context) {
-            DB db = (DB)context.getAttribute("DB");
+            DB db = (DB)context.getAttribute("DB_Corsi");
             if(db == null) {
                 db = DBMaker.fileDB(nameDB).make();
-                context.setAttribute("DB", db);
+                context.setAttribute("DB_Corsi", db);
             }
             return db;
         }

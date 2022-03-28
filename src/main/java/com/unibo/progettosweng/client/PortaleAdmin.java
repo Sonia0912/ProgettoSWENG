@@ -12,7 +12,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ public class PortaleAdmin extends Portale {
 
     Utente admin = null;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
+    private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 
     /*private static ArrayList<Utente>  listaStudenti = new ArrayList<Utente>(Arrays.asList(
             new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
@@ -170,7 +173,11 @@ public class PortaleAdmin extends Portale {
         corsiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                visualizzaCorsi(object.getUsername(), object.getTipo());
+                try {
+                    visualizzaCorsi(object.getUsername(), object.getTipo());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -311,21 +318,51 @@ public class PortaleAdmin extends Portale {
         return nuovoUtente;
     }*/
 
-    private void visualizzaCorsi(String username, String tipo) {
+    private void visualizzaCorsi(String username, String tipo) throws Exception {
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Corsi</div>"));
-        String[] corsi;
         if(tipo.equalsIgnoreCase("studente")) {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è iscritto/a ai seguenti corsi: </div>"));
-            corsi = new String[]{"Algebra", "Analisi I", "Sistemi Operativi"};
+            String[] corsi = new String[]{"Algebra", "Analisi I", "Sistemi Operativi"};
+            for(int i = 0; i < corsi.length; i++) {
+                spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + corsi[i] + "</div>"));
+            }
+            spazioDinamico.add(new HTML("</div>"));
         } else {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è un docente dei seguenti corsi: </div>"));
-            corsi = new String[]{"Basi di dati", "Sistemi Operativi"};
+            serviceCorso.getCorsiDocente(username, new AsyncCallback<ArrayList<Corso>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    Window.alert("Failure: " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(ArrayList<Corso> listaCorsi) {
+                    for (int i = 0; i < listaCorsi.size(); i++) {
+                        spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + listaCorsi.get(i).getNomeCorso() + "</div>"));
+                    }
+                    spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è un co-docente dei seguenti corsi: </div>"));
+                    try {
+                        serviceCorso.getCorsiCoDocente(username, new AsyncCallback<ArrayList<Corso>>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(ArrayList<Corso> listaCorsi) {
+                                for (int i = 0; i < listaCorsi.size(); i++) {
+                                    spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + listaCorsi.get(i).getNomeCorso() + "</div>"));
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            });
         }
-        for(int i = 0; i < corsi.length; i++) {
-            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + corsi[i] + "</div>"));
-        }
-        spazioDinamico.add(new HTML("</div>"));
     }
 
     private void visualizzaEsami(String username, String tipo) {

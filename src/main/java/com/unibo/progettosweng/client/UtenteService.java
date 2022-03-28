@@ -5,7 +5,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * The client-side stub for the RPC service.

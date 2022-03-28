@@ -26,15 +26,15 @@ public class Dipartimenti implements Pagina {
     };
 
     Corso[] CORSI = {
-            new Corso("Matematica Applicata", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica"),
-            new Corso("Analisi I", "12/05/2022", "27/06/2022", "Un corso molto bello sui logaritmi e gli integrali.", "Matematica"),
-            new Corso("Chimica dei materiali", "07/04/2022", "17/04/2022", "Di cosa sono fatti i materiali che usiamo?", "Chimica"),
-            new Corso("Sistemi Operativi", "12/05/2022", "17/06/2022", "Tutto sui calcolatori.", "Informatica"),
-            new Corso("Meccanica", "13/06/2022", "17/07/2022", "Impareremo il funzionamento dei motori.", "Ingegneria"),
-            new Corso("Probablità", "26/07/2022", "17/08/2022", "Più che il lancio di una moneta.", "Matematica"),
-            new Corso("Gestione dei progetti", "25/03/2022", "17/07/2022", "Come gestire progetti complessi.", "Ingegneria"),
-            new Corso("Basi di dati", "30/04/2022", "17/06/2022", "DB relazionali e non.", "Informatica"),
-            new Corso("Fisica dei fluidi", "13/04/2022", "22/06/2022", "Tante informazioni sulla fisica dei fluidi.", "Fisica")
+            new Corso("Matematica Applicata", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica","doc","c", false),
+            new Corso("Analisi I", "12/05/2022", "27/06/2022", "Un corso molto bello sui logaritmi e gli integrali.", "Matematica","doc","c", false),
+            new Corso("Chimica dei materiali", "07/04/2022", "17/04/2022", "Di cosa sono fatti i materiali che usiamo?", "Chimica","doc","c", false),
+            new Corso("Sistemi Operativi", "12/05/2022", "17/06/2022", "Tutto sui calcolatori.", "Informatica","doc","c", false),
+            new Corso("Meccanica", "13/06/2022", "17/07/2022", "Impareremo il funzionamento dei motori.", "Ingegneria","doc","c", false),
+            new Corso("Probablità", "26/07/2022", "17/08/2022", "Più che il lancio di una moneta.", "Matematica","doc","c", false),
+            new Corso("Gestione dei progetti", "25/03/2022", "17/07/2022", "Come gestire progetti complessi.", "Ingegneria","doc","c", false),
+            new Corso("Basi di dati", "30/04/2022", "17/06/2022", "DB relazionali e non.", "Informatica","doc","c", false),
+            new Corso("Fisica dei fluidi", "13/04/2022", "22/06/2022", "Tante informazioni sulla fisica dei fluidi.", "Fisica","doc","c", false)
     };
 
     ArrayList<Corso>[] CORSISUDDIVISI = new ArrayList[DIPARTIMENTI.length];
@@ -93,6 +93,8 @@ public class Dipartimenti implements Pagina {
     @Override
     public void aggiungiContenuto() throws Exception {
         RootPanel.get("contenuto").clear();
+        suddividiCorsiPerDipartimento(CORSI);
+
 
 /*        service.getCorsi(new AsyncCallback<Corso[]>() {
             @Override

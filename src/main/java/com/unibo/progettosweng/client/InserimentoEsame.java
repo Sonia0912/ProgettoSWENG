@@ -3,24 +3,32 @@ package com.unibo.progettosweng.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
+import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
+
+import java.util.ArrayList;
 
 public class InserimentoEsame implements Form{
     FormPanel nuovoEsame;
 
-    private final EsameServiceAsync serice = GWT.create(EsameService.class);
-    private Utente docente;
+    private final EsameServiceAsync sericeEsami = GWT.create(EsameService.class);
+    private final CorsoServiceAsync serviceCorsi = GWT.create(CorsoService.class);
 
-    public InserimentoEsame(Utente docente){
+    private Utente docente;
+    private String nomeCorso;
+
+    public InserimentoEsame(Utente docente, String nomeCorso){
         this.docente = docente;
+        this.nomeCorso = nomeCorso;
     }
 
     @Override
-    public FormPanel getForm(){
+    public FormPanel getForm() throws Exception {
         nuovoEsame = new FormPanel();
         nuovoEsame.addStyleName("formCreazioneUtente");
         nuovoEsame.setAction("/creaNuovoCorso");
@@ -31,7 +39,9 @@ public class InserimentoEsame implements Form{
         final Label labelData = new Label("Data*:");
         labelData.getElement().setClassName("label");
         formPanel.add(labelData);
-        final DatePicker data = new DatePicker();
+        final DateBox data = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        data.setFormat(new DateBox.DefaultFormat(format));
         data.getElement().setClassName("input");
         formPanel.add(data);
 
@@ -39,7 +49,6 @@ public class InserimentoEsame implements Form{
         labelOrario.getElement().setClassName("label");
         formPanel.add(labelOrario);
         final ListBox orario = new ListBox();
-        orario.getElement().setClassName("input");
         orario.addItem("");
         for (int h = 0; h < 24; h++){
             for (int m = 0; m < 60; m+=30){
@@ -66,7 +75,6 @@ public class InserimentoEsame implements Form{
         labelHardness.getElement().setClassName("label");
         formPanel.add(labelHardness);
         final ListBox hardness = new ListBox();
-        hardness.getElement().setClassName("input");
         hardness.addItem("");
         hardness.addItem("Facile");
         hardness.addItem("Medio");
@@ -87,11 +95,29 @@ public class InserimentoEsame implements Form{
         labelNomeCorso.getElement().setClassName("label");
         formPanel.add(labelNomeCorso);
         formPanel.add(labelNomeCorso);
-        final TextBox corso = new TextBox();
-        corso.getElement().setClassName("input");
+        final ListBox corso = new ListBox();
+        corso.setName(this.nomeCorso);
         corso.setName("Corso");
-        formPanel.add(corso);
+        corso.addItem("");
+        //corso.setValue(this.nomeCorso);
 
+
+        serviceCorsi.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Errore in getCorsiDocente: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Corso> corsiDocente) {
+                for (int i = 0; i < corsiDocente.size(); i++){
+                    corso.addItem(corsiDocente.get(i).getNomeCorso());
+                }
+            }
+        });
+
+
+        formPanel.add(corso);
 
 
         Button send = new Button("Inserisci");
@@ -109,9 +135,15 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getText().length() == 0) {
-                    Window.alert("Compilare tutti i campi");
-                    submitEvent.cancel();
+                if (data.getValue() == null || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getItemCount() == 0) {
+                    if(corso.getSelectedItemText().equals("")){
+                        Window.alert("Devi prima selezionare un corso per registrare l'esame ");
+                        submitEvent.cancel();
+                    }else {
+                        Window.alert("Compilare tutti i campi");
+                        submitEvent.cancel();
+                    }
+
                 }
             }
         });
@@ -119,11 +151,11 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                String[] input ={data.getValue().toString(),orario.getSelectedItemText().toString(),hardness.getSelectedItemText().toString(), aula.getText(), corso.getText()};
-                serice.add(input, new AsyncCallback<String>() {
+                String[] input ={format.format(data.getValue()).toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(), aula.getText(), corso.getSelectedItemText()};
+                sericeEsami.add(input, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Window.alert("Errore nell'insimento esame: "+ throwable.getMessage());
+                        Window.alert("Errore nell'inserimento dell'esame: "+ throwable.getMessage());
                     }
 
                     @Override

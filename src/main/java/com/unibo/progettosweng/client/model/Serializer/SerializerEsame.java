@@ -16,12 +16,12 @@ public class SerializerEsame implements Serializer<Esame>, Serializable {
         out.writeUTF(value.getData());
         out.writeUTF(value.getOra());
         out.writeUTF(value.getDifficolta());
-        out.writeUTF(value.getDifficolta());
+        out.writeUTF(value.getAula());
         out.writeUTF(value.getNomeCorso());
     }
 
     @Override
     public Esame deserialize(DataInput2 input, int available) throws IOException {
-        return new Esame(input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF() );
+        return new Esame(input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF());
     }
 }

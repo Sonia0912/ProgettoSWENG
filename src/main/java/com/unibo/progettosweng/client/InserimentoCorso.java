@@ -3,21 +3,26 @@ package com.unibo.progettosweng.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class InserimentoCorso implements Form {
     FormPanel nuovoCorso;
     Utente docente;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
+    private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
+    VerticalPanel spazioDinamico ;
 
-    public InserimentoCorso(Utente docente){
+    public InserimentoCorso(Utente docente, VerticalPanel spazioDinamico){
         this.docente = docente;
+        this.spazioDinamico = spazioDinamico;
     }
 
     @Override
@@ -39,24 +44,35 @@ public class InserimentoCorso implements Form {
         final Label labelInizio = new Label("Data di inizio*:");
         labelInizio.getElement().setClassName("label");
         formPanel.add(labelInizio);
-        final DatePicker inizio = new DatePicker();
+        final DateBox inizio = new DateBox();
+        DateTimeFormat format = DateTimeFormat.getFormat("dd/MM/yyyy");
+        inizio.setFormat(new DateBox.DefaultFormat(format));
         inizio.getElement().setClassName("input");
         formPanel.add(inizio);
 
         final Label labelFine = new Label("Data di fine*:");
         labelFine.getElement().setClassName("label");
         formPanel.add(labelFine);
-        final DatePicker fine = new DatePicker();
+        final DateBox fine = new DateBox();
+        fine.setFormat(new DateBox.DefaultFormat(format));
         fine.getElement().setClassName("input");
         formPanel.add(fine);
 
         final Label labelDescr = new Label("Breve descrizione del corso*:");
         labelDescr.getElement().setClassName("label");
         formPanel.add(labelDescr);
-        final TextBox descr = new TextBox();
-        descr.getElement().setClassName("input");
-        descr.setName("Descrizione");
-        formPanel.add(descr);
+        final TextBox dipdescr = new TextBox();
+        dipdescr.getElement().setClassName("input");
+        dipdescr.setName("Descrizione");
+        formPanel.add(dipdescr);
+
+        final Label labelDip = new Label("Dipartimento*:");
+        labelDip.getElement().setClassName("label");
+        formPanel.add(labelDip);
+        final TextBox dip = new TextBox();
+        dip.getElement().setClassName("input");
+        dip.setName("Dipartimento");
+        formPanel.add(dip);
 
 
         final Label labelCoDoc = new Label("Co-docente:");
@@ -64,7 +80,6 @@ public class InserimentoCorso implements Form {
         formPanel.add(labelCoDoc);
         formPanel.add(labelCoDoc);
         ListBox codoc = new ListBox();
-        codoc.getElement().setClassName("input");
         codoc.addItem("");
         service.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
             @Override
@@ -82,6 +97,11 @@ public class InserimentoCorso implements Form {
 
         formPanel.add(codoc);
 
+        final CheckBox checkBoxEsame = new CheckBox("Crea esame");
+        checkBoxEsame.getElement().setClassName("checkbox");
+        formPanel.add(checkBoxEsame);
+
+
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {
@@ -97,7 +117,7 @@ public class InserimentoCorso implements Form {
         nuovoCorso.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || inizio.getValue().toString().length() == 0 || fine.getValue().toString().length() == 0 || descr.getText().length() == 0) {
+                if (nome.getText().trim().length() == 0 || inizio.getValue() == null || fine.getValue() == null || dipdescr.getText().trim().length() == 0 || dip.getText().trim().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -107,7 +127,29 @@ public class InserimentoCorso implements Form {
         nuovoCorso.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+
+                String[] info = {nome.getText(), format.format(inizio.getValue()).toString(), format.format(fine.getValue()).toString(),dipdescr.getText(), dip.getText(), docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
+                serviceCorso.add(info, new AsyncCallback<String>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore nell'inserimento del corso "+ throwable.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(String s) {
+                            Window.alert(s);
+                            if( checkBoxEsame.getValue() ){
+                                spazioDinamico.clear();
+                                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\"> Inserisci esame </div>"));
+                                try {
+                                    spazioDinamico.add((new InserimentoEsame(docente, nome.getText() )).getForm());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
+
             }
         });
         return nuovoCorso;
