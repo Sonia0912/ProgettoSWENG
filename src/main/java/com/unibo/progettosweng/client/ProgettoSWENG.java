@@ -3,10 +3,15 @@
  */
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.unibo.progettosweng.client.model.Corso;
+import com.unibo.progettosweng.client.model.Utente;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -24,6 +29,8 @@ public class ProgettoSWENG implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
+
+        CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 
         final String[] menuSections = {"Home", "Dipartimenti"};
         final Button[] menuButtons = new Button[menuSections.length];
@@ -57,8 +64,22 @@ public class ProgettoSWENG implements EntryPoint {
         menuButtons[1].addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 try {
-                    Dipartimenti dip = new Dipartimenti();
-                    dip.aggiungiContenuto();
+                    serviceCorso.getCorsi(new AsyncCallback<Corso[]>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore getCorsi: " + throwable.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Corso[] output) {
+                            try {
+                                Dipartimenti dip = new Dipartimenti();
+                                dip.aggiungiCorsi(output);
+                                dip.aggiungiContenuto();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

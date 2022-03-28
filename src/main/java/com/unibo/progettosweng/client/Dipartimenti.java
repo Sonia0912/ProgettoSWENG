@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Dipartimenti implements Pagina {
 
@@ -25,47 +26,36 @@ public class Dipartimenti implements Pagina {
             new HTML("<div class=\"titolettoDipartimenti\">Ingegneria</div><div class=\"descrizioneDipartimento\">Il Dipartimento di Ingegneria dell'Unitech si trova nel Campus del Polo Scientifico Tecnologico, un'ampia area verde dove si trovano aule, laboratori, sale studio, biblioteca e mensa. I nostri punti di forza sono lo stretto rapporto di collaborazione con le imprese, i numerosi accordi con le Università estere (per Erasmus e Doppi titoli), un ottimo rapporto studente-docente.</div><div class=\"titolettoDipartimenti\">Esplora i corsi</div>"),
     };
 
-    Corso[] CORSI = {
-            new Corso("Matematica Applicata", "05/04/2022", "17/06/2022", "Un corso molto bello sulla matematica applicata.", "Matematica","doc","c", false),
-            new Corso("Analisi I", "12/05/2022", "27/06/2022", "Un corso molto bello sui logaritmi e gli integrali.", "Matematica","doc","c", false),
-            new Corso("Chimica dei materiali", "07/04/2022", "17/04/2022", "Di cosa sono fatti i materiali che usiamo?", "Chimica","doc","c", false),
-            new Corso("Sistemi Operativi", "12/05/2022", "17/06/2022", "Tutto sui calcolatori.", "Informatica","doc","c", false),
-            new Corso("Meccanica", "13/06/2022", "17/07/2022", "Impareremo il funzionamento dei motori.", "Ingegneria","doc","c", false),
-            new Corso("Probablità", "26/07/2022", "17/08/2022", "Più che il lancio di una moneta.", "Matematica","doc","c", false),
-            new Corso("Gestione dei progetti", "25/03/2022", "17/07/2022", "Come gestire progetti complessi.", "Ingegneria","doc","c", false),
-            new Corso("Basi di dati", "30/04/2022", "17/06/2022", "DB relazionali e non.", "Informatica","doc","c", false),
-            new Corso("Fisica dei fluidi", "13/04/2022", "22/06/2022", "Tante informazioni sulla fisica dei fluidi.", "Fisica","doc","c", false)
-    };
+    List<Corso> CORSI = new ArrayList<Corso>();
 
-    ArrayList<Corso>[] CORSISUDDIVISI = new ArrayList[DIPARTIMENTI.length];
+    List<Corso>[] CORSISUDDIVISI = new ArrayList[DIPARTIMENTI.length];
 
-    //private static CorsoServiceAsync service = GWT.create(CorsoService.class);
+    private static CorsoServiceAsync service = GWT.create(CorsoService.class);
 
-
-    private void suddividiCorsiPerDipartimento(Corso[] tuttiCorsi) {
+    private void suddividiCorsiPerDipartimento(List<Corso> tuttiCorsi) {
         Arrays.setAll(CORSISUDDIVISI, element -> new ArrayList<>());
-        for(int i = 0; i < tuttiCorsi.length; i++) {
-            switch (tuttiCorsi[i].getDipartimento()) {
+        for(int i = 0; i < tuttiCorsi.size(); i++) {
+            switch (tuttiCorsi.get(i).getDipartimento()) {
                 case "Matematica":
-                    CORSISUDDIVISI[0].add(tuttiCorsi[i]);
+                    CORSISUDDIVISI[0].add(tuttiCorsi.get(i));
                     break;
                 case "Fisica":
-                    CORSISUDDIVISI[1].add(tuttiCorsi[i]);
+                    CORSISUDDIVISI[1].add(tuttiCorsi.get(i));
                     break;
                 case "Chimica":
-                    CORSISUDDIVISI[2].add(tuttiCorsi[i]);
+                    CORSISUDDIVISI[2].add(tuttiCorsi.get(i));
                     break;
                 case "Informatica":
-                    CORSISUDDIVISI[3].add(tuttiCorsi[i]);
+                    CORSISUDDIVISI[3].add(tuttiCorsi.get(i));
                     break;
                 case "Ingegneria":
-                    CORSISUDDIVISI[4].add(tuttiCorsi[i]);
+                    CORSISUDDIVISI[4].add(tuttiCorsi.get(i));
                     break;
             }
          }
     }
 
-    private ScrollPanel popolaTree(Tree staticTree, ArrayList<Corso> corsi, String dipID) {
+    private ScrollPanel popolaTree(Tree staticTree, List<Corso> corsi, String dipID) {
         staticTree.setAnimationEnabled(true);
         staticTree.ensureDebugId("cwTree-staticTree");
         ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
@@ -80,7 +70,7 @@ public class Dipartimenti implements Pagina {
                 TreeItem item = event.getSelectedItem();
                 String id = "dettagliCorsoMateria".concat(dipID);
                 RootPanel.get(id).clear();
-                for(int i = 0; i < CORSI.length; i++) {
+                for(int i = 0; i < CORSI.size(); i++) {
                     if(corsi.get(i).getNomeCorso().equals(item.getText())) {
                         RootPanel.get(id).add(new HTML("<div class=\"paragrafroDipartimenti\">" + corsi.get(i).getDescrizione() + "</div>"));
                     }
@@ -90,23 +80,15 @@ public class Dipartimenti implements Pagina {
         return staticTreeWrapper;
     }
 
+    public void aggiungiCorsi(Corso[] tuttiCorsi) {
+        for(int i = 0; i < tuttiCorsi.length; i++) {
+            CORSI.add(tuttiCorsi[i]);
+        }
+    }
+
     @Override
-    public void aggiungiContenuto() throws Exception {
+    public void aggiungiContenuto() {
         RootPanel.get("contenuto").clear();
-        suddividiCorsiPerDipartimento(CORSI);
-
-
-/*        service.getCorsi(new AsyncCallback<Corso[]>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                Window.alert("Errore getCorsi: " + throwable.getMessage());
-            }
-            @Override
-            public void onSuccess(Corso[] output) {
-                CORSI = output;
-            }
-        });*/
-
         suddividiCorsiPerDipartimento(CORSI);
 
         VerticalPanel mainPanel = new VerticalPanel();

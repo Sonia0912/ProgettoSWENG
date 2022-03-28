@@ -67,7 +67,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         createOrOpenDB();
         Corso[] corsi = new Corso[map.size()];
         int k = 0;
-        for ( String i: map.getKeys()) {
+        for (String i: map.getKeys()) {
             corsi[k] = map.get(i);
             k++;
         }
