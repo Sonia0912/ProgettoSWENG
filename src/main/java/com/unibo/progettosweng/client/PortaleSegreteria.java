@@ -52,6 +52,9 @@ public class PortaleSegreteria extends Portale {
     }
 
     @Override
+    public void caricaDati(String username) throws Exception {}
+
+    @Override
     public void caricaMenu() {
         Button btnStudenti = new Button("Studenti");
         Button btnInserimento = new Button("Inserisci voti");

@@ -26,21 +26,13 @@ public class PortaleAdmin extends Portale {
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 
-    /*private static ArrayList<Utente>  listaStudenti = new ArrayList<Utente>(Arrays.asList(
-            new Utente("Luca", "Bianchi","lucabianchi@mail.com","123","studente"),
-            new Utente("Sofia", "Neri","sofianeri@mail.com","0000","studente"),
-            new Utente("Francesco", "Verdi","francescoverdi@mail.com","qwerty","studente")
-    ));
-    private static ArrayList<Utente>  listaDocenti = new ArrayList<Utente>(Arrays.asList(
-            new Utente("Mario", "Rossi","mariorossi@mail.com","5678","docente"),
-            new Utente("Giulia", "Gallo","giuliagallo@mail.com","acbde","docente"),
-            new Utente("Tommaso", "Neri","tommasoneri@mail.com","asdfg","docente")
-    ));*/
-
     @Override
     public void salvaCredenziali() {
         admin = super.utenteLoggato;
     }
+
+    @Override
+    public void caricaDati(String username) throws Exception {}
 
     @Override
     public void caricaMenu() {

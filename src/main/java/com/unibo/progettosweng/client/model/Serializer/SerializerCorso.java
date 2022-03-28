@@ -28,4 +28,5 @@ public class SerializerCorso implements Serializer<Corso>, Serializable {
     public Corso deserialize(DataInput2 input, int available) throws IOException {
         return new Corso(input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(),input.readUTF(), input.readUTF(),input.readUTF(), input.readBoolean());
     }
+
 }

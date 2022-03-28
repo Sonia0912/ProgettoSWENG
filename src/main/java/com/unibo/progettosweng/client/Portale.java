@@ -20,11 +20,13 @@ public abstract class Portale {
     public abstract void caricaMenu();
     public abstract void caricaDefault() throws Exception;
     public abstract void salvaCredenziali();
+    public abstract void caricaDati(String username) throws Exception;
 
 
     public void caricaPortale(Utente utenteInserito) throws Exception {
         this.utenteLoggato = utenteInserito;
         salvaCredenziali();
+        caricaDati(utenteInserito.getUsername());
 
         svuotaPagina();
         HorizontalPanel mainPanel = new HorizontalPanel();

@@ -35,6 +35,16 @@
     <servlet-name>esameServlet</servlet-name>
     <url-pattern>/progettosweng/esami</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>iscrizioneServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.IscrizioneServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>iscrizioneServlet</servlet-name>
+    <url-pattern>/progettosweng/iscrizioni</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
