@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Utente;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
@@ -182,6 +183,36 @@ public class InserimentoEsame implements Form{
                     @Override
                     public void onSuccess(String s) {
                         Window.alert("user docente: " + docente.getUsername() + " " + s);
+                        try {
+                            serviceCorsi.getCorso(corso.getSelectedItemText(), new AsyncCallback<Corso>() {
+                                @Override
+                                public void onFailure(Throwable throwable) {
+                                    Window.alert("Failure: " + throwable.getMessage());
+                                }
+
+                                @Override
+                                public void onSuccess(Corso corso) {
+                                    Corso corsoUpdated = new Corso(corso.getNomeCorso(), corso.getDataInizio(), corso.getDataFine(), corso.getDescrizione(), corso.getDipartimento(), corso.getDocente(), corso.getCodocente(), true);
+                                    try {
+                                        serviceCorsi.aggiorna(corsoUpdated, new AsyncCallback<Corso>() {
+                                            @Override
+                                            public void onFailure(Throwable throwable) {
+                                                Window.alert("Failure: " + throwable.getMessage());
+                                            }
+
+                                            @Override
+                                            public void onSuccess(Corso corso) {
+                                                Window.alert("Corso aggiornato");
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
