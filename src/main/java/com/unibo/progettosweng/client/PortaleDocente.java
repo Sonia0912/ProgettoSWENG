@@ -106,24 +106,24 @@ public class PortaleDocente extends Portale {
         serviceCorso.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
             public void onFailure(Throwable throwable) {
-                Window.alert("Failure: " + throwable.getMessage());
+                Window.alert("Failure on getCorsiDocente: " + throwable.getMessage());
             }
-
             @Override
             public void onSuccess(ArrayList<Corso> listaCorsi) {
-                CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi da docente</div>"));
+                CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.", false);
                 spazioDinamico.add(tableCorsi);
                 try {
+                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi da co-docente</div>"));
                     serviceCorso.getCorsiCoDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            Window.alert("Failure: " + throwable.getMessage());
+                            Window.alert("Failure on getCorsiCoDocente: " + throwable.getMessage());
                         }
-
                         @Override
                         public void onSuccess(ArrayList<Corso> listaCorsi) {
-                            CellTable<Corso> tableCorsi = creaTabellaCorsi(listaCorsi, "Non hai ancora creato nessun corso.");
+                            CellTable<Corso> tableCoCorsi = creaTabellaCorsi(listaCorsi, "Non sei stato assegnato come co-docente a nessun corso.", true);
+                            spazioDinamico.add(tableCoCorsi);
                             Button btnCreaCorso = new Button("Crea corso");
                             btnCreaCorso.addStyleName("btnCreazione");
                             btnCreaCorso.addClickHandler(new ClickHandler() {
@@ -138,10 +138,7 @@ public class PortaleDocente extends Portale {
                                     }
                                 }
                             });
-                            spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei corsi da co-docente</div>"));
-                            spazioDinamico.add(tableCorsi);
                             spazioDinamico.add(btnCreaCorso);
-
                         }
                     });
                 } catch (Exception e) {
@@ -149,7 +146,6 @@ public class PortaleDocente extends Portale {
                 }
             }
         });
-
     }
 
     public void caricaEsami() {
@@ -174,7 +170,7 @@ public class PortaleDocente extends Portale {
         spazioDinamico.add(btnCreaEsame);
     }
 
-    private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto) {
+    private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean codocente) {
         CellTable<Corso> tableCorsi = new CellTable<Corso>();
         tableCorsi.addStyleName("tablePortale");
         tableCorsi.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
@@ -188,21 +184,13 @@ public class PortaleDocente extends Portale {
         };
         tableCorsi.addColumn(nomeCol, "Nome");
 
-        TextColumn<Corso> inizioCol = new TextColumn<Corso>() {
+        TextColumn<Corso> periodoCol = new TextColumn<Corso>() {
             @Override
             public String getValue(Corso object) {
-                return object.getDataInizio();
+                return object.getDataInizio() + " - " + object.getDataFine();
             }
         };
-        tableCorsi.addColumn(inizioCol, "Data di inizio");
-
-        TextColumn<Corso> fineCol = new TextColumn<Corso>() {
-            @Override
-            public String getValue(Corso object) {
-                return object.getDataFine();
-            }
-        };
-        tableCorsi.addColumn(fineCol, "Data di fine");
+        tableCorsi.addColumn(periodoCol, "Periodo");
 
         TextColumn<Corso> descrizioneCol = new TextColumn<Corso>() {
             @Override
@@ -212,48 +200,66 @@ public class PortaleDocente extends Portale {
         };
         tableCorsi.addColumn(descrizioneCol, "Descrizione");
 
-        TextColumn<Corso> codocCol = new TextColumn<Corso>() {
+        TextColumn<Corso> dipCol = new TextColumn<Corso>() {
             @Override
             public String getValue(Corso object) {
-                return object.getCodocente();
+                return object.getDipartimento();
             }
         };
-        tableCorsi.addColumn(codocCol, "Co-Docente");
+        tableCorsi.addColumn(dipCol, "Dipartimento");
 
-        ButtonCell modificaCell = new ButtonCell();
-        Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
-            @Override
-            public String getValue(Corso object) {
-                return "Modifica";
-            }
-        };
-        tableCorsi.addColumn(modificaCol, "");
-        modificaCol.setCellStyleNames("btnTableStandard");
-        modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
-            @Override
-            public void update(int index, Corso object, String value) {
-                spazioDinamico.clear();
-                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
-                spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
+        if(!codocente) {
+            TextColumn<Corso> codocCol = new TextColumn<Corso>() {
+                @Override
+                public String getValue(Corso object) {
+                    return object.getCodocente();
+                }
+            };
+            tableCorsi.addColumn(codocCol, "Co-Docente");
 
-            }
-        });
+            ButtonCell modificaCell = new ButtonCell();
+            Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
+                @Override
+                public String getValue(Corso object) {
+                    return "Modifica";
+                }
+            };
+            tableCorsi.addColumn(modificaCol, "");
+            modificaCol.setCellStyleNames("btnTableStandard");
+            modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
+                @Override
+                public void update(int index, Corso object, String value) {
+                    spazioDinamico.clear();
+                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
+                    spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
 
-        ButtonCell eliminaCell = new ButtonCell();
-        Column<Corso, String> eliminaCol = new Column<Corso, String>(eliminaCell) {
-            @Override
-            public String getValue(Corso object) {
-                return "Cancella";
-            }
-        };
-        tableCorsi.addColumn(eliminaCol, "");
-        eliminaCol.setCellStyleNames("btnElimina");
-        eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
-            @Override
-            public void update(int index, Corso object, String value) {
-                Window.alert("Hai eliminato con successo il corso di " + object.getNomeCorso());
-            }
-        });
+                }
+            });
+
+            ButtonCell eliminaCell = new ButtonCell();
+            Column<Corso, String> eliminaCol = new Column<Corso, String>(eliminaCell) {
+                @Override
+                public String getValue(Corso object) {
+                    return "Cancella";
+                }
+            };
+            tableCorsi.addColumn(eliminaCol, "");
+            eliminaCol.setCellStyleNames("btnElimina");
+            eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
+                @Override
+                public void update(int index, Corso object, String value) {
+                    Window.alert("Vuoi eliminare il corso di " + object.getNomeCorso());
+                }
+            });
+        } else {
+            TextColumn<Corso> docCol = new TextColumn<Corso>() {
+                @Override
+                public String getValue(Corso object) {
+                    return object.getDocente();
+                }
+            };
+            tableCorsi.addColumn(docCol, "Docente");
+        }
 
         tableCorsi.setRowCount(LISTCORSI.size(), true);
         tableCorsi.setRowData(0, LISTCORSI);

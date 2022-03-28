@@ -77,16 +77,10 @@ public class InserimentoCorso implements Form {
             dip.addItem(DIPARTIMENTI[i]);
         }
         formPanel.add(dip);
-/*        final TextBox dip = new TextBox();
-        dip.getElement().setClassName("input");
-        dip.setName("Dipartimento");
-        formPanel.add(dip);*/
-
 
         final Label labelCoDoc = new Label("Co-docente:");
         labelCoDoc.getElement().setClassName("label");
         formPanel.add(labelCoDoc);
-        //formPanel.add(labelCoDoc);
         ListBox codoc = new ListBox();
         codoc.addItem("");
         service.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
@@ -102,13 +96,13 @@ public class InserimentoCorso implements Form {
                 }
             }
         });
-
         formPanel.add(codoc);
 
-        final CheckBox checkBoxEsame = new CheckBox("Crea esame");
-        checkBoxEsame.getElement().setClassName("checkbox");
-        formPanel.add(checkBoxEsame);
+        formPanel.add(new HTML("<br />"));
 
+        final CheckBox checkBoxEsame = new CheckBox("Crea esame");
+        checkBoxEsame.addStyleName("checkBoxEsame");
+        formPanel.add(checkBoxEsame);
 
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
