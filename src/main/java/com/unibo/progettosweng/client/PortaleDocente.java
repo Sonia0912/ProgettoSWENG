@@ -21,7 +21,6 @@ import com.unibo.progettosweng.client.model.Utente;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PortaleDocente extends Portale {
@@ -32,16 +31,17 @@ public class PortaleDocente extends Portale {
     String email = null;
 
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
+    private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
 
     /*private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
             new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info","doc","c", false),
             new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
             new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","info","doc","c", false)));
 */
-    private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
+    /*private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
             new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
             new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")));
-
+*/
     @Override
     public void salvaCredenziali() {
         docente = super.utenteLoggato;
@@ -80,7 +80,11 @@ public class PortaleDocente extends Portale {
         btnEsami.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaEsami();
+                try {
+                    caricaEsami();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         menuLaterale.add(btnProfilo);
@@ -151,26 +155,83 @@ public class PortaleDocente extends Portale {
         });
     }
 
-    public void caricaEsami() {
+    public void caricaEsami() throws Exception {
         spazioDinamico.clear();
-        CellTable<Esame> tableEsami = creaTabellaEsami(listaEsami, "Non hai ancora creato nessun esame.");
-        Button btnCreaEsame = new Button("Crea esame");
-        btnCreaEsame.addClickHandler(new ClickHandler() {
+        serviceCorso.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
-            public void onClick(ClickEvent clickEvent) {
-                spazioDinamico.clear();
-                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Corso> corsi) {
                 try {
-                    spazioDinamico.add((new InserimentoEsame(docente, "").getForm()));
+                    serviceEsame.getEsamiFromCorsi(corsi, new AsyncCallback<ArrayList<Esame>>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Failure: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(ArrayList<Esame> listaEsami) {
+                            CellTable<Esame> tableEsamiDocente = creaTabellaEsami(listaEsami, "Non hai ancora creato nessun esame.");
+                            spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami da docente</div>"));
+                            spazioDinamico.add(tableEsamiDocente);
+                            try {
+                                serviceCorso.getCorsiCoDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                        Window.alert("Failure: " + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onSuccess(ArrayList<Corso> corsiCodocente) {
+                                        try {
+                                            serviceEsame.getEsamiFromCorsi(corsiCodocente, new AsyncCallback<ArrayList<Esame>>() {
+                                                @Override
+                                                public void onFailure(Throwable throwable) {
+                                                    Window.alert("Failure: " + throwable.getMessage());
+                                                }
+
+                                                @Override
+                                                public void onSuccess(ArrayList<Esame> listaEsamiCoDoc) {
+                                                    CellTable<Esame> tableEsamiDocente = creaTabellaEsami(listaEsamiCoDoc, "Non hai ancora creato nessun esame.");
+                                                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami da co-docente</div>"));
+                                                    spazioDinamico.add(tableEsamiDocente);
+
+                                                    Button btnCreaEsame = new Button("Crea esame");
+                                                    btnCreaEsame.addClickHandler(new ClickHandler() {
+                                                        @Override
+                                                        public void onClick(ClickEvent clickEvent) {
+                                                            spazioDinamico.clear();
+                                                            spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea un nuovo esame</div>"));
+                                                            try {
+                                                                spazioDinamico.add((new InserimentoEsame(docente, "").getForm()));
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    });
+                                                    btnCreaEsame.addStyleName("btnCreazione");
+                                                    spazioDinamico.add(btnCreaEsame);
+                                                }
+                                            });
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
         });
-        btnCreaEsame.addStyleName("btnCreazione");
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami</div>"));
-        spazioDinamico.add(tableEsami);
-        spazioDinamico.add(btnCreaEsame);
     }
 
     private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean codocente) {

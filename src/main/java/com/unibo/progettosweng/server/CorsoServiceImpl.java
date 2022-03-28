@@ -100,15 +100,26 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     }
 
     @Override
-    public ArrayList<Corso> getCorsiCoDocente(String usernameDocente) throws Exception {
+    public ArrayList<Corso> getCorsiCoDocente(String usernameCoDocente) throws Exception {
         createOrOpenDB();
         ArrayList<Corso> corsiCoDocente = new ArrayList<>();
         for (String i: map.getKeys()){
-            if(map.get(i).getCodocente().equals(usernameDocente)){
+            if(map.get(i).getCodocente().equals(usernameCoDocente)){
                 corsiCoDocente.add(map.get(i));
             }
         }
         return corsiCoDocente;
+    }
+
+    @Override
+    public Corso getCorso(String nomeCorso) throws Exception {
+        createOrOpenDB();
+        for (String i: map.getKeys()){
+            if(map.get(i).getNomeCorso().equals(nomeCorso)){
+                return map.get(i);
+            }
+        }
+        return null;
     }
 
 
