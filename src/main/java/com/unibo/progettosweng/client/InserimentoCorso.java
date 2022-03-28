@@ -20,6 +20,8 @@ public class InserimentoCorso implements Form {
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
     VerticalPanel spazioDinamico ;
 
+    final static String[] DIPARTIMENTI = {"Matematica", "Fisica", "Chimica", "Informatica", "Ingegneria"};
+
     public InserimentoCorso(Utente docente, VerticalPanel spazioDinamico){
         this.docente = docente;
         this.spazioDinamico = spazioDinamico;
@@ -69,16 +71,22 @@ public class InserimentoCorso implements Form {
         final Label labelDip = new Label("Dipartimento*:");
         labelDip.getElement().setClassName("label");
         formPanel.add(labelDip);
-        final TextBox dip = new TextBox();
+        ListBox dip = new ListBox();
+        dip.addItem("");
+        for (int i = 0; i < DIPARTIMENTI.length; i++) {
+            dip.addItem(DIPARTIMENTI[i]);
+        }
+        formPanel.add(dip);
+/*        final TextBox dip = new TextBox();
         dip.getElement().setClassName("input");
         dip.setName("Dipartimento");
-        formPanel.add(dip);
+        formPanel.add(dip);*/
 
 
         final Label labelCoDoc = new Label("Co-docente:");
         labelCoDoc.getElement().setClassName("label");
         formPanel.add(labelCoDoc);
-        formPanel.add(labelCoDoc);
+        //formPanel.add(labelCoDoc);
         ListBox codoc = new ListBox();
         codoc.addItem("");
         service.getCodocenti(docente.getUsername(), new AsyncCallback<ArrayList<Utente>>() {
@@ -117,7 +125,7 @@ public class InserimentoCorso implements Form {
         nuovoCorso.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().trim().length() == 0 || inizio.getValue() == null || fine.getValue() == null || dipdescr.getText().trim().length() == 0 || dip.getText().trim().length() == 0) {
+                if (nome.getText().trim().length() == 0 || inizio.getValue() == null || fine.getValue() == null || dipdescr.getText().trim().length() == 0 || dip.getSelectedItemText() == "") {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -128,7 +136,7 @@ public class InserimentoCorso implements Form {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
 
-                String[] info = {nome.getText(), format.format(inizio.getValue()).toString(), format.format(fine.getValue()).toString(),dipdescr.getText(), dip.getText(), docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
+                String[] info = {nome.getText(), format.format(inizio.getValue()).toString(), format.format(fine.getValue()).toString(),dipdescr.getText(), dip.getSelectedItemText(), docente.getUsername(), codoc.getSelectedItemText(), String.valueOf(checkBoxEsame.getValue())};
                 serviceCorso.add(info, new AsyncCallback<String>() {
                         @Override
                         public void onFailure(Throwable throwable) {
