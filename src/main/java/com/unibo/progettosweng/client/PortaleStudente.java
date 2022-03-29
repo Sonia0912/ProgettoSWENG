@@ -177,19 +177,18 @@ public class PortaleStudente extends Portale {
             }
             @Override
             public void onSuccess(Corso[] tuttiCorsi) {
-                List<Corso> corsiVisibili = new ArrayList<>(Arrays.asList(tuttiCorsi));
-                for (int i = 0; i < corsiVisibili.size(); i++) {
+                corsiEsplorabili = new ArrayList<>(Arrays.asList(tuttiCorsi));
+                for (int i = 0; i < corsiEsplorabili.size(); i++) {
                     for (int j = 0; j < iscrizioniPersonali.size(); j++) {
                         String currentCorso = iscrizioniPersonali.get(j).getCorso();
-                        corsiVisibili.removeIf(corso -> corso.getNomeCorso().equals(currentCorso));
+                        corsiEsplorabili.removeIf(corso -> corso.getNomeCorso().equals(currentCorso));
                     }
                 }
-                corsiEsplorabili = corsiVisibili;
             }
         });
     }
 
-    private void caricaProfilo() throws Exception {
+    private void caricaProfilo() {
         spazioDinamico.clear();
         HTML infoPersonali = new HTML("<div class=\"infoPersonali\"><b>Nome: </b>" + nome
                 + "<br /><b>Cognome: </b>" + cognome
@@ -319,7 +318,7 @@ public class PortaleStudente extends Portale {
                         @Override
                         public void onSuccess(String s) {
                             Window.alert("Ti sei iscritto con successo al corso di " + object.getNomeCorso());
-                            corsiEsplorabili.removeIf(corso -> corso.getNomeCorso().equals(object.getNomeCorso()));
+                            corsiEsplorabili.remove(index);
                             corsiIscritto.add(object);
                             try {
                                 caricaEsploraCorsi();
