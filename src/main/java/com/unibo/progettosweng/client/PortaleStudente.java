@@ -269,46 +269,54 @@ public class PortaleStudente extends Portale {
     }
 
     private void caricaPrenotaEsame() throws Exception {
-//        List<Esame> esamiVisibili = new ArrayList<>(TUTTIESAMI);
-//        for(int i = 0; i < TUTTIESAMI.size(); i++) {
-//            for(int j = 0; j < ESAMI.size(); j++) {
-//                if(ESAMI.get(j).getNomeCorso().equals(TUTTIESAMI.get(i).getNomeCorso())) {
-//                    String daRimuovere = TUTTIESAMI.get(i).getNomeCorso();
-//                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
-//                }
-//            }
-//        }
-        serviceEsame.getEsami(new AsyncCallback<ArrayList<Esame>>() {
+        serviceIscrizione.getIscrizioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Iscrizione>>() {
             @Override
             public void onFailure(Throwable throwable) {
                 Window.alert("Failure: " + throwable.getMessage());
             }
 
             @Override
-            public void onSuccess(ArrayList<Esame> esamiTutti){
-                serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Window.alert("Failure: " + throwable.getMessage());
+            public void onSuccess(ArrayList<Iscrizione> iscrizioni) {
+                try {
+                    ArrayList<String> corsiIscritto = new ArrayList<>();
+                    for(int i = 0; i < iscrizioni.size(); i++){
+                        corsiIscritto.add(iscrizioni.get(i).getCorso());
                     }
-
-                    @Override
-                    public void onSuccess(ArrayList<Registrazione> esamiStudente) {
-                        List<Esame> esamiVisibili = new ArrayList<>(esamiTutti);
-                        for (int i = 0; i < esamiTutti.size(); i++){
-                            for (int j = 0; j < esamiStudente.size(); j++){
-                                if(esamiStudente.get(j).getCorso().equals(esamiTutti.get(i).getNomeCorso())){
-                                    String daRimuovere = esamiTutti.get(i).getNomeCorso();
-                                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
-                                }
-                            }
+                    serviceEsame.getEsamiFromNomeCorsi(corsiIscritto, new AsyncCallback<ArrayList<Esame>>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Failure: " + throwable.getMessage());
                         }
-                        CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
-                        spazioDinamico.clear();
-                        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
-                        spazioDinamico.add(tableEsami);
-                    }
-                });
+                        @Override
+                        public void onSuccess(ArrayList<Esame> esamiTutti){
+                            serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
+                                @Override
+                                public void onFailure(Throwable throwable) {
+                                    Window.alert("Failure: " + throwable.getMessage());
+                                }
+
+                                @Override
+                                public void onSuccess(ArrayList<Registrazione> esamiStudente) {
+                                    List<Esame> esamiVisibili = new ArrayList<>(esamiTutti);
+                                    for (int i = 0; i < esamiTutti.size(); i++){
+                                        for (int j = 0; j < esamiStudente.size(); j++){
+                                            if(esamiStudente.get(j).getCorso().equals(esamiTutti.get(i).getNomeCorso())){
+                                                String daRimuovere = esamiTutti.get(i).getNomeCorso();
+                                                esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+                                            }
+                                        }
+                                    }
+                                    CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
+                                    spazioDinamico.clear();
+                                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
+                                    spazioDinamico.add(tableEsami);
+                                }
+                            });
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

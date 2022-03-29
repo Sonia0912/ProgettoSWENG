@@ -13,4 +13,5 @@ public interface EsameServiceAsync {
     void getEsami(AsyncCallback<ArrayList<Esame>> callback) throws Exception;
     void aggiorna(Esame esame, AsyncCallback<Esame> callback) throws Exception;
     void getEsamiFromCorsi(ArrayList<Corso> corsi, AsyncCallback<ArrayList<Esame>> callback) throws Exception;
+    void getEsamiFromNomeCorsi(ArrayList<String> corsi, AsyncCallback<ArrayList<Esame>> callback) throws Exception;
 }

@@ -15,4 +15,5 @@ public interface EsameService extends RemoteService {
     ArrayList<Esame> getEsami() throws Exception;
     void aggiorna(Esame esame) throws Exception;
     ArrayList<Esame> getEsamiFromCorsi(ArrayList<Corso> corsi) throws Exception;
+    ArrayList<Esame> getEsamiFromNomeCorsi(ArrayList<String> corsi) throws Exception;
 }
