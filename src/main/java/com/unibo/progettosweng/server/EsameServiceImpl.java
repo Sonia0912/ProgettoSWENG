@@ -77,13 +77,13 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     }
 
     @Override
-    public Esame[] getEsami() throws Exception {
+    public ArrayList<Esame> getEsami() throws Exception {
         createOrOpenDB();
-        Esame[] esames = new Esame[map.size()];
+        ArrayList<Esame> esames = new ArrayList<>();
 
         int k = 0;
         for ( String i: map.getKeys()) {
-            esames[k] = map.get(i);
+            esames.add(map.get(i));
             k++;
         }
         return esames;

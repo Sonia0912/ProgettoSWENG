@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface EsameService extends RemoteService {
     String add(String[] input) throws IllegalArgumentException;
     String remove(String key) throws IllegalArgumentException;
-    Esame[] getEsami() throws Exception;
+    ArrayList<Esame> getEsami() throws Exception;
     void aggiorna(Esame esame) throws Exception;
     ArrayList<Esame> getEsamiFromCorsi(ArrayList<Corso> corsi) throws Exception;
 }

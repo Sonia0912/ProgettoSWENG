@@ -2,6 +2,7 @@ package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.unibo.progettosweng.client.RegistrazioneService;
+import com.unibo.progettosweng.client.model.Iscrizione;
 import com.unibo.progettosweng.client.model.Registrazione;
 import com.unibo.progettosweng.client.model.Serializer.SerializerRegistrazione;
 import org.mapdb.DB;
@@ -10,6 +11,7 @@ import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class RegistrazioneServiceImpl extends RemoteServiceServlet implements RegistrazioneService {
@@ -47,6 +49,18 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
             }
         }
         return "successo";
+    }
+
+    @Override
+    public ArrayList<Registrazione> getRegistrazioniStudente(String studente) throws IllegalArgumentException {
+        createOrOpenDB();
+        ArrayList<Registrazione> registrazioni = new ArrayList<>();
+        for (String i: map.getKeys()) {
+            if(map.get(i).getStudente().equals(studente)) {
+                registrazioni.add(map.get(i));
+            }
+        }
+        return registrazioni;
     }
 
     private String escapeHtml(String html) {

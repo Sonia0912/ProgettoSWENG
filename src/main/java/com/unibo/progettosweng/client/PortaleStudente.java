@@ -11,10 +11,8 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.client.model.Corso;
-import com.unibo.progettosweng.client.model.Esame;
-import com.unibo.progettosweng.client.model.Iscrizione;
-import com.unibo.progettosweng.client.model.Utente;
+import com.unibo.progettosweng.client.model.*;
+import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 
 
@@ -30,7 +28,9 @@ public class PortaleStudente extends Portale {
     String email = null;
 
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
+    private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
+    private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
 
     private static ArrayList<Corso> corsiIscritto = new ArrayList<>();
     private static List<Corso> corsiEsplorabili = new ArrayList<>();
@@ -118,7 +118,11 @@ public class PortaleStudente extends Portale {
         btnEsami.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                caricaPrenotaEsame();
+                try {
+                    caricaPrenotaEsame();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         btnVoti.addClickHandler(new ClickHandler() {
@@ -207,9 +211,53 @@ public class PortaleStudente extends Portale {
 
     private void caricaMieiEsami() {
         spazioDinamico.clear();
-        CellTable<Esame> tableEsami = creaTabellaEsami(ESAMI, "Non hai prenotato nessun esame.", false);
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami</div>"));
-        spazioDinamico.add(tableEsami);
+        serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Registrazione> registrazioni) {
+                ArrayList<String> nomeCorsi = new ArrayList<>();
+                for (int i = 0; i < registrazioni.size(); i++){
+                    nomeCorsi.add(registrazioni.get(i).getCorso());
+                }
+                try {
+                    serviceCorso.getListaCorsiIscrizioni(nomeCorsi, new AsyncCallback<ArrayList<Corso>>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Failure: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(ArrayList<Corso> corsi) {
+                            try {
+                                serviceEsame.getEsamiFromCorsi(corsi, new AsyncCallback<ArrayList<Esame>>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                        Window.alert("Failure: " + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onSuccess(ArrayList<Esame> listaEsami) {
+                                        CellTable<Esame> tableEsami = creaTabellaEsami(listaEsami, "Non hai prenotato nessun esame.", false);
+                                        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami</div>"));
+                                        spazioDinamico.add(tableEsami);
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     private void caricaEsploraCorsi() throws Exception {
@@ -220,20 +268,49 @@ public class PortaleStudente extends Portale {
         spazioDinamico.add(tableCorsi);
     }
 
-    private void caricaPrenotaEsame() {
-        List<Esame> esamiVisibili = new ArrayList<>(TUTTIESAMI);
-        for(int i = 0; i < TUTTIESAMI.size(); i++) {
-            for(int j = 0; j < ESAMI.size(); j++) {
-                if(ESAMI.get(j).getNomeCorso().equals(TUTTIESAMI.get(i).getNomeCorso())) {
-                    String daRimuovere = TUTTIESAMI.get(i).getNomeCorso();
-                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
-                }
+    private void caricaPrenotaEsame() throws Exception {
+//        List<Esame> esamiVisibili = new ArrayList<>(TUTTIESAMI);
+//        for(int i = 0; i < TUTTIESAMI.size(); i++) {
+//            for(int j = 0; j < ESAMI.size(); j++) {
+//                if(ESAMI.get(j).getNomeCorso().equals(TUTTIESAMI.get(i).getNomeCorso())) {
+//                    String daRimuovere = TUTTIESAMI.get(i).getNomeCorso();
+//                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+//                }
+//            }
+//        }
+        serviceEsame.getEsami(new AsyncCallback<ArrayList<Esame>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
             }
-        }
-        CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
-        spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
-        spazioDinamico.add(tableEsami);
+
+            @Override
+            public void onSuccess(ArrayList<Esame> esamiTutti){
+                serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Failure: " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(ArrayList<Registrazione> esamiStudente) {
+                        List<Esame> esamiVisibili = new ArrayList<>(esamiTutti);
+                        for (int i = 0; i < esamiTutti.size(); i++){
+                            for (int j = 0; j < esamiStudente.size(); j++){
+                                if(esamiStudente.get(j).getCorso().equals(esamiTutti.get(i).getNomeCorso())){
+                                    String daRimuovere = esamiTutti.get(i).getNomeCorso();
+                                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+                                }
+                            }
+                        }
+                        CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
+                        spazioDinamico.clear();
+                        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
+                        spazioDinamico.add(tableEsami);
+                    }
+                });
+            }
+        });
     }
 
     private void caricaVoti() {
@@ -395,9 +472,23 @@ public class PortaleStudente extends Portale {
             prenotazioneCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
                 @Override
                 public void update(int index, Esame object, String value) {
-                    Window.alert("Hai prenotato con successo l'esame di " + object.getNomeCorso());
-                    ESAMI.add(object);
-                    caricaPrenotaEsame();
+
+                    serviceRegistrazione.add(studente.getUsername(), object.getNomeCorso(), new AsyncCallback<String>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Failure: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+                            Window.alert("Hai prenotato con successo l'esame di " + object.getNomeCorso());
+                        }
+                    });
+                    try {
+                        caricaPrenotaEsame();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
