@@ -12,10 +12,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.unibo.progettosweng.client.model.Corso;
-import com.unibo.progettosweng.client.model.Esame;
-import com.unibo.progettosweng.client.model.Iscrizione;
-import com.unibo.progettosweng.client.model.Utente;
+import com.unibo.progettosweng.client.model.*;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
@@ -29,6 +26,7 @@ public class PortaleAdmin extends Portale {
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
     private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
+    private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
 
     @Override
     public void salvaCredenziali() {
@@ -276,13 +274,22 @@ public class PortaleAdmin extends Portale {
     private void visualizzaEsami(String username, String tipo) throws Exception {
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esami</div>"));
-        String[] esami;
         if(tipo.equalsIgnoreCase("studente")) {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> si è registrato/a ai seguenti esami: </div>"));
-            esami = new String[]{"Chimica", "Fisica nucleare", "Sistemi Operativi"};
-            for(int i = 0; i < esami.length; i++) {
-                spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + esami[i] + "</div>"));
-            }
+            //esami = new String[]{"Chimica", "Fisica nucleare", "Sistemi Operativi"};
+            serviceRegistrazione.getRegistrazioniStudente(username, new AsyncCallback<ArrayList<Registrazione>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    Window.alert("Failure: " + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(ArrayList<Registrazione> registrazioni) {
+                    for (int i = 0; i < registrazioni.size(); i++) {
+                        spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + registrazioni.get(i).getCorso() + "</div>"));
+                    }
+                }
+            });
         } else {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è assegnato come docente ai seguenti esami: </div>"));
             //esami = new String[]{"Fisica nucleare", "Sistemi Operativi"};

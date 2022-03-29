@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.unibo.progettosweng.client.model.Iscrizione;
+import com.unibo.progettosweng.client.model.Registrazione;
 import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class PortaleSegreteria extends Portale {
     Utente segreteria = null;
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
+    private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
 
     private static ArrayList<String[]> listaDaInserire = new ArrayList<String[]>(Arrays.asList(
             new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
@@ -302,10 +304,19 @@ public class PortaleSegreteria extends Portale {
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esami</div>"));
         spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> si è registrato/a ai seguenti esami: </div>"));
-        String[] esami = {"Algebra", "Sistemi Operativi"};
-        for(int i = 0; i < esami.length; i++) {
-            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + esami[i] + "</div>"));
-        }
+        serviceRegistrazione.getRegistrazioniStudente(username, new AsyncCallback<ArrayList<Registrazione>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure: " + throwable.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Registrazione> registrazioni) {
+                for (int i = 0; i < registrazioni.size(); i++) {
+                    spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + registrazioni.get(i).getCorso() + "</div>"));
+                }
+            }
+        });
     }
 
     private void visualizzaVoti(String username) {
