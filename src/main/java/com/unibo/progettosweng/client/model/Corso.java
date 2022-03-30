@@ -27,13 +27,14 @@ public class Corso implements Serializable {
         this.esameCreato = esameCreato;
     }
 
-    public Corso(){
+    public Corso() {
 
     }
 
-public String getDipartimento(){
+    public String getDipartimento(){
         return dipartimento;
 }
+
     public String getDataInizio() {
         return dataInizio;
     }

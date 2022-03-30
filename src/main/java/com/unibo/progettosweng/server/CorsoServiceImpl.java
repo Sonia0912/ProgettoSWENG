@@ -124,12 +124,24 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
 
 
     private boolean controlloCorsoDuplicato(HTreeMap<String, Corso> map, Corso corso){
-        for ( String i: map.getKeys()) {
-            if (map.get(i).getNomeCorso().equals(corso.getNomeCorso()) ){
+        for (String i: map.getKeys()) {
+            if (map.get(i).getNomeCorso().equals(corso.getNomeCorso())){
                 return true;
             }
         }
         return false;
+    }
+
+    public ArrayList<Corso> getListaCorsiIscrizioni(ArrayList<String> nomiCorsi) {
+        ArrayList<Corso> lista = new ArrayList<>();
+        for (String i: map.getKeys()) {
+            for (int j = 0; j < nomiCorsi.size(); j++) {
+                if (map.get(i).getNomeCorso().equals(nomiCorsi.get(j))){
+                    lista.add(map.get(i));
+                }
+            }
+        }
+        return lista;
     }
 
 

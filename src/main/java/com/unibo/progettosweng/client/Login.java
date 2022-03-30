@@ -6,7 +6,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.unibo.progettosweng.client.model.Corso;
+import com.unibo.progettosweng.client.model.Iscrizione;
 import com.unibo.progettosweng.client.model.Utente;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Login implements Pagina{
     FormPanel login;

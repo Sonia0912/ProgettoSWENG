@@ -14,5 +14,5 @@ public interface CorsoServiceAsync {
     void getCorsiDocente(String usernameDocente, AsyncCallback<ArrayList<Corso>> callback) throws Exception;
     void getCorsiCoDocente(String usernameCoDocente, AsyncCallback<ArrayList<Corso>> callback) throws Exception;
     void getCorso(String nomeCorso, AsyncCallback<Corso> callback) throws Exception;
-
+    void getListaCorsiIscrizioni(ArrayList<String> nomiCorsi, AsyncCallback<ArrayList<Corso>> callback) throws Exception;
 }

@@ -45,7 +45,27 @@
     <servlet-name>valutazioneServlet</servlet-name>
     <url-pattern>/progettosweng/valutazioni</url-pattern>
   </servlet-mapping>
-  
+
+  <servlet>
+    <servlet-name>iscrizioneServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.IscrizioneServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>iscrizioneServlet</servlet-name>
+    <url-pattern>/progettosweng/iscrizioni</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>registrazioneServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.RegistrazioneServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>registrazioneServlet</servlet-name>
+    <url-pattern>/progettosweng/registrazioni</url-pattern>
+  </servlet-mapping>
+
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>ProgettoSWENG.html</welcome-file>
