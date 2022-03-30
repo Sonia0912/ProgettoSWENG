@@ -35,6 +35,16 @@
     <servlet-name>esameServlet</servlet-name>
     <url-pattern>/progettosweng/esami</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>valutazioneServlet</servlet-name>
+    <servlet-class>com.unibo.progettosweng.server.ValutazioneServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>valutazioneServlet</servlet-name>
+    <url-pattern>/progettosweng/valutazioni</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
