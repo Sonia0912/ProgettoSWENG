@@ -55,6 +55,8 @@ public class PortaleDocente extends Portale {
         Button btnProfilo = new Button("Profilo");
         Button btnCorsi = new Button("Corsi");
         Button btnEsami = new Button("Esami");
+        Button btnValutazioni = new Button("Valutazioni");
+        btnValutazioni.addStyleName("buttonMenuLaterale");
         btnProfilo.addStyleName("buttonMenuLaterale");
         btnCorsi.addStyleName("buttonMenuLaterale");
         btnEsami.addStyleName("buttonMenuLaterale");
@@ -84,9 +86,33 @@ public class PortaleDocente extends Portale {
                 }
             }
         });
+
+        btnValutazioni.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                try {
+                    caricaValutazioni();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         menuLaterale.add(btnProfilo);
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
+        menuLaterale.add(btnValutazioni);
+    }
+
+    private void caricaValutazioni() {
+
+        spazioDinamico.clear();
+        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea una nuova valutazioni </div>"));
+        try {
+            spazioDinamico.add((new InserimentoValutazione(docente)).getForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
