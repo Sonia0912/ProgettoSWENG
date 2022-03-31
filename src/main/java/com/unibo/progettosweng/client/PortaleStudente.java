@@ -316,14 +316,16 @@ public class PortaleStudente extends Portale {
                             Window.alert("Failure on add Iscrizione: " + throwable.getMessage());
                         }
                         @Override
-                        public void onSuccess(String s) {
-                            Window.alert("Ti sei iscritto con successo al corso di " + object.getNomeCorso());
-                            corsiEsplorabili.remove(index);
-                            corsiIscritto.add(object);
-                            try {
-                                caricaEsploraCorsi();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                        public void onSuccess(String output) {
+                            Window.alert(output);
+                            if(!output.equals("Ti sei già iscritto a questo corso")) {
+                                corsiEsplorabili.remove(index);
+                                corsiIscritto.add(object);
+                                try {
+                                    caricaEsploraCorsi();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
