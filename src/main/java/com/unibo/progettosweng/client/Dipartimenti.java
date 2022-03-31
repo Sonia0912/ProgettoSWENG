@@ -72,7 +72,7 @@ public class Dipartimenti implements Pagina {
                 RootPanel.get(id).clear();
                 for(int i = 0; i < CORSI.size(); i++) {
                     if(corsi.get(i).getNomeCorso().equals(item.getText())) {
-                        RootPanel.get(id).add(new HTML("<div class=\"paragrafroDipartimenti\">" + corsi.get(i).getDescrizione() + "</div>"));
+                        RootPanel.get(id).add(new HTML("<div class=\"paragrafoDipartimenti\">" + corsi.get(i).getDescrizione() + "</div>"));
                     }
                 }
             }
@@ -152,40 +152,3 @@ public class Dipartimenti implements Pagina {
         RootPanel.get("dettagliCorsoMateria0").add(new HTML(" "));
     }
 }
-
-/*    private ScrollPanel popolaTree(Tree staticTree, String[] corsi, String[][] docentiPerCorso, String dipID) {
-        staticTree.setAnimationEnabled(true);
-        staticTree.ensureDebugId("cwTree-staticTree");
-        ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
-        staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
-        staticTreeWrapper.setSize("600px", "400px");
-        for(int i = 0; i < corsi.length; i++) {
-            TreeItem corso = staticTree.addTextItem(corsi[i]);
-            for(int j = 0; j < 2; j++) {
-                corso.addTextItem(docentiPerCorso[i][j]);
-            }
-        }
-        staticTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
-            @Override
-            public void onSelection(SelectionEvent<TreeItem> event) {
-                TreeItem item = event.getSelectedItem();
-                String id = "dettagliCorsoMateria".concat(dipID);
-                RootPanel.get(id).clear();
-                boolean trovato = false;
-                for(int i = 0; i < dettagli.length; i++) {
-                    if(dettagli[i][1].equalsIgnoreCase(item.getText())) {
-                        trovato = true;
-                        if(dettagli[i][0] != null) {
-                            RootPanel.get(id).add(new HTML("<div class=\"paragrafroDipartimenti\">Il docente del corso è " + dettagli[i][0] + ".</div>"));
-                        } else {
-                            RootPanel.get(id).add(new HTML("<div class=\"paragrafroDipartimenti\">Il corso è stato fondato nel " + dettagli[i][2] + ".</div>"));
-                        }
-                    }
-                }
-                if(!trovato) {
-                    RootPanel.get(id).add(new HTML("<div class=\"paragrafroDipartimenti\">Nessuna informazione trovata.</div>"));
-                }
-            }
-        });
-        return staticTreeWrapper;
-    }*/

@@ -1,5 +1,8 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -13,8 +16,8 @@ public abstract class Portale {
 
     public void svuotaPagina() {
         RootPanel.get("contenuto").clear();
-        RootPanel.get("pannelloMenu").clear();
-        RootPanel.get("pannelloMenu").setHeight("0");
+        RootPanel.get("login").clear();
+        ProgettoSWENG.caricaButtonPortale(true);
     }
 
     public abstract void caricaMenu();

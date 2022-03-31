@@ -20,5 +20,6 @@ public interface UtenteServiceAsync {
     void getCodocenti(String username, AsyncCallback<ArrayList<Utente>> callback) throws Exception;
     void getStudenti(AsyncCallback<ArrayList<Utente>> callback) throws Exception;
     void getDocenti(AsyncCallback<ArrayList<Utente>> callback) throws Exception;
-
+    void getNumeroStudenti(AsyncCallback<Integer> callback) throws Exception;
+    void getNumeroDocenti(AsyncCallback<Integer> callback) throws Exception;
 }
