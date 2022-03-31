@@ -51,9 +51,6 @@ public class PortaleDocente extends Portale {
     }
 
     @Override
-    public void caricaDati(String username) throws Exception {}
-
-    @Override
     public void caricaMenu() {
         Button btnProfilo = new Button("Profilo");
         Button btnCorsi = new Button("Corsi");
