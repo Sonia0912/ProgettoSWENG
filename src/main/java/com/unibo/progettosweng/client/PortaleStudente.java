@@ -12,8 +12,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.*;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 
 
 import java.util.ArrayList;
@@ -31,11 +29,7 @@ public class PortaleStudente extends Portale {
     private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
     private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
-
-    private static ArrayList<String[]> listaVoti = new ArrayList<String[]>(Arrays.asList(
-            new String[]{"Sistemi Operativi", "28"},
-            new String[]{"Algebra lineare", "29"}
-    ));
+    private static ValutazioneServiceAsync serviceValutazione = GWT.create(ValutazioneService.class);
 
     @Override
     public void salvaCredenziali() {
@@ -59,60 +53,46 @@ public class PortaleStudente extends Portale {
         btnCorsi.addStyleName("buttonMenuLaterale");
         btnEsami.addStyleName("buttonMenuLaterale");
         btnVoti.addStyleName("buttonMenuLaterale");
-        btnProfilo.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaDefault();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnProfilo.addClickHandler(clickEvent -> {
+            try {
+                caricaDefault();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnMieiCorsi.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaMieiCorsi();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnMieiCorsi.addClickHandler(clickEvent -> {
+            try {
+                caricaMieiCorsi();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnMieiEsami.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaMieiEsami();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnMieiEsami.addClickHandler(clickEvent -> {
+            try {
+                caricaMieiEsami();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnCorsi.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaEsploraCorsi();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnCorsi.addClickHandler(clickEvent -> {
+            try {
+                caricaEsploraCorsi();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnEsami.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaPrenotaEsame();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnEsami.addClickHandler(clickEvent -> {
+            try {
+                caricaPrenotaEsame();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnVoti.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
+        btnVoti.addClickHandler(clickEvent -> {
+            try {
                 caricaVoti();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
         menuLaterale.add(btnProfilo);
@@ -309,11 +289,20 @@ public class PortaleStudente extends Portale {
         });
     }
 
-    private void caricaVoti() {
-        CellTable<String[]> tableVoti = creaTabellaVoti(listaVoti, "Non hai ancora nessun voto.");
+    private void caricaVoti() throws Exception {
         spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei voti</div>"));
-        spazioDinamico.add(tableVoti);
+        serviceValutazione.getValutazioniStudente(email, new AsyncCallback<ArrayList<Valutazione>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure on getValutazioniStudente: " + throwable.getMessage());
+            }
+            @Override
+            public void onSuccess(ArrayList<Valutazione> listaValutazioni) {
+                CellTable<Valutazione> tableVoti = creaTabellaVoti(listaValutazioni, "Non hai ancora nessun voto.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei voti</div>"));
+                spazioDinamico.add(tableVoti);
+            }
+        });
     }
 
     private CellTable<Corso> creaTabellaCorsi(List<Corso> LISTCORSI, String messaggioVuoto, boolean selezionabile) {
@@ -495,24 +484,24 @@ public class PortaleStudente extends Portale {
     }
 
     // Da modificare quando avremo l'oggetto Voto
-    private CellTable<String[]> creaTabellaVoti(List<String[]> listaVoti, String messaggioVuoto) {
-        CellTable<String[]> tableVoti = new CellTable<String[]>();
+    private CellTable<Valutazione> creaTabellaVoti(ArrayList<Valutazione> listaVoti, String messaggioVuoto) {
+        CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
         tableVoti.addStyleName("tablePortale");
         tableVoti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
         tableVoti.setEmptyTableWidget(new Label(messaggioVuoto));
 
-        TextColumn<String[]> corsoCol = new TextColumn<String[]>() {
+        TextColumn<Valutazione> corsoCol = new TextColumn<Valutazione>() {
             @Override
-            public String getValue(String[] object) {
-                return object[0];
+            public String getValue(Valutazione object) {
+                return object.getNomeCorso();
             }
         };
         tableVoti.addColumn(corsoCol, "Nome del corso");
 
-        TextColumn<String[]> votoCol = new TextColumn<String[]>() {
+        TextColumn<Valutazione> votoCol = new TextColumn<Valutazione>() {
             @Override
-            public String getValue(String[] object) {
-                return object[1];
+            public String getValue(Valutazione object) {
+                return String.valueOf(object.getVoto());
             }
         };
         tableVoti.addColumn(votoCol, "Voto");

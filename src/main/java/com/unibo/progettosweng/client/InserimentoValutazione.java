@@ -67,10 +67,11 @@ public class InserimentoValutazione implements Form {
         labelVoto.getElement().setClassName("label");
         final ListBox voto = new ListBox();
         voto.addItem("");
-        for( int i = 18; i <=30; i++){
+        //voto.addItem("Insufficiente");
+        for (int i = 0; i <=30; i++) {
             voto.addItem(String.valueOf(i));
         }
-        voto.addItem("30L");
+        //voto.addItem("30L");
         formPanel.add(voto);
 
         Button send = new Button("Inserisci");

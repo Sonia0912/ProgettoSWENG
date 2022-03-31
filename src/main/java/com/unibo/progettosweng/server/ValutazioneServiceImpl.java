@@ -10,6 +10,7 @@ import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 
 public class ValutazioneServiceImpl extends RemoteServiceServlet implements ValutazioneService {
 
@@ -60,7 +61,6 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
 
     }
 
-
     @Override
     public String remove(String nomeCorso, String studente) throws IllegalArgumentException {
         createOrOpenDB();
@@ -71,7 +71,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
                 return "La taglia: " + map.size() + " La vautazione di " + studente + " del corso di" + nomeCorso + " è  stato rimosso.";
             }
         }
-        return "Nessun utente Presente!";
+        return "Nessun voto presente";
     }
 
     @Override
@@ -86,7 +86,6 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         return valutazioni;
     }
 
-
     @Override
     public Valutazione aggiorna(Valutazione val, String nomeCorso, String studente) throws Exception {
         createOrOpenDB();
@@ -96,6 +95,17 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
             }
         }
         return  val;
+    }
+
+    public ArrayList<Valutazione> getValutazioniStudente(String studente) {
+        createOrOpenDB();
+        ArrayList<Valutazione> val = new ArrayList<>();
+        for (String i: map.getKeys()) {
+            if(map.get(i).getStudente().equals(studente) && map.get(i).getPubblicato()) {
+                val.add(map.get(i));
+            }
+        }
+        return val;
     }
 
 
