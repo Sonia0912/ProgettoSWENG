@@ -30,36 +30,30 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     @Override
     public String add(String[] input) throws IllegalArgumentException {
         createOrOpenDB();
-        for(int i = 0; i < input.length; i++) {
+        for (int i = 0; i < input.length; i++) {
             input[i] = escapeHtml(input[i]);
         }
-
-        //if(input.length == 6){
-            Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4], input[5], input[6],Boolean.valueOf(input[7]));
-            if(controlloCorsoDuplicato( map,corso)){
-                return "Corso già inserito!";
-            }else {
-                map.put(String.valueOf(map.size() + 1), corso);
-                db.commit();
-                return "(size: " + map.size()+ ") Il corso " + corso.getNomeCorso() + ", inzio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
-            }
-//        }else {
-//            return "Errore lunghezza input array";
-//        }
-
+        Corso corso = new Corso(input[0], input[1], input[2], input[3], input[4], input[5], input[6],Boolean.valueOf(input[7]));
+        if(controlloCorsoDuplicato( map,corso)){
+            return "Corso già inserito!";
+        } else {
+            map.put(String.valueOf(map.size() + 1), corso);
+            db.commit();
+            return "(size: " + map.size()+ ") Il corso " + corso.getNomeCorso() + ", inzio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
+        }
     }
 
     @Override
     public String remove(String nomeCorso) throws IllegalArgumentException {
         createOrOpenDB();
-        for ( String i: map.getKeys()) {
+        for (String i: map.getKeys()) {
             if(map.get(i).getNomeCorso().equals(nomeCorso)){
                 map.remove(i);
                 db.commit();
                 return "La taglia: " + map.size() + " Il corso " + nomeCorso + " è  stato rimosso.";
             }
         }
-        return "Nessun corso Presente!";
+        return "Nessun corso presente";
     }
 
     @Override
@@ -84,7 +78,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
                 map.replace(i,corso);
             }
         }
-
     }
 
     @Override
@@ -133,6 +126,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     }
 
     public ArrayList<Corso> getListaCorsiIscrizioni(ArrayList<String> nomiCorsi) {
+        createOrOpenDB();
         ArrayList<Corso> lista = new ArrayList<>();
         for (String i: map.getKeys()) {
             for (int j = 0; j < nomiCorsi.size(); j++) {
@@ -153,7 +147,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
     }
-
 
     private DB getDb(String nameDB){
         ServletContext context = this.getServletContext();

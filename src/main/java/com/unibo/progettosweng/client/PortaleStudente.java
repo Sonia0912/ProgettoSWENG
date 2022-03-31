@@ -27,9 +27,9 @@ public class PortaleStudente extends Portale {
     String cognome = null;
     String email = null;
 
+    private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
     private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
-    private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
     private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
 
     private static ArrayList<String[]> listaVoti = new ArrayList<String[]>(Arrays.asList(
@@ -139,6 +139,7 @@ public class PortaleStudente extends Portale {
 
     private void caricaMieiCorsi() {
         spazioDinamico.clear();
+        // Prendo le iscrizioni dello studente.
         serviceIscrizione.getIscrizioniStudente(email, new AsyncCallback<ArrayList<Iscrizione>>() {
             @Override
             public void onFailure(Throwable throwable) {
@@ -151,10 +152,11 @@ public class PortaleStudente extends Portale {
                     nomeCorsi.add(iscrizioni.get(i).getCorso());
                 }
                 try {
+                    // Prendo le informazioni dei corsi a cui e' iscritto.
                     serviceCorso.getListaCorsiIscrizioni(nomeCorsi, new AsyncCallback<ArrayList<Corso>>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            Window.alert("Failure on getListaCorsiIscrizioni: " + throwable.getMessage());
+                            Window.alert("Failure on getListaCorsiIscrizioni: " + throwable.getMessage() + " I corsi a cui è iscritto: " + nomeCorsi.toString());
                         }
                         @Override
                         public void onSuccess(ArrayList<Corso> corsiIscrittoOutput) {
@@ -171,12 +173,12 @@ public class PortaleStudente extends Portale {
 
     private void caricaMieiEsami() {
         spazioDinamico.clear();
+        // Prendo gli esami a cui lo studente e' registrato.
         serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
             @Override
             public void onFailure(Throwable throwable) {
-                Window.alert("Failure: " + throwable.getMessage());
+                Window.alert("Failure on getRegistrazioniStudente: " + throwable.getMessage());
             }
-
             @Override
             public void onSuccess(ArrayList<Registrazione> registrazioni) {
                 ArrayList<String> nomeCorsi = new ArrayList<>();
@@ -184,20 +186,21 @@ public class PortaleStudente extends Portale {
                     nomeCorsi.add(registrazioni.get(i).getCorso());
                 }
                 try {
+                    // Prendo le informazioni sui corsi a cui e' registrato.
                     serviceCorso.getListaCorsiIscrizioni(nomeCorsi, new AsyncCallback<ArrayList<Corso>>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            Window.alert("Failure: " + throwable.getMessage());
+                            Window.alert("Failure on getListaCorsiIscrizioni: " + throwable.getMessage());
                         }
                         @Override
                         public void onSuccess(ArrayList<Corso> corsi) {
                             try {
+                                // Prendo le informazioni sugli esami a cui e' registrato.
                                 serviceEsame.getEsamiFromCorsi(corsi, new AsyncCallback<ArrayList<Esame>>() {
                                     @Override
                                     public void onFailure(Throwable throwable) {
                                         Window.alert("Failure: " + throwable.getMessage());
                                     }
-
                                     @Override
                                     public void onSuccess(ArrayList<Esame> listaEsami) {
                                         CellTable<Esame> tableEsami = creaTabellaEsami(listaEsami, "Non hai prenotato nessun esame.", false);
