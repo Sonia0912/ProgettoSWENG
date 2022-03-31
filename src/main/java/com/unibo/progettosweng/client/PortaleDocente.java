@@ -33,15 +33,6 @@ public class PortaleDocente extends Portale {
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
     private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
 
-    /*private static ArrayList<Corso> listaCorsi = new ArrayList<Corso>(Arrays.asList(
-            new Corso("Sistemi Operativi", "24/04/2022", "06/06/2022", "Un corso sull'informatica.","info","doc","c", false),
-            new Corso("Analisi I", "26/04/2022", "15/06/2022", "Logaritmi e derivate.","info","doc","c", false),
-            new Corso("Algebra lineare", "12/03/2022", "17/05/2022", "Tutto sulle matrici.","info","doc","c", false)));
-*/
-    /*private static List<Esame> listaEsami = new ArrayList<Esame>(Arrays.asList(
-            new Esame("17/06/2022", "15:30", "Medio", "Aula Tonelli", "Sistemi Operativi"),
-            new Esame("22/06/2022", "09:40", "Difficile", "Aula Verdi", "Analisi I")));
-*/
     @Override
     public void salvaCredenziali() {
         docente = super.utenteLoggato;
@@ -104,7 +95,6 @@ public class PortaleDocente extends Portale {
     }
 
     private void caricaValutazioni() {
-
         spazioDinamico.clear();
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea una nuova valutazioni </div>"));
         try {
@@ -112,7 +102,6 @@ public class PortaleDocente extends Portale {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -128,8 +117,6 @@ public class PortaleDocente extends Portale {
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Informazioni personali</div>"));
         spazioDinamico.add(infoPersonali);
     }
-
-
 
     public void caricaCorsi() throws Exception {
         spazioDinamico.clear();
@@ -303,41 +290,6 @@ public class PortaleDocente extends Portale {
                 }
             };
             tableCorsi.addColumn(codocCol, "Co-Docente");
-
-            ButtonCell modificaCell = new ButtonCell();
-            Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
-                @Override
-                public String getValue(Corso object) {
-                    return "Modifica";
-                }
-            };
-            tableCorsi.addColumn(modificaCol, "");
-            modificaCol.setCellStyleNames("btnTableStandard");
-            modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
-                @Override
-                public void update(int index, Corso object, String value) {
-                    spazioDinamico.clear();
-                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
-                    spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
-
-                }
-            });
-
-            ButtonCell eliminaCell = new ButtonCell();
-            Column<Corso, String> eliminaCol = new Column<Corso, String>(eliminaCell) {
-                @Override
-                public String getValue(Corso object) {
-                    return "Cancella";
-                }
-            };
-            tableCorsi.addColumn(eliminaCol, "");
-            eliminaCol.setCellStyleNames("btnElimina");
-            eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
-                @Override
-                public void update(int index, Corso object, String value) {
-                    Window.alert("Vuoi eliminare il corso di " + object.getNomeCorso());
-                }
-            });
         } else {
             TextColumn<Corso> docCol = new TextColumn<Corso>() {
                 @Override
@@ -347,6 +299,41 @@ public class PortaleDocente extends Portale {
             };
             tableCorsi.addColumn(docCol, "Docente");
         }
+
+        ButtonCell modificaCell = new ButtonCell();
+        Column<Corso, String> modificaCol = new Column<Corso, String>(modificaCell) {
+            @Override
+            public String getValue(Corso object) {
+                return "Modifica";
+            }
+        };
+        tableCorsi.addColumn(modificaCol, "");
+        modificaCol.setCellStyleNames("btnTableStandard");
+        modificaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
+            @Override
+            public void update(int index, Corso object, String value) {
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica corso</div>"));
+                spazioDinamico.add((new ModificaCorso(docente, object)).getForm());
+
+            }
+        });
+
+        ButtonCell eliminaCell = new ButtonCell();
+        Column<Corso, String> eliminaCol = new Column<Corso, String>(eliminaCell) {
+            @Override
+            public String getValue(Corso object) {
+                return "Cancella";
+            }
+        };
+        tableCorsi.addColumn(eliminaCol, "");
+        eliminaCol.setCellStyleNames("btnElimina");
+        eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
+            @Override
+            public void update(int index, Corso object, String value) {
+                Window.alert("Vuoi eliminare il corso di " + object.getNomeCorso());
+            }
+        });
 
         tableCorsi.setRowCount(LISTCORSI.size(), true);
         tableCorsi.setRowData(0, LISTCORSI);
