@@ -102,13 +102,11 @@ public class InserimentoEsame implements Form{
         corso.addItem("");
         //corso.setValue(this.nomeCorso);
 
-
         serviceCorsi.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
             public void onFailure(Throwable throwable) {
                 Window.alert("Errore in getCorsiDocente: " + throwable.getMessage());
             }
-
             @Override
             public void onSuccess(ArrayList<Corso> corsiDocente) {
                 for (int i = 0; i < corsiDocente.size(); i++){
@@ -122,7 +120,6 @@ public class InserimentoEsame implements Form{
                         public void onFailure(Throwable throwable) {
                             Window.alert("Errore in getCorsiDocente: " + throwable.getMessage());
                         }
-
                         @Override
                         public void onSuccess(ArrayList<Corso> corsiCoDocente) {
                             for (int i = 0; i < corsiCoDocente.size(); i++){

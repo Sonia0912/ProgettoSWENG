@@ -254,6 +254,7 @@ public class PortaleStudente extends Portale {
     }
 
     private void caricaPrenotaEsame() throws Exception {
+        // Prendo tutti gli esami esistenti.
         serviceEsame.getEsami(new AsyncCallback<ArrayList<Esame>>() {
             @Override
             public void onFailure(Throwable throwable) {
@@ -261,26 +262,47 @@ public class PortaleStudente extends Portale {
             }
             @Override
             public void onSuccess(ArrayList<Esame> esamiTutti){
-                serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
+                // Prendo i corsi a cui lo studente e' iscritto.
+                serviceIscrizione.getIscrizioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Iscrizione>>() {
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Window.alert("Failure: " + throwable.getMessage());
+                        Window.alert("Failure on getIscrizioniStudente: " + throwable.getMessage());
                     }
                     @Override
-                    public void onSuccess(ArrayList<Registrazione> esamiStudente) {
-                        List<Esame> esamiVisibili = new ArrayList<>(esamiTutti);
-                        for (int i = 0; i < esamiTutti.size(); i++){
-                            for (int j = 0; j < esamiStudente.size(); j++){
-                                if(esamiStudente.get(j).getCorso().equals(esamiTutti.get(i).getNomeCorso())){
-                                    String daRimuovere = esamiTutti.get(i).getNomeCorso();
-                                    esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+                    public void onSuccess(ArrayList<Iscrizione> iscrizioniStudente) {
+                        // Rimuovo da tutti gli esami quelli a cui lo studente non e' registrato.
+                        ArrayList<Esame> esamiPrenotabili = new ArrayList<>();
+                        for (int i = 0; i < esamiTutti.size(); i++) {
+                            for (int j = 0; j < iscrizioniStudente.size(); j++) {
+                                if(esamiTutti.get(i).getNomeCorso().equals(iscrizioniStudente.get(j).getCorso())) {
+                                    esamiPrenotabili.add(esamiTutti.get(i));
                                 }
                             }
                         }
-                        CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
-                        spazioDinamico.clear();
-                        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
-                        spazioDinamico.add(tableEsami);
+                        // Prendo gli esami ai quali lo studente e' gia' registrato.
+                        serviceRegistrazione.getRegistrazioniStudente(studente.getUsername(), new AsyncCallback<ArrayList<Registrazione>>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                Window.alert("Failure: " + throwable.getMessage());
+                            }
+                            @Override
+                            public void onSuccess(ArrayList<Registrazione> esamiStudente) {
+                                // Rimuovo dagli esami prenotabili quelli a cui lo studente e' gia' registrato.
+                                List<Esame> esamiVisibili = new ArrayList<>(esamiPrenotabili);
+                                for (int i = 0; i < esamiPrenotabili.size(); i++){
+                                    for (int j = 0; j < esamiStudente.size(); j++){
+                                        if(esamiStudente.get(j).getCorso().equals(esamiPrenotabili.get(i).getNomeCorso())){
+                                            String daRimuovere = esamiPrenotabili.get(i).getNomeCorso();
+                                            esamiVisibili.removeIf(esame -> esame.getNomeCorso().equals(daRimuovere));
+                                        }
+                                    }
+                                }
+                                CellTable<Esame> tableEsami = creaTabellaEsami(esamiVisibili, "Non sono presenti esami prenotabili (prova ad iscriverti prima ad un corso).", true);
+                                spazioDinamico.clear();
+                                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Prenota un esame</div>"));
+                                spazioDinamico.add(tableEsami);
+                            }
+                        });
                     }
                 });
             }
