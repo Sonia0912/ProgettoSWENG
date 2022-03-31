@@ -113,6 +113,20 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
         return esami;
     }
 
+    @Override
+    public ArrayList<Esame> getEsamiFromNomeCorsi(ArrayList<String> corsi) throws Exception {
+        createOrOpenDB();
+        ArrayList<Esame> esami = new ArrayList<>();
+        for (int c = 0; c < corsi.size(); c++){
+            for (String i: map.getKeys()){
+                if(map.get(i).getNomeCorso().equals(corsi.get(c))){
+                    esami.add(map.get(i));
+                }
+            }
+        }
+        return esami;
+    }
+
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
         if (html == null) {
