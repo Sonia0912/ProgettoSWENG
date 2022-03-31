@@ -2,6 +2,7 @@ package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.unibo.progettosweng.client.IscrizioneService;
+import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Iscrizione;
 import com.unibo.progettosweng.client.model.Serializer.SerializerIscrizione;
 import org.mapdb.DB;
@@ -29,9 +30,13 @@ public class IscrizioneServiceImpl extends RemoteServiceServlet implements Iscri
         studente = escapeHtml(studente);
         corso = escapeHtml(corso);
         Iscrizione iscr = new Iscrizione(studente, corso);
-        map.put(String.valueOf(map.size() + 1), iscr);
-        db.commit();
-        return "successo";
+        if(controlloIscrizioneDuplicata(map, iscr)) {
+            return "Ti sei già iscritto a questo corso";
+        } else {
+            map.put(String.valueOf(map.size() + 1), iscr);
+            db.commit();
+            return "Ti sei iscritto con successo al corso di " + corso;
+        }
     }
 
     // quando viene modificato un corso, se si modifica il nome devono essere modificate le relative iscrizioni
@@ -58,6 +63,15 @@ public class IscrizioneServiceImpl extends RemoteServiceServlet implements Iscri
             }
         }
         return iscrizioni;
+    }
+
+    private boolean controlloIscrizioneDuplicata(HTreeMap<String, Iscrizione> map, Iscrizione iscr){
+        for (String i: map.getKeys()) {
+            if (map.get(i).getCorso().equals(iscr.getCorso()) && map.get(i).getStudente().equals(iscr.getStudente())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private String escapeHtml(String html) {
