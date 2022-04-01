@@ -1,6 +1,8 @@
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -22,6 +24,8 @@ public class Login implements Pagina{
     @Override
     public void aggiungiContenuto(){
         RootPanel.get("contenuto").clear();
+        ProgettoSWENG.rimuoviMenu();
+        RootPanel.get("login").clear();
         VerticalPanel formContainer = new VerticalPanel();
         formContainer.getElement().setClassName("formContainer");
 

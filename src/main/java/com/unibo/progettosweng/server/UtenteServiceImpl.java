@@ -80,9 +80,6 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return null;
     }
 
-
-
-
     //metodo che viene invocato quando vengono modificato le informazioni degli utenti
     @Override
     public Utente aggiorna(Utente ut, String usernameOriginale){
@@ -142,6 +139,27 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return docenti;
     }
 
+    public int getNumeroStudenti() {
+        createOrOpenDB();
+        int count = 0;
+        for(int i = 0; i < map.size(); i++) {
+            if(map.get(i).getTipo().equals("Studente")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getNumeroDocenti() {
+        createOrOpenDB();
+        int count = 0;
+        for(int i = 0; i < map.size(); i++) {
+            if(map.get(i).getTipo().equals("Docente")) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     private boolean controlloUtenteDuplicato(HTreeMap<String,Utente> map, Utente utente){
         for ( String i: map.getKeys()) {
@@ -151,7 +169,6 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         }
         return false;
     }
-
 
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
