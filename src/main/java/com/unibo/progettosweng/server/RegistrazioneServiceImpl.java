@@ -63,6 +63,19 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
         return registrazioni;
     }
 
+    @Override
+    public ArrayList<Registrazione> getRegistrazioniFromEsame(String nomeCorso) throws IllegalArgumentException {
+        createOrOpenDB();
+        ArrayList<Registrazione> registrazioni = new ArrayList<>();
+        for (String i: map.getKeys()){
+            if(map.get(i).getCorso().equals(nomeCorso)){
+                registrazioni.add(map.get(i));
+            }
+
+        }
+        return registrazioni;
+    }
+
     private String escapeHtml(String html) {
         if (html == null) {
             return null;
