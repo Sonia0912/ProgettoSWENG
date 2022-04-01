@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public interface ValutazioneServiceAsync {
     void add(String info[], AsyncCallback<String> callback)  throws IllegalArgumentException;
+    void addMore(ArrayList<String[]> listaValutazione, AsyncCallback<String> callback) throws IllegalArgumentException;
     void remove(String nomeCorso,String usernameStudente, AsyncCallback<String> callback)  throws IllegalArgumentException;
     void getValutazioni(AsyncCallback<Valutazione[]> callback) throws Exception;
     void aggiorna(Valutazione val,String nomeCorso, String studente, AsyncCallback<Valutazione> callback) throws Exception;

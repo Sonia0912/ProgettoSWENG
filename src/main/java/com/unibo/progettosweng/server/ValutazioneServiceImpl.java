@@ -50,6 +50,22 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         }
     }
 
+    @Override
+    public String addMore(ArrayList<String[]> listaValutazioni) throws IllegalArgumentException {
+        createOrOpenDB();
+        for (String[] val: listaValutazioni) {
+            Valutazione valutazione = new Valutazione(val[0],val[1],Integer.parseInt(val[2]),Boolean.parseBoolean(val[3]));
+            if(controlloValutazioneDuplicato( map,valutazione)){
+                return "Valutazione già inserito!";
+            }else {
+                map.put(String.valueOf(map.size() + 1), valutazione);
+                db.commit();
+                 }
+        }
+        return "(size: " + map.size()+ ") La valutazione  sono stata creata e aggiunta al database.";
+
+    };
+
     private boolean controlloValutazioneDuplicato(HTreeMap<String, Valutazione> map, Valutazione val) {
 
         for (String i : map.getKeys()) {
