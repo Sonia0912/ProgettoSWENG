@@ -13,4 +13,5 @@ public interface ValutazioneServiceAsync {
     void getValutazioni(AsyncCallback<Valutazione[]> callback) throws Exception;
     void aggiorna(Valutazione val,String nomeCorso, String studente, AsyncCallback<Valutazione> callback) throws Exception;
     void getValutazioniStudente(String studente, AsyncCallback<ArrayList<Valutazione>> callback) throws Exception;
+    void getValutazioniFromEsame(String nomeCorsoEsame, AsyncCallback<ArrayList<Valutazione>> callback) throws IllegalArgumentException;
 }

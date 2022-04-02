@@ -124,6 +124,18 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         return val;
     }
 
+    @Override
+    public ArrayList<Valutazione> getValutazioniFromEsame(String nomeCorsoEsame) throws IllegalArgumentException {
+        createOrOpenDB();
+        ArrayList<Valutazione> valutazioni = new ArrayList<>();
+        for (String i: map.getKeys()) {
+            if (map.get(i).getNomeCorso().equals(nomeCorsoEsame)){
+                valutazioni.add(map.get(i));
+            }
+        }
+        return valutazioni;
+    }
+
 
     private String escapeHtml(String html) {
         if (html == null) {

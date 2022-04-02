@@ -11,4 +11,5 @@ public interface RegistrazioneService extends RemoteService {
     String add(String studente, String corso) throws IllegalArgumentException;
     String aggiorna(String vecchioCorso, String nuovoCorso) throws IllegalArgumentException;
     ArrayList<Registrazione> getRegistrazioniStudente(String studente) throws IllegalArgumentException;
+    ArrayList<Registrazione> getRegistrazioniFromEsame(String nomeCorso) throws IllegalArgumentException;
 }
