@@ -2,6 +2,7 @@ package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,9 +16,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 
-import com.unibo.progettosweng.client.model.Corso;
-import com.unibo.progettosweng.client.model.Esame;
-import com.unibo.progettosweng.client.model.Utente;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.unibo.progettosweng.client.model.*;
 
 
 import java.util.ArrayList;
@@ -32,6 +32,8 @@ public class PortaleDocente extends Portale {
 
     private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
     private static EsameServiceAsync serviceEsame = GWT.create(EsameService.class);
+    private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
+    private static ValutazioneServiceAsync serviceValutazione = GWT.create(ValutazioneService.class);
 
     @Override
     public void salvaCredenziali() {
@@ -78,30 +80,9 @@ public class PortaleDocente extends Portale {
             }
         });
 
-        btnValutazioni.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                try {
-                    caricaValutazioni();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
         menuLaterale.add(btnProfilo);
         menuLaterale.add(btnCorsi);
         menuLaterale.add(btnEsami);
-        menuLaterale.add(btnValutazioni);
-    }
-
-    private void caricaValutazioni() {
-        spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Crea una nuova valutazioni </div>"));
-        try {
-            spazioDinamico.add((new InserimentoValutazione(docente)).getForm());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -390,7 +371,7 @@ public class PortaleDocente extends Portale {
         Column<Esame, String> votiCol = new Column<Esame, String>(votiCell) {
             @Override
             public String getValue(Esame object) {
-                return "Inserisci voti";
+                return "Gestisci voti";
             }
         };
         tableEsami.addColumn(votiCol, "");
@@ -398,7 +379,33 @@ public class PortaleDocente extends Portale {
         votiCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
-                Window.alert("Vuoi inserire i voti dell'esame di " + object.getNomeCorso());
+                serviceRegistrazione.getRegistrazioniFromEsame(object.getNomeCorso(), new AsyncCallback<ArrayList<Registrazione>>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Failure: " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(ArrayList<Registrazione> registrazioni) {
+                        serviceValutazione.getValutazioniFromEsame(object.getNomeCorso(), new AsyncCallback<ArrayList<Valutazione>>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                Window.alert("Failure: " + throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(ArrayList<Valutazione> valutazioni) {
+                                spazioDinamico.clear();
+                                VerticalPanel tableValutazioni = creaTabellaValutazioni(registrazioni, valutazioni, "Non ci sono iscritti da valutare per questo esame.");
+                                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Inserisci valutazioni per l'esame di " + object.getNomeCorso() +"</div>"));
+                                spazioDinamico.add(tableValutazioni);
+                                CellTable<Valutazione> tableModificaValutazioni = creaTabellaModificaValutazioni(valutazioni,"Non ci sono valutazioni da modificare");
+                                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voti</div>"));
+                                spazioDinamico.add(tableModificaValutazioni);
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -439,5 +446,119 @@ public class PortaleDocente extends Portale {
         tableEsami.setRowCount(listaEsami.size(), true);
         tableEsami.setRowData(0, listaEsami);
         return tableEsami;
+    }
+
+    private VerticalPanel creaTabellaValutazioni(List<Registrazione> listaRegistrazioni, List<Valutazione> valutazioniOld, String messaggioVuoto) {
+        VerticalPanel vp = new VerticalPanel();
+        CellTable<Registrazione> tableRegistrazioni = new CellTable<Registrazione>();
+        for (int i = 0; i < listaRegistrazioni.size(); i++){
+            for (int j = 0; j < valutazioniOld.size(); j++){
+                if (listaRegistrazioni.get(i).getStudente().equals(valutazioniOld.get(j).getStudente()) && listaRegistrazioni.get(i).getCorso().equals(valutazioniOld.get(j).getNomeCorso())) {
+                    listaRegistrazioni.remove(listaRegistrazioni.get(i));
+                }
+            }
+        }
+        ArrayList<String[]> valutazioni = new ArrayList<>();
+        tableRegistrazioni.addStyleName("tablePortale");
+        tableRegistrazioni.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
+        tableRegistrazioni.setEmptyTableWidget(new Label(messaggioVuoto));
+
+        TextColumn<Registrazione> usernameCol = new TextColumn<Registrazione>() {
+            @Override
+            public String getValue(Registrazione object) {
+                return object.getStudente();
+            }
+        };
+        tableRegistrazioni.addColumn(usernameCol, "Username studente");
+
+        final TextInputCell valCell = new TextInputCell();
+        Column<Registrazione, String> nameColumn = new Column<Registrazione, String>(valCell) {
+            @Override
+            public String getValue(Registrazione object) {
+                // Return the name as the value of this column.
+                return "";
+            }
+        };
+        tableRegistrazioni.addColumn(nameColumn, "Valutazione");
+        nameColumn.setFieldUpdater(new FieldUpdater<Registrazione, String>() {
+            @Override
+            public void update(int index, Registrazione object, String value) {
+                if (Integer.parseInt(value) < 18 || Integer.parseInt(value) > 30){
+                    Window.alert("Il voto deve essere compreso tra 18 e 30");
+                }
+                valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "false"});
+            }
+        });
+
+        Button btnInviaVoti = new Button("Invia voti");
+        btnInviaVoti.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                //fare addMore(valutazioni)
+            }
+        });
+        btnInviaVoti.addStyleName("btnCreazione");
+
+        tableRegistrazioni.setRowCount(listaRegistrazioni.size(), true);
+        tableRegistrazioni.setRowData(0, listaRegistrazioni);
+
+        vp.add(tableRegistrazioni);
+        vp.add(btnInviaVoti);
+        return vp;
+    }
+
+    private CellTable<Valutazione> creaTabellaModificaValutazioni(List<Valutazione> listaValutazioni, String messaggioVuoto) {
+        CellTable<Valutazione> tableValutazioni = new CellTable<Valutazione>();
+        tableValutazioni.addStyleName("tablePortale");
+        tableValutazioni.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
+        tableValutazioni.setEmptyTableWidget(new Label(messaggioVuoto));
+
+        TextColumn<Valutazione> usernameCol = new TextColumn<Valutazione>() {
+            @Override
+            public String getValue(Valutazione object) {
+                return object.getStudente();
+            }
+        };
+        tableValutazioni.addColumn(usernameCol, "Username studente");
+
+        TextColumn<Valutazione> votoCol = new TextColumn<Valutazione>() {
+            @Override
+            public String getValue(Valutazione object) {
+                return String.valueOf(object.getVoto());
+            }
+        };
+        tableValutazioni.addColumn(votoCol, "Voto");
+
+        ButtonCell modificaCell = new ButtonCell();
+        Column<Valutazione, String> modificaCol = new Column<Valutazione, String>(modificaCell) {
+            @Override
+            public String getValue(Valutazione object) {
+                return "Modifica";
+            }
+        };
+        tableValutazioni.addColumn(modificaCol, "");
+        modificaCol.setCellStyleNames("btnTableStandard");
+        modificaCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
+            @Override
+            public void update(int index, Valutazione object, String value) {
+                spazioDinamico.clear();
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voto</div>"));
+                for(int i = 0; i < listaValutazioni.size(); i++){
+                    if(object.getNomeCorso().equals(listaValutazioni.get(i).getNomeCorso()) && object.getStudente().equals(listaValutazioni.get(i).getStudente())){
+                        try {
+                            spazioDinamico.add((new ModificaValutazione(listaValutazioni.get(i)).getForm()));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+        });
+
+        tableValutazioni.setRowCount(listaValutazioni.size(), true);
+        tableValutazioni.setRowData(0, listaValutazioni);
+
+        return tableValutazioni;
     }
 }
