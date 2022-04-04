@@ -40,17 +40,6 @@ public class ModificaCorso implements Form{
 
 
         VerticalPanel formPanel = new VerticalPanel();
-         /*
-        final Label labelNome = new Label("Nome del Corso*:");
-        labelNome.getElement().setClassName("label");
-        formPanel.add(labelNome);
-        final TextBox nome = new TextBox();
-        nome.getElement().setClassName("input");
-        nome.setValue(corso.getNomeCorso());
-        nome.setName("Nome");
-        formPanel.add(nome);
-         */
-
         final Label labelInizio = new Label("Data di inizio*:");
         labelInizio.getElement().setClassName("label");
         formPanel.add(labelInizio);

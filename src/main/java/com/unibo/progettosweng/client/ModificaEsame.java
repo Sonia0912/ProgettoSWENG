@@ -108,20 +108,6 @@ public class ModificaEsame implements Form{
         aula.setName("Aula");
         formPanel.add(aula);
 
-        /*
-        final Label labelNomeCorso = new Label("Corso*:");
-        labelNomeCorso.getElement().setClassName("label");
-        formPanel.add(labelNomeCorso);
-        formPanel.add(labelNomeCorso);
-        final TextBox corso = new TextBox();
-        corso.getElement().setClassName("input");
-        corso.setValue(esame.getNomeCorso());
-        corso.setName("Corso");
-        formPanel.add(corso);
-         */
-
-
-
         Button send = new Button("Modifica");
         send.getElement().setClassName("btn-send");
         send.addClickHandler(new ClickHandler() {

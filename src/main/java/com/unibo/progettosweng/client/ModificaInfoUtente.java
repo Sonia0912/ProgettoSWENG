@@ -108,9 +108,12 @@ public class ModificaInfoUtente implements Form {
         editUtente.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                Utente utenteAggiornato = new Utente(nome.getText(), cognome.getText(), email.getText(), password.getText(), utente.getTipo());
+                utente.setCognome(cognome.getText());
+                utente.setNome(nome.getText());
+                utente.setUsername(email.getText());
+                utente.setPassword(password.getText());
                 try {
-                    service.aggiorna(utenteAggiornato, utente.getUsername(), new AsyncCallback<Utente>() {
+                    service.aggiorna(utente, utente.getUsername(), new AsyncCallback<Utente>() {
                         @Override
                         public void onFailure(Throwable throwable) {
                             Window.alert("Failuire to update user's information: " + throwable.getMessage());
