@@ -148,22 +148,21 @@ public class ModificaEsame implements Form{
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
 
-                Esame  esameAggiornato = new Esame(format.format(data.getValue()).toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(),aula.getText(),esame.getNomeCorso());
+                esame.setAula(aula.getText());
+                esame.setData(format.format(data.getValue()));
+                esame.setOra(orario.getSelectedItemText());
+                esame.setDifficolta(hardness.getSelectedItemText());
+
                 try {
-                    esameService.aggiorna(esameAggiornato, new AsyncCallback<Esame>() {
+                    esameService.aggiorna(esame, new AsyncCallback<Void>() {
                         @Override
                         public void onFailure(Throwable throwable) {
                             Window.alert("Errore durante la modifica dell'esame: " + throwable.getMessage());
                         }
 
                         @Override
-                        public void onSuccess(Esame esame) {
-                            if(esame != null){
-                                Window.alert("L'esame " + esame.getNomeCorso() +" è stato modificato corretamente");
-                            }else {
-                                Window.alert("esame null");
-                            }
-                            //esame = esameAggiornato;
+                        public void onSuccess(Void v) {
+                            Window.alert("L'esame " + esame.getNomeCorso() +" è stato modificato corretamente");
                         }
                     });
                 } catch (Exception e) {

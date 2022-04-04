@@ -5,7 +5,6 @@ import com.unibo.progettosweng.client.EsameService;
 
 import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
-import com.unibo.progettosweng.client.model.Serializer.SerializerCorso;
 import com.unibo.progettosweng.client.model.Serializer.SerializerEsame;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -90,15 +89,14 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     }
 
     @Override
-    public Esame aggiorna(Esame esame) throws Exception {
+    public void aggiorna(Esame esame) throws Exception {
         createOrOpenDB();
         for ( String i: map.getKeys()) {
             if(map.get(i).getNomeCorso().equals(esame.getNomeCorso())){
                 map.replace(i,esame);
-                return map.get(i);
+               // db.commit();
             }
         }
-        return null;
     }
 
     @Override

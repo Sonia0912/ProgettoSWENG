@@ -24,6 +24,7 @@ public class ModificaCorso implements Form{
     Corso corso;
     FormPanel editCorso;
     private static UtenteServiceAsync serviceUtente = GWT.create(UtenteService.class);
+    private static CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 
     public ModificaCorso(Utente docente, Corso corso){
         this.docente = docente;
@@ -37,7 +38,9 @@ public class ModificaCorso implements Form{
         editCorso.setAction("/modificaCorso");
         editCorso.setMethod(FormPanel.METHOD_POST);
 
+
         VerticalPanel formPanel = new VerticalPanel();
+         /*
         final Label labelNome = new Label("Nome del Corso*:");
         labelNome.getElement().setClassName("label");
         formPanel.add(labelNome);
@@ -46,6 +49,7 @@ public class ModificaCorso implements Form{
         nome.setValue(corso.getNomeCorso());
         nome.setName("Nome");
         formPanel.add(nome);
+         */
 
         final Label labelInizio = new Label("Data di inizio*:");
         labelInizio.getElement().setClassName("label");
@@ -121,7 +125,7 @@ public class ModificaCorso implements Form{
         editCorso.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().length() == 0 || inizio.getValue().toString().length() == 0 || fine.getValue().toString().length() == 0 || descr.getText().length() == 0) {
+                if (inizio.getValue().toString().length() == 0 || fine.getValue().toString().length() == 0 || descr.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -131,7 +135,28 @@ public class ModificaCorso implements Form{
         editCorso.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+
+                corso.setDataInizio(format.format(inizio.getValue()));
+                corso.setDataFine(format.format(fine.getValue()));
+                corso.setDescrizione( descr.getText() );
+                corso.setCodocente( codoc.getSelectedItemText());
+
+                try {
+                        serviceCorso.aggiorna(corso, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore durante la modifica del corso");
+                        }
+
+                        @Override
+                        public void onSuccess(Void v) {
+                            Window.alert("Esame di "+ corso.getNomeCorso()+ " aggiornato corretamente");
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         return editCorso;

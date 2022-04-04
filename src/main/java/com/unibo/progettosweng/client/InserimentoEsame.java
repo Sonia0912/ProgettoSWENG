@@ -189,17 +189,17 @@ public class InserimentoEsame implements Form{
 
                                 @Override
                                 public void onSuccess(Corso corso) {
-                                    Corso corsoUpdated = new Corso(corso.getNomeCorso(), corso.getDataInizio(), corso.getDataFine(), corso.getDescrizione(), corso.getDipartimento(), corso.getDocente(), corso.getCodocente(), true);
-                                    try {
-                                        serviceCorsi.aggiorna(corsoUpdated, new AsyncCallback<Corso>() {
+                                    corso.setEsameCreato(true);
+                                   try {
+                                        serviceCorsi.aggiorna(corso, new AsyncCallback<Void>() {
                                             @Override
                                             public void onFailure(Throwable throwable) {
                                                 Window.alert("Failure: " + throwable.getMessage());
                                             }
 
                                             @Override
-                                            public void onSuccess(Corso corso) {
-                                                Window.alert("Corso aggiornato");
+                                            public void onSuccess(Void v) {
+                                                //Window.alert("Corso aggiornato");
                                             }
                                         });
                                     } catch (Exception e) {
