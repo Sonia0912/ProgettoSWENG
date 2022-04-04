@@ -154,7 +154,7 @@ public class InserimentoEsame implements Form{
         nuovoEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue() == null || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getItemCount() == 0) {
+                if (data.getValue() == null || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getSelectedItemText().equals("") ) {
                     if(corso.getSelectedItemText().equals("")){
                         Window.alert("Devi prima selezionare un corso per registrare l'esame ");
                         submitEvent.cancel();

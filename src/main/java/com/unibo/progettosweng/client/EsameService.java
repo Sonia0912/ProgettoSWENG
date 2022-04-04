@@ -13,7 +13,7 @@ public interface EsameService extends RemoteService {
     String add(String[] input) throws IllegalArgumentException;
     String remove(String key) throws IllegalArgumentException;
     ArrayList<Esame> getEsami() throws Exception;
-    void aggiorna(Esame esame) throws Exception;
+    Esame aggiorna(Esame esame) throws Exception;
     ArrayList<Esame> getEsamiFromCorsi(ArrayList<Corso> corsi) throws Exception;
     ArrayList<Esame> getEsamiFromNomeCorsi(ArrayList<String> corsi) throws Exception;
 }

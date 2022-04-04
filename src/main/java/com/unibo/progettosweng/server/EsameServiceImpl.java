@@ -90,13 +90,15 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     }
 
     @Override
-    public void aggiorna(Esame esame) throws Exception {
+    public Esame aggiorna(Esame esame) throws Exception {
         createOrOpenDB();
         for ( String i: map.getKeys()) {
             if(map.get(i).getNomeCorso().equals(esame.getNomeCorso())){
                 map.replace(i,esame);
+                return map.get(i);
             }
         }
+        return null;
     }
 
     @Override

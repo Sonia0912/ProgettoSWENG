@@ -1,5 +1,6 @@
 package com.unibo.progettosweng.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -16,9 +17,9 @@ import java.util.Date;
 public class ModificaEsame implements Form{
     FormPanel editEsame;
     Esame esame;
+    private EsameServiceAsync esameService = GWT.create(EsameService.class);
 
-    public ModificaEsame (Esame esame){
-        this.esame = esame;
+    public ModificaEsame (Esame esame){ this.esame = esame;
     }
 
     @Override
@@ -107,6 +108,7 @@ public class ModificaEsame implements Form{
         aula.setName("Aula");
         formPanel.add(aula);
 
+        /*
         final Label labelNomeCorso = new Label("Corso*:");
         labelNomeCorso.getElement().setClassName("label");
         formPanel.add(labelNomeCorso);
@@ -116,6 +118,7 @@ public class ModificaEsame implements Form{
         corso.setValue(esame.getNomeCorso());
         corso.setName("Corso");
         formPanel.add(corso);
+         */
 
 
 
@@ -134,7 +137,7 @@ public class ModificaEsame implements Form{
         editEsame.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0 || corso.getText().length() == 0) {
+                if (data.getValue().toString().length() == 0 || orario.getSelectedItemText().length() == 0 || hardness.getSelectedItemText().length() == 0 || aula.getText().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -144,7 +147,28 @@ public class ModificaEsame implements Form{
         editEsame.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //to do
+
+                Esame  esameAggiornato = new Esame(format.format(data.getValue()).toString(),orario.getSelectedItemText(),hardness.getSelectedItemText(),aula.getText(),esame.getNomeCorso());
+                try {
+                    esameService.aggiorna(esameAggiornato, new AsyncCallback<Esame>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore durante la modifica dell'esame: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Esame esame) {
+                            if(esame != null){
+                                Window.alert("L'esame " + esame.getNomeCorso() +" è stato modificato corretamente");
+                            }else {
+                                Window.alert("esame null");
+                            }
+                            //esame = esameAggiornato;
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         return editEsame;
