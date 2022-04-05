@@ -312,7 +312,23 @@ public class PortaleDocente extends Portale {
         eliminaCol.setFieldUpdater(new FieldUpdater<Corso, String>() {
             @Override
             public void update(int index, Corso object, String value) {
-                Window.alert("Vuoi eliminare il corso di " + object.getNomeCorso());
+                serviceCorso.remove(object.getNomeCorso(), new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Errore durante l'eliminazione del corso " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        Window.alert(s);
+                        try {
+                            caricaCorsi();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
             }
         });
 

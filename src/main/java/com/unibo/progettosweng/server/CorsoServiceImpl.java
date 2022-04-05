@@ -50,7 +50,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
             if(map.get(i).getNomeCorso().equals(nomeCorso)){
                 map.remove(i);
                 db.commit();
-                return "La taglia: " + map.size() + " Il corso " + nomeCorso + " è  stato rimosso.";
+                return "(taglia: " + map.size() + ") Il corso " + nomeCorso + " è  stato rimosso.";
             }
         }
         return "Nessun corso presente";
