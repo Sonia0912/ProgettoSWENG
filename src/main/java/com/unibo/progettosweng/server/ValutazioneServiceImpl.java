@@ -40,7 +40,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         for(int i = 0; i < input.length; i++) {
             input[i] = escapeHtml(input[i]);
         }
-        Valutazione valutazione = new Valutazione(input[0], input[1], Integer.parseInt(input[2]), Boolean.parseBoolean(input[3]));
+        Valutazione valutazione = new Valutazione(input[0], input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]));
         if(controlloValutazioneDuplicato( map,valutazione)){
             return "Valutazione già inserito!";
         }else {
@@ -52,15 +52,9 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
 
     @Override
     public String addMore(ArrayList<String[]> listaValutazioni) throws IllegalArgumentException {
-        createOrOpenDB();
+
         for (String[] val: listaValutazioni) {
-            Valutazione valutazione = new Valutazione(val[0],val[1],Integer.parseInt(val[2]),Boolean.parseBoolean(val[3]));
-            if(controlloValutazioneDuplicato( map,valutazione)){
-                return "Valutazione già inserito!";
-            }else {
-                map.put(String.valueOf(map.size() + 1), valutazione);
-                db.commit();
-                 }
+            add(val);
         }
         return "(size: " + map.size()+ ") La valutazione  sono stata creata e aggiunta al database.";
 
@@ -117,7 +111,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         createOrOpenDB();
         ArrayList<Valutazione> val = new ArrayList<>();
         for (String i: map.getKeys()) {
-            if(map.get(i).getStudente().equals(studente) && map.get(i).getPubblicato()) {
+            if(map.get(i).getStudente().equals(studente) && map.get(i).getStato() == 2) {
                 val.add(map.get(i));
             }
         }

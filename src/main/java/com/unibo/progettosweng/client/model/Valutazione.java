@@ -7,17 +7,17 @@ public class Valutazione implements Serializable {
     private String nomeCorso;
     private String studente;
     private int voto;
-    private boolean pubblicato;
+    private int stato;
 
     public Valutazione(){
 
     }
 
-    public Valutazione(String nomeCorso, String studente, int voto, boolean pubblicato){
+    public Valutazione(String nomeCorso, String studente, int voto, int stato){
         this.nomeCorso = nomeCorso;
         this.studente = studente;
         this.voto = voto;
-        this.pubblicato = pubblicato;
+        this.stato = stato;
     }
 
     public String getNomeCorso() {
@@ -28,8 +28,8 @@ public class Valutazione implements Serializable {
         return voto;
     }
 
-    public boolean getPubblicato() {
-        return pubblicato;
+    public int getStato() {
+        return stato;
     }
 
     public String getStudente() {
@@ -41,8 +41,8 @@ public class Valutazione implements Serializable {
     }
 
 
-    public void setPubblicato(boolean pubblicato) {
-        this.pubblicato = pubblicato;
+    public void setStato(int stato) {
+        this.stato = stato;
     }
 
     public void setVoto(int voto) {
@@ -55,7 +55,7 @@ public class Valutazione implements Serializable {
 
     @Override
     public String toString(){
-        return this.nomeCorso+" "+this.studente+" "+this.voto+" "+this.pubblicato;
+        return this.nomeCorso+" "+this.studente+" "+this.voto+" "+this.stato;
     }
 
 }

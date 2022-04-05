@@ -15,11 +15,11 @@ public class SerializerValutazione implements Serializer<Valutazione>, Serializa
         out.writeUTF(valutazione.getNomeCorso());
         out.writeUTF(valutazione.getStudente());
         out.writeInt(valutazione.getVoto());
-        out.writeBoolean(valutazione.getPubblicato());
+        out.writeInt(valutazione.getStato());
     }
 
     @Override
     public Valutazione deserialize(@NotNull DataInput2 in, int i) throws IOException {
-        return new Valutazione(in.readUTF(),in.readUTF(),in.readInt(),in.readBoolean());
+        return new Valutazione(in.readUTF(),in.readUTF(),in.readInt(),in.readInt());
     }
 }
