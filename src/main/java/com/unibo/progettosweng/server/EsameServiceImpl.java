@@ -69,7 +69,7 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
             if(map.get(i).getNomeCorso().equals(key)){
                 map.remove(i);
                 db.commit();
-                return "La taglia: " + map.size() + " L'esame di " + key + " è  stato rimosso.";
+                return "(taglia: " + map.size() + ") L'esame di " + key + " è  stato rimosso.";
             }
         }
         return "Nessun corso Presente!";

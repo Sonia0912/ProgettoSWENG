@@ -455,7 +455,54 @@ public class PortaleDocente extends Portale {
         eliminaCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
-                Window.alert("Hai eliminato con successo l'esame di " + object.getNomeCorso());
+                serviceEsame.remove(object.getNomeCorso(), new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Errore durante l'eliminazione dell'esame di " + object.getNomeCorso() + " -> "+ throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        Window.alert(s);
+                        try {
+                            serviceCorso.getCorso(object.getNomeCorso(), new AsyncCallback<Corso>() {
+                                @Override
+                                public void onFailure(Throwable throwable) {
+                                    Window.alert("Errore durante ottenimento del corso " + throwable.getMessage());
+                                }
+
+                                @Override
+                                public void onSuccess(Corso corso) {
+                                    corso.setEsameCreato(false);
+
+                                    try {
+                                        serviceCorso.aggiorna(corso, new AsyncCallback<Void>() {
+                                            @Override
+                                            public void onFailure(Throwable throwable) {
+                                                Window.alert("Errore durante aggiornamento corso " + throwable.getMessage());
+                                            }
+
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                try {
+                                                    caricaEsami();
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
             }
         });
 
