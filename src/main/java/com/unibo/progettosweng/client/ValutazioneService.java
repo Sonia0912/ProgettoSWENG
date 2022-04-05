@@ -12,7 +12,7 @@ public interface ValutazioneService extends RemoteService {
     String addMore(ArrayList<String[]> listaValutazioni) throws IllegalArgumentException;
     String remove(String nomeCorso, String usernameStudente) throws IllegalArgumentException;
     Valutazione[] getValutazioni() throws Exception;
-    Valutazione aggiorna(Valutazione val, String nomeCorso, String studente) throws Exception;
+    void aggiorna(Valutazione val) throws Exception;
     ArrayList<Valutazione> getValutazioniStudente(String studente) throws Exception;
     ArrayList<Valutazione> getValutazioniFromEsame(String nomeCorsoEsame) throws IllegalArgumentException;
 }

@@ -97,14 +97,13 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
     }
 
     @Override
-    public Valutazione aggiorna(Valutazione val, String nomeCorso, String studente) throws Exception {
+    public void aggiorna(Valutazione val) throws Exception {
         createOrOpenDB();
         for (String i: map.getKeys()) {
-            if(map.get(i).getStudente().equals(studente) && map.get(i).getNomeCorso().equals(nomeCorso) ){
+            if(map.get(i).equals(val) ){
                 map.replace(i,val);
             }
         }
-        return  val;
     }
 
     public ArrayList<Valutazione> getValutazioniStudente(String studente) {

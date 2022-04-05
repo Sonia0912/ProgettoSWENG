@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class ModificaValutazione implements Form {
 
     private static ValutazioneServiceAsync valutazioneService = GWT.create(ValutazioneService.class);
-    private static CorsoServiceAsync corsoSerivce = GWT.create(CorsoService.class);
     Valutazione valutazione;
     FormPanel nuovaValutazione;
 
@@ -63,8 +62,8 @@ public class ModificaValutazione implements Form {
         nuovaValutazione.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if(voto.getText().trim().length() == 0){
-                    Window.alert("Inserire il nuovo voto");
+                if(Integer.parseInt(voto.getText()) < 18 || Integer.parseInt(voto.getText()) > 30){
+                    Window.alert("Il voto deve essere compreso tra 18 e 30");
                     submitEvent.cancel();
                 }
             }
@@ -73,7 +72,22 @@ public class ModificaValutazione implements Form {
         nuovaValutazione.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             @Override
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
-                //fare aggiornamento
+                valutazione.setVoto(Integer.valueOf(voto.getText()));
+                try {
+                    valutazioneService.aggiorna(valutazione, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Errore nell'aggiornare la valutaizone: " + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Void v) {
+                            Window.alert("Aggionato valtazione di " + valutazione.getStudente() + " con voto " + valutazione.getVoto());
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         return nuovaValutazione;

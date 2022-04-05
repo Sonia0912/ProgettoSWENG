@@ -58,4 +58,17 @@ public class Valutazione implements Serializable {
         return this.nomeCorso+" "+this.studente+" "+this.voto+" "+this.stato;
     }
 
+   @Override
+   public boolean equals(Object obj) {
+        if(obj != null){
+            if(obj.getClass() == this.getClass()){
+                Valutazione other = (Valutazione) obj;
+                if(other.getNomeCorso().equals(this.nomeCorso) && other.getStudente().equals(this.studente)){
+                    return true;
+                }
+            }
+        }
+        return false;
+   }
+
 }
