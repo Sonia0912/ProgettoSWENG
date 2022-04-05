@@ -549,7 +549,7 @@ public class PortaleDocente extends Portale {
                 if (Integer.parseInt(value) < 18 || Integer.parseInt(value) > 30){
                     Window.alert("Il voto deve essere compreso tra 18 e 30");
                 }
-                valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "false"});
+                valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "0"});
             }
         });
 
@@ -557,7 +557,23 @@ public class PortaleDocente extends Portale {
         btnInviaVoti.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                //fare addMore(valutazioni)
+
+                serviceValutazione.addMore(valutazioni, new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Errore durante l'invio dei voti " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        Window.alert(s);
+                        try {
+                            caricaEsami();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
         btnInviaVoti.addStyleName("btnCreazione");
