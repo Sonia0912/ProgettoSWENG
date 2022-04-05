@@ -93,4 +93,17 @@ public class Corso implements Serializable {
     public void setEsameCreato(Boolean value){
         this.esameCreato = value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null){
+            if(obj.getClass() == this.getClass()){
+                Corso other = (Corso) obj;
+                if(other.getNomeCorso().equals(this.nome)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

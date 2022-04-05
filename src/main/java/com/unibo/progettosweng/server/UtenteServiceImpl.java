@@ -45,16 +45,13 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     @Override
-    public String remove(String username) throws IllegalArgumentException {
+    public void remove(Utente utente) throws IllegalArgumentException {
         createOrOpenDB();
         for ( String i: map.getKeys()) {
-            if(map.get(i).getUsername().equals(username)){
+            if(map.get(i).equals(utente)){
                 map.remove(i);
-                db.commit();
-                return "La taglia: " + map.size() + " L'utente " + username + " è  stato rimosso.";
             }
         }
-        return "Nessun utente Presente!";
     }
 
     @Override

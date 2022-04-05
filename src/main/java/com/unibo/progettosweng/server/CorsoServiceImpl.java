@@ -74,7 +74,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
     public void aggiorna(Corso corso){
         createOrOpenDB();
         for ( String i: map.getKeys()) {
-            if(map.get(i).getNomeCorso().equals(corso.getNomeCorso())){
+            if(map.get(i).equals(corso)){
                 map.replace(i,corso);
             }
         }

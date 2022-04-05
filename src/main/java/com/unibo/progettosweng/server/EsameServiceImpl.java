@@ -92,9 +92,8 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     public void aggiorna(Esame esame) throws Exception {
         createOrOpenDB();
         for ( String i: map.getKeys()) {
-            if(map.get(i).getNomeCorso().equals(esame.getNomeCorso())){
+            if(map.get(i).equals(esame)){
                 map.replace(i,esame);
-               // db.commit();
             }
         }
     }

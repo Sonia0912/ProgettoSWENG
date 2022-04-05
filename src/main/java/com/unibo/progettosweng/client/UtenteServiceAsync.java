@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public interface UtenteServiceAsync {
     //tutti questi metodi devono essere void
-    void remove(String key, AsyncCallback<String> callback) throws IllegalArgumentException;
+    void remove(Utente ut, AsyncCallback<Void> callback) throws IllegalArgumentException;
     void add(String[] input, AsyncCallback<String> callback) throws IllegalArgumentException;
     void getUtenti(AsyncCallback<Utente[]> callback) throws Exception;
     void login(String username, String password, AsyncCallback<Utente> callback);

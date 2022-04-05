@@ -60,5 +60,17 @@ public class Utente implements Serializable {
         return this.nome+" "+this.cognome+" "+this.username+" "+this.tipo;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null){
+            if(obj.getClass() == this.getClass()){
+                Utente other = (Utente) obj;
+                if(other.getUsername().equals(this.username)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

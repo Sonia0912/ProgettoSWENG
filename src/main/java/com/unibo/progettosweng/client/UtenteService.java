@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @RemoteServiceRelativePath("utenti")
 public interface UtenteService extends RemoteService {
     String add(String[] input) throws IllegalArgumentException;
-    String remove(String key) throws IllegalArgumentException;
+        void remove(Utente ut) throws IllegalArgumentException;
     Utente[] getUtenti() throws Exception;
     Utente login(String username, String password) ;
     Utente aggiorna(Utente utente, String usernameOriginale) throws Exception;

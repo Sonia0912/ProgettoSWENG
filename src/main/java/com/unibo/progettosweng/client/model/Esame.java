@@ -63,4 +63,17 @@ public class Esame implements Serializable {
     public void setOra(String ora) {
         this.ora = ora;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null){
+            if(obj.getClass() == this.getClass()){
+                Esame other = (Esame) obj;
+                if(other.getNomeCorso().equals(this.nomeCorso)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
