@@ -546,10 +546,12 @@ public class PortaleDocente extends Portale {
         nameColumn.setFieldUpdater(new FieldUpdater<Registrazione, String>() {
             @Override
             public void update(int index, Registrazione object, String value) {
-                if (Integer.parseInt(value) < 18 || Integer.parseInt(value) > 30){
-                    Window.alert("Il voto deve essere compreso tra 18 e 30");
+                if (Integer.parseInt(value) <= 18 || Integer.parseInt(value) >= 30){
+                    Window.alert("!Il voto deve essere compreso tra 18 e 30");
+                }else {
+                    valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "0"});
                 }
-                valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "0"});
+
             }
         });
 
@@ -559,6 +561,7 @@ public class PortaleDocente extends Portale {
             public void onClick(ClickEvent clickEvent) {
 
                 serviceValutazione.addMore(valutazioni, new AsyncCallback<String>() {
+
                     @Override
                     public void onFailure(Throwable throwable) {
                         Window.alert("Errore durante l'invio dei voti " + throwable.getMessage());

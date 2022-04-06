@@ -15,4 +15,7 @@ public interface ValutazioneService extends RemoteService {
     void aggiorna(Valutazione val) throws Exception;
     ArrayList<Valutazione> getValutazioniStudente(String studente) throws Exception;
     ArrayList<Valutazione> getValutazioniFromEsame(String nomeCorsoEsame) throws IllegalArgumentException;
+    ArrayList<Valutazione> getValutazioniDaInserire() throws Exception;
+    ArrayList<Valutazione> getValutazioniDaPubblicare() throws Exception;
+    Valutazione cambiaStatoValutazione(String username,String corso, int stato) throws Exception;
 }

@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.unibo.progettosweng.client.model.Iscrizione;
 import com.unibo.progettosweng.client.model.Registrazione;
 import com.unibo.progettosweng.client.model.Utente;
+import com.unibo.progettosweng.client.model.Valutazione;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,21 +29,27 @@ public class PortaleSegreteria extends Portale {
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
     private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
+    private static ValutazioneServiceAsync serviceValutazioni = GWT.create(ValutazioneService.class);
 
-    private static ArrayList<String[]> listaDaInserire = new ArrayList<String[]>(Arrays.asList(
+    //private static ArrayList<String[]> listaDaInserire;
+    /*
+            new ArrayList<String[]>(Arrays.asList(
             new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
             new String[]{"Sistemi Operativi", "sofianeri@mail.com", "25"},
             new String[]{"Sistemi Operativi", "francescoverdi@mail.com", "30"},
             new String[]{"Algebra lineare", "lucabianchi@mail.com", "19"},
             new String[]{"Algebra lineare", "francescoverdi@mail.com", "23"}
     ));
+     */
 
-    private static ArrayList<String[]> listaDaPubblicare = new ArrayList<String[]>(Arrays.asList(
+    private static ArrayList<String[]> listaDaPubblicare ;
+    /*= new ArrayList<String[]>(Arrays.asList(
             new String[]{"Chimica", "lucabianchi@mail.com", "24"},
             new String[]{"Chimica", "francescoverdi@mail.com", "24"},
             new String[]{"Chimica", "sofianeri@mail.com", "24"},
             new String[]{"Algebra lineare", "sofianeri@mail.com", "26"}
     ));
+     */
 
     @Override
     public void salvaCredenziali() {
@@ -107,17 +114,49 @@ public class PortaleSegreteria extends Portale {
     }
 
     private void caricaInserimento() {
-        CellTable<String[]> tableVotiDaInserire = creaTabellaVoti(listaDaInserire, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
-        spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
-        spazioDinamico.add(tableVotiDaInserire);
+        try {
+            serviceValutazioni.getValutazioniDaInserire(new AsyncCallback<ArrayList<Valutazione>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    Window.alert("Errore durante ottenimento delle valutazioni da inserire");
+                }
+
+                @Override
+                public void onSuccess(ArrayList<Valutazione> val) {
+                    CellTable<Valutazione> tableVotiDaInserire = creaTabellaVoti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
+                    spazioDinamico.clear();
+                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
+                    spazioDinamico.add(tableVotiDaInserire);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void caricaPubblicazione() {
-        CellTable<String[]> tableVotiDaPubblicare = creaTabellaVoti(listaDaPubblicare, "Non ci sono voti da pubblicare, ricordati che prima devi inserirli.", false);
-        spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da pubblicare</div>"));
-        spazioDinamico.add(tableVotiDaPubblicare);
+
+        try {
+            serviceValutazioni.getValutazioniDaPubblicare(new AsyncCallback<ArrayList<Valutazione>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    Window.alert("Errore durante l'ottenimento della valutazioni da pubblicare");
+                }
+
+                @Override
+                public void onSuccess(ArrayList<Valutazione> valPub) {
+
+                    CellTable<Valutazione> tableVotiDaPubblicare = creaTabellaVoti(valPub, "Non ci sono voti da pubblicare, ricordati che prima devi inserirli.", false);
+                    spazioDinamico.clear();
+                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da pubblicare</div>"));
+                    spazioDinamico.add(tableVotiDaPubblicare);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public CellTable<Utente> creaTabellaStudenti(List<Utente> listaUtenti, String messaggioVuoto) {
@@ -204,70 +243,98 @@ public class PortaleSegreteria extends Portale {
     }
 
     // Da modificare quando avremo l'oggetto Voto
-    private CellTable<String[]> creaTabellaVoti(List<String[]> listaVoti, String messaggioVuoto, boolean daInserire) {
-        CellTable<String[]> tableVoti = new CellTable<String[]>();
+    private CellTable<Valutazione> creaTabellaVoti(List<Valutazione> listaVoti, String messaggioVuoto, boolean daInserire) {
+        CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
         tableVoti.addStyleName("tablePortale");
         tableVoti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
         tableVoti.setEmptyTableWidget(new Label(messaggioVuoto));
 
-        TextColumn<String[]> corsoCol = new TextColumn<String[]>() {
+        TextColumn<Valutazione> corsoCol = new TextColumn<Valutazione>() {
             @Override
-            public String getValue(String[] object) {
-                return object[0];
+            public String getValue(Valutazione object) {
+                return object.getNomeCorso();
             }
         };
         tableVoti.addColumn(corsoCol, "Nome del corso");
 
-        TextColumn<String[]> studenteCol = new TextColumn<String[]>() {
+        TextColumn<Valutazione> studenteCol = new TextColumn<Valutazione>() {
             @Override
-            public String getValue(String[] object) {
-                return object[1];
+            public String getValue(Valutazione object) {
+                return object.getStudente();
             }
         };
         tableVoti.addColumn(studenteCol, "Username studente");
 
-        TextColumn<String[]> votoCol = new TextColumn<String[]>() {
+        TextColumn<Valutazione> votoCol = new TextColumn<Valutazione>() {
             @Override
-            public String getValue(String[] object) {
-                return object[2];
+            public String getValue(Valutazione object) {
+                return String.valueOf(object.getVoto());
             }
         };
         tableVoti.addColumn(votoCol, "Voto");
 
         if(daInserire) {
             ButtonCell azioneCell = new ButtonCell();
-            Column<String[], String> azioneCol = new Column<String[], String>(azioneCell) {
+            Column<Valutazione, String> azioneCol = new Column<Valutazione, String>(azioneCell) {
                 @Override
-                public String getValue(String[] object) {
+                public String getValue(Valutazione object) {
                     return "Inserisci";
                 }
             };
             tableVoti.addColumn(azioneCol, "");
             azioneCol.setCellStyleNames("btnTableStandard");
-            azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
+            azioneCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
                 @Override
-                public void update(int index, String[] object, String value) {
-                    String[] selezionato = {object[0], object[1], object[2]};
-                    listaDaInserire.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
-                    listaDaPubblicare.add(selezionato);
+                public void update(int index, Valutazione object, String value) {
+                    try {
+                        object.setStato(1);
+                        serviceValutazioni.aggiorna(object, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                Window.alert("Errore durante il cambiamento di stato");
+                            }
+
+                            @Override
+                            public void onSuccess(Void val) {
+                                Window.alert("Stato cambiato correttamente ");
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     caricaInserimento();
                 }
             });
         } else {
             ButtonCell azioneCell = new ButtonCell();
-            Column<String[], String> azioneCol = new Column<String[], String>(azioneCell) {
+            Column<Valutazione, String> azioneCol = new Column<Valutazione, String>(azioneCell) {
                 @Override
-                public String getValue(String[] object) {
+                public String getValue(Valutazione object) {
                     return "Pubblica";
                 }
             };
             tableVoti.addColumn(azioneCol, "");
             azioneCol.setCellStyleNames("btnTableStandard");
-            azioneCol.setFieldUpdater(new FieldUpdater<String[], String>() {
+            azioneCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
                 @Override
-                public void update(int index, String[] object, String value) {
-                    String[] selezionato = {object[0], object[1], object[2]};
-                    listaDaPubblicare.removeIf(esame -> esame[0].equals(object[0]) && esame[1].equals(object[1]) && esame[2].equals(object[2]));
+                public void update(int index, Valutazione object, String value) {
+
+                    try {
+                        object.setStato(2);
+                        serviceValutazioni.aggiorna(object, new AsyncCallback<Void>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                Window.alert("Errore durante il cambiamento di stato");
+                            }
+
+                            @Override
+                            public void onSuccess(Void v) {
+                                Window.alert("Stato cambiato correttamente ");
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     caricaPubblicazione();
                 }
             });

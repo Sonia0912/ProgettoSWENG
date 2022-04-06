@@ -87,13 +87,50 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
     @Override
     public Valutazione[] getValutazioni() throws Exception {
         createOrOpenDB();
-        Valutazione[] valutazioni = new Valutazione[map.size()];
+        Valutazione[] valutazioni = new Valutazione[map.getSize()];
         int j = 0;
         for (String i: map.getKeys()) {
             valutazioni[j] = map.get(i);
             j++;
         }
         return valutazioni;
+    }
+
+    @Override
+    public ArrayList<Valutazione> getValutazioniDaInserire() throws Exception{
+        Valutazione [] valutazioni = getValutazioni();
+        ArrayList<Valutazione> lista = new ArrayList<>();
+        for (Valutazione val : valutazioni) {
+            if(val.getStato() == 0){
+                lista.add(val);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public ArrayList<Valutazione> getValutazioniDaPubblicare() throws Exception {
+        Valutazione [] valutazioni = getValutazioni();
+        ArrayList<Valutazione> lista = new ArrayList<>();
+        for (Valutazione val : valutazioni) {
+            if(val.getStato() == 1 ){
+                lista.add(val);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+        public Valutazione cambiaStatoValutazione(String username, String corso,  int stato) throws Exception {
+       createOrOpenDB();
+        for (String i : map.getKeys()) {
+            if(map.get(i).getStudente().equals(username) && map.get(i).getNomeCorso().equals(corso)){
+              map.get(i).setStato(stato);
+              db.commit();
+              return map.get(i);
+            }
+        }
+        return null;
     }
 
     @Override
