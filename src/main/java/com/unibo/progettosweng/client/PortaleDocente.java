@@ -559,14 +559,11 @@ public class PortaleDocente extends Portale {
         btnInviaVoti.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-
                 serviceValutazione.addMore(valutazioni, new AsyncCallback<String>() {
-
                     @Override
                     public void onFailure(Throwable throwable) {
                         Window.alert("Errore durante l'invio dei voti " + throwable.getMessage());
                     }
-
                     @Override
                     public void onSuccess(String s) {
                         Window.alert(s);

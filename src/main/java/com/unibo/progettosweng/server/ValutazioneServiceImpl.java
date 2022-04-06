@@ -42,7 +42,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         }
         Valutazione valutazione = new Valutazione(input[0], input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]));
         if(controlloValutazioneDuplicato( map,valutazione)){
-            return "Valutazione già inserito!";
+            return "Valutazione già inserita!";
         }else {
             map.put(String.valueOf(map.size() + 1), valutazione);
             db.commit();
@@ -56,7 +56,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         for (String[] val: listaValutazioni) {
             add(val);
         }
-        return "(size: " + map.size()+ ") La valutazione  sono stata creata e aggiunta al database.";
+        return "(size: " + map.size()+ ") Le valutazioni sono state create e aggiunte al database.";
 
     };
 
@@ -78,7 +78,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
             if(map.get(i).getNomeCorso().equals(nomeCorso) && map.get(i).getStudente().equals(studente)){
                 map.remove(i);
                 db.commit();
-                return "La taglia: " + map.size() + " La vautazione di " + studente + " del corso di" + nomeCorso + " è  stato rimosso.";
+                return "La taglia: " + map.size() + ". La valutazione di " + studente + " del corso di " + nomeCorso + " è stata rimossa.";
             }
         }
         return "Nessun voto presente";

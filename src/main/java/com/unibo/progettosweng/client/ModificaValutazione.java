@@ -31,17 +31,20 @@ public class ModificaValutazione implements Form {
 
         VerticalPanel formPanel = new VerticalPanel();
 
-        final Label labelNomeCorso = new Label("Esame di " + valutazione.getNomeCorso());
+        final Label labelNomeCorso = new Label("Esame: " + valutazione.getNomeCorso());
         labelNomeCorso.getElement().setClassName("label");
+        labelNomeCorso.addStyleName("infoVoto");
         formPanel.add(labelNomeCorso);
         formPanel.add(labelNomeCorso);
 
         final Label labelUsername = new Label("Studente: " + valutazione.getStudente());
         labelUsername.getElement().setClassName("label");
+        labelUsername.addStyleName("infoVoto");
         formPanel.add(labelUsername);
 
-        final Label labelVoto = new Label("Voto");
+        final Label labelVoto = new Label("Voto:");
         labelVoto.getElement().setClassName("label");
+        labelVoto.addStyleName("infoVoto");
         formPanel.add(labelVoto);
         final TextBox voto = new TextBox();
         voto.setValue(String.valueOf(valutazione.getVoto()));
@@ -77,12 +80,12 @@ public class ModificaValutazione implements Form {
                     valutazioneService.aggiorna(valutazione, new AsyncCallback<Void>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            Window.alert("Errore nell'aggiornare la valutaizone: " + throwable.getMessage());
+                            Window.alert("Errore nell'aggiornare la valutazione: " + throwable.getMessage());
                         }
 
                         @Override
                         public void onSuccess(Void v) {
-                            Window.alert("Aggionato valtazione di " + valutazione.getStudente() + " con voto " + valutazione.getVoto());
+                            Window.alert("Aggionata valutazione di " + valutazione.getStudente() + " con voto " + valutazione.getVoto());
                         }
                     });
                 } catch (Exception e) {

@@ -746,6 +746,11 @@ table.mainInfoStudentePanel:first-child > tbody:first-child > tr:first-child > t
     padding-left: 40px;
 }
 
+.infoVoto {
+    font-size: 16px;
+    line-height: 2;
+}
+
 /* Tabella i miei corsi */
 
 .tablePortale {
