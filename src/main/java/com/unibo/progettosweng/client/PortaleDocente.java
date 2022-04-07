@@ -546,7 +546,7 @@ public class PortaleDocente extends Portale {
         nameColumn.setFieldUpdater(new FieldUpdater<Registrazione, String>() {
             @Override
             public void update(int index, Registrazione object, String value) {
-                if (Integer.parseInt(value) <= 18 || Integer.parseInt(value) >= 30){
+                if (Integer.parseInt(value) < 18 || Integer.parseInt(value) > 30){
                     Window.alert("!Il voto deve essere compreso tra 18 e 30");
                 }else {
                     valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "0"});
@@ -620,17 +620,24 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
             @Override
             public void update(int index, Valutazione object, String value) {
-                spazioDinamico.clear();
-                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voto</div>"));
-                for(int i = 0; i < listaValutazioni.size(); i++){
-                    if(object.getNomeCorso().equals(listaValutazioni.get(i).getNomeCorso()) && object.getStudente().equals(listaValutazioni.get(i).getStudente())){
-                        try {
-                            spazioDinamico.add((new ModificaValutazione(listaValutazioni.get(i)).getForm()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
+
+                if(object.getStato() == 2) {
+                    Window.alert("Non puoi modificare un voto già pubblicato");
+                }else {
+                    spazioDinamico.clear();
+                    spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voto</div>"));
+                    for(int i = 0; i < listaValutazioni.size(); i++){
+                        if(object.getNomeCorso().equals(listaValutazioni.get(i).getNomeCorso()) && object.getStudente().equals(listaValutazioni.get(i).getStudente())){
+                            try {
+                                spazioDinamico.add((new ModificaValutazione(listaValutazioni.get(i)).getForm()));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
+
+
 
             }
         });
