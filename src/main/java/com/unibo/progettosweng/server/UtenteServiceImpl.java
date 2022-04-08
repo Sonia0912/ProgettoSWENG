@@ -28,9 +28,15 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         this.map = this.db.hashMap("utentiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
     }
 
+    //serve per i test
+    public void createOrOpenDB(HTreeMap<String, Utente> map, DB db){
+        this.db = db;
+        this.map = map;
+    }
+
     @Override
     public String add(String[] input) throws IllegalArgumentException {
-        createOrOpenDB();
+        //createOrOpenDB();
         for(int i = 0; i < input.length; i++) {
             input[i] = escapeHtml(input[i]);
         }
@@ -46,7 +52,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     @Override
     public void remove(Utente utente) throws IllegalArgumentException {
-        createOrOpenDB();
+        //createOrOpenDB();
         for ( String i: map.getKeys()) {
             if(map.get(i).equals(utente)){
                 map.remove(i);
@@ -56,7 +62,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     @Override
     public Utente[] getUtenti() throws Exception{
-        createOrOpenDB();
+        //createOrOpenDB();
         Utente[] utenti = new Utente[map.size()];
         int k = 0;
         for ( String i: map.getKeys()) {
@@ -68,7 +74,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
 
     @Override
     public Utente login(String username, String password) {
-        createOrOpenDB();
+        //createOrOpenDB();
         for (String i : map.getKeys()) {
             if(map.get(i).getUsername().equals(username) & map.get(i).getPassword().equals(password)){
                 return map.get(i);
