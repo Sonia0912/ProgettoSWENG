@@ -51,7 +51,7 @@ public class InserimentoEsame implements Form{
         formPanel.add(labelOrario);
         final ListBox orario = new ListBox();
         orario.addItem("");
-        for (int h = 0; h < 24; h++){
+        for (int h = 8; h < 18; h++){
             for (int m = 0; m < 60; m+=30){
                 if(h < 10){
                     if (m < 10){

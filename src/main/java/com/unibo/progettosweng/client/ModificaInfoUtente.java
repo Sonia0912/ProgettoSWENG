@@ -44,14 +44,14 @@ public class ModificaInfoUtente implements Form {
         cognome.setName("Cognome");
         formPanel.add(cognome);
 
-        final Label labelEmail = new Label("Email:");
-        labelEmail.getElement().setClassName("label");
-        formPanel.add(labelEmail);
-        final TextBox email = new TextBox();
-        email.getElement().setClassName("input");
-        email.setValue(utente.getUsername());
-        email.setName("Email");
-        formPanel.add(email);
+//        final Label labelEmail = new Label("Email:");
+//        labelEmail.getElement().setClassName("label");
+//        formPanel.add(labelEmail);
+//        final TextBox email = new TextBox();
+//        email.getElement().setClassName("input");
+//        email.setValue(utente.getUsername());
+//        email.setName("Email");
+//        formPanel.add(email);
 
         final Label labelPassword = new Label("Password:");
         labelPassword.getElement().setClassName("label");
@@ -98,7 +98,7 @@ public class ModificaInfoUtente implements Form {
         editUtente.addSubmitHandler(new FormPanel.SubmitHandler() {
             @Override
             public void onSubmit(FormPanel.SubmitEvent submitEvent) {
-                if (nome.getText().trim().length() == 0 || cognome.getText().trim().length() == 0 || email.getText().trim().length() == 0 || password.getText().trim().length() == 0) {
+                if (nome.getText().trim().length() == 0 || cognome.getText().trim().length() == 0 || password.getText().trim().length() == 0) {
                     Window.alert("Compilare tutti i campi");
                     submitEvent.cancel();
                 }
@@ -110,7 +110,6 @@ public class ModificaInfoUtente implements Form {
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent submitCompleteEvent) {
                 utente.setCognome(cognome.getText());
                 utente.setNome(nome.getText());
-                utente.setUsername(email.getText());
                 utente.setPassword(password.getText());
                 try {
                     service.aggiorna(utente, utente.getUsername(), new AsyncCallback<Utente>() {
