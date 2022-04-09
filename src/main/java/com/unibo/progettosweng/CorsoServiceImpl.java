@@ -1,4 +1,4 @@
-package com.unibo.progettosweng.server;
+package com.unibo.progettosweng;
 
 import com.unibo.progettosweng.client.CorsoService;
 import com.unibo.progettosweng.client.model.Corso;

@@ -1,4 +1,4 @@
-package com.unibo.progettosweng.server;
+package com.unibo.progettosweng;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.unibo.progettosweng.client.RegistrazioneService;

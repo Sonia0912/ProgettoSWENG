@@ -22,4 +22,5 @@ public interface UtenteServiceAsync {
     void getDocenti(AsyncCallback<ArrayList<Utente>> callback) throws Exception;
     void getNumeroStudenti(AsyncCallback<Integer> callback) throws Exception;
     void getNumeroDocenti(AsyncCallback<Integer> callback) throws Exception;
+    int getSize(AsyncCallback<Integer> callback);
 }

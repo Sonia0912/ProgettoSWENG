@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>utenteServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.UtenteServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.UtenteServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -18,7 +18,7 @@
 
   <servlet>
     <servlet-name>corsoServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.CorsoServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.CorsoServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -28,7 +28,7 @@
 
   <servlet>
     <servlet-name>esameServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.EsameServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.EsameServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -38,7 +38,7 @@
 
   <servlet>
     <servlet-name>valutazioneServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.ValutazioneServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.ValutazioneServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -48,7 +48,7 @@
 
   <servlet>
     <servlet-name>iscrizioneServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.IscrizioneServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.IscrizioneServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -58,7 +58,7 @@
 
   <servlet>
     <servlet-name>registrazioneServlet</servlet-name>
-    <servlet-class>com.unibo.progettosweng.server.RegistrazioneServiceImpl</servlet-class>
+    <servlet-class>com.unibo.progettosweng.RegistrazioneServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>

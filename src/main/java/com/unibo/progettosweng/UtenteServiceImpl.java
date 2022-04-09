@@ -1,4 +1,4 @@
-package com.unibo.progettosweng.server;
+package com.unibo.progettosweng;
 
 import com.unibo.progettosweng.client.UtenteService;
 import com.unibo.progettosweng.client.model.Serializer.SerializerUtente;
@@ -35,8 +35,13 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     @Override
+    public int getSize(){
+        return map.getSize();
+    }
+
+    @Override
     public String add(String[] input) throws IllegalArgumentException {
-        //createOrOpenDB();
+        createOrOpenDB();
         for(int i = 0; i < input.length; i++) {
             input[i] = escapeHtml(input[i]);
         }
