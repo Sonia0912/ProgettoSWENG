@@ -66,6 +66,11 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return utenti;
     }
 
+    public int getSize(){
+        createOrOpenDB();
+        return this.map.getSize();
+    }
+
     @Override
     public Utente login(String username, String password) {
         createOrOpenDB();
