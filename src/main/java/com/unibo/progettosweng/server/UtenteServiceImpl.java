@@ -66,6 +66,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return utenti;
     }
 
+    @Override
     public int getSize(){
         createOrOpenDB();
         return this.map.getSize();
@@ -82,7 +83,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         return null;
     }
 
-    //metodo che viene invocato quando vengono modificato le informazioni degli utenti
+    //metodo che viene invocato quando vengono modificate le informazioni degli utenti
     @Override
     public Utente aggiorna(Utente ut, String usernameOriginale){
         createOrOpenDB();
