@@ -8,42 +8,42 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.unibo.progettosweng.client.model.Utente;
 import org.checkerframework.checker.units.qual.A;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 public class UtentiServiceImplTest extends GWTTestCase {
 
     //prima di far partire il test eliminare il db utentiTest
     private static ArrayList<String[]> utentiTest = new ArrayList<>(Arrays.asList(
-            new String[]{"studente", "studente", "studente", "123", "studente"},
-            new String[]{"docente", "docente", "docente", "123", "docente"},
-            new String[]{"admin", "admin", "admin", "123", "admin"},
-            new String[]{"segreteria", "segreteria", "segreteria", "123", "segreteria"}
+            new String[]{"studente", "studente", "studente", "123", "Studente"},
+            new String[]{"docente", "docente", "docente", "123", "Docente"},
+            new String[]{"admin", "admin", "admin", "123", "Admin"},
+            new String[]{"codocente", "codocente", "codocente", "123", "Docente"},
+            new String[]{"segreteria", "segreteria", "segreteria", "123", "Segreteria"}
     ));
 
     UtenteServiceAsync service;
 
-    private void createService(){
+    public void gwtSetUp(){
         // Create the service that we will test.
         service = GWT.create(UtenteService.class);
         ServiceDefTarget target = (ServiceDefTarget) service;
         target.setServiceEntryPoint(GWT.getModuleBaseURL() + "progettosweng/utenti");
     }
 
-    //test inserimento con DB vuoto
-    public void testAdd1() throws Exception {
-
-        createService();
+    //test inserimento
+    public synchronized void testAdd() throws Exception {
 
         // Since RPC calls are asynchronous, we will need to wait for a response
         // after this test method returns. This line tells the test runner to wait
         // up to 10 seconds before timing out.
         delayTestFinish(10000);
 
-        //inserimento con db vuoto
-        service.add(utentiTest.get(0), new AsyncCallback<String>() {
+        //inserimento primo utente
+        service.add(utentiTest.get(1), new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
                 fail("Failure add utente: " + caught.getMessage());
@@ -51,207 +51,89 @@ public class UtentiServiceImplTest extends GWTTestCase {
 
             @Override
             public void onSuccess(String result) {
-                try {
-                    service.getSize(new AsyncCallback<Integer>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            fail("Failure get new size: " + caught.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(Integer size) {
-                            assertEquals("Inserimento utente con db vuoto", new Integer(1), size);
-                            finishTest();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                assertTrue(true);
             }
         });
-    }
 
-    //test inserimento utente già esistente
-    public void testAdd2(){
-        createService();
-        delayTestFinish(10000);
-
-        //controllo l'inserimento con utente già inserito
-        service.add(utentiTest.get(0), new AsyncCallback<String>() {
+        //inserimento secondo utente
+        service.add(utentiTest.get(2), new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
-                fail("Failure: " + caught.getMessage());
+                fail("Failure get size: " + caught.getMessage());
             }
 
             @Override
             public void onSuccess(String result) {
-                try {
-                    service.getSize(new AsyncCallback<Integer>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            fail("Failure get new size: " + caught.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(Integer size) {
-                            assertEquals("Inserimento utente già inserito", new Integer(1), size);
-                            finishTest();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                assertTrue(true);
             }
         });
-    }
 
-    //test inserimento con DB non vuoto
-    public void testAdd3(){
-        createService();
-        delayTestFinish(10000);
-
-        //controllo l'inserimento con db non vuoto
-        service.add(utentiTest.get(1), new AsyncCallback<String>() {
+        //inserimento utente già esistente
+        service.add(utentiTest.get(2), new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
-                fail("Failure: " + caught.getMessage());
+                fail("Failure get size: " + caught.getMessage());
             }
 
             @Override
             public void onSuccess(String result) {
-                try {
-                    service.getSize(new AsyncCallback<Integer>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            fail("Failure get new size: " + caught.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(Integer size) {
-                            assertEquals("Inserimento con db non vuoto", new Integer(2), size);
-                            finishTest();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                assertTrue(true);
             }
         });
-    }
 
-    //test rimozione utente non esistente
-    public void testRemove1() throws Exception {
-        createService();
-        delayTestFinish(10000);
-
-        //rimozione utente non esistente
+        //prendo la size del db e la confronto con quella attesa
         service.getSize(new AsyncCallback<Integer>() {
             @Override
             public void onFailure(Throwable caught) {
-                fail("Failure: " + caught.getMessage());
+                fail("Failure get size: " + caught.getMessage());
             }
 
             @Override
-            public void onSuccess(Integer oldSize) {
-                String[] utente = utentiTest.get(2);
-                service.remove(new Utente(utente[0], utente[1], utente[2], utente[3], utente[4]), new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        fail("Failure: " + caught.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(Void result) {
-                        try {
-                            service.getSize(new AsyncCallback<Integer>() {
-                                @Override
-                                public void onFailure(Throwable caught) {
-                                    fail("Failure: " + caught.getMessage());
-                                }
-
-                                @Override
-                                public void onSuccess(Integer size) {
-                                    assertEquals("Rimozione utente non esistente", oldSize, size);
-                                    finishTest();
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    //test rimozione utente esistente
-    public void testRemove2() throws Exception {
-        createService();
-        delayTestFinish(10000);
-
-        service.getSize(new AsyncCallback<Integer>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                fail("Failure: " + caught.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Integer oldSize) {
-                String[] utente = utentiTest.get(0);
-                service.remove(new Utente(utente[0], utente[1], utente[2], utente[3], utente[4]), new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        fail("Failure: " + caught.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(Void result) {
-                        try {
-                            service.getSize(new AsyncCallback<Integer>() {
-                                @Override
-                                public void onFailure(Throwable caught) {
-                                    fail("Failure: " + caught.getMessage());
-                                }
-
-                                @Override
-                                public void onSuccess(Integer size) {
-                                    assertEquals("Rimozione utente esistente", new Integer(oldSize - 1), size);
-                                    finishTest();
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+            public void onSuccess(Integer size) {
+                assertEquals("Inserimento utente", new Integer(2), size);
+                finishTest();
             }
         });
     }
 
     //test getUtenti
-    public void testGetUtenti() throws Exception {
-        createService();
+    public synchronized void testGetUtenti() throws Exception {
         delayTestFinish(10000);
+
         service.getUtenti(new AsyncCallback<Utente[]>() {
             @Override
             public void onFailure(Throwable caught) {
                 fail("Failure get utenti: " + caught.getMessage());
-                finishTest();
             }
 
             @Override
             public void onSuccess(Utente[] utenti) {
-                assertEquals("get utenti", 1, utenti.length);
-                finishTest();
+                try {
+                    service.getSize(new AsyncCallback<Integer>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            fail("Failure get size: " + caught.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Integer result) {
+                            assertEquals("get utenti", result, new Integer(utenti.length));
+                            finishTest();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
 
-    //test login successfull
-    public void testLogin1(){
-        createService();
+    //test login
+    public synchronized void testLogin(){
         delayTestFinish(10000);
 
+        //test successfull
         String[] utente = utentiTest.get(1);
         service.login(utente[2], utente[3], new AsyncCallback<Utente>() {
             @Override
@@ -265,14 +147,8 @@ public class UtentiServiceImplTest extends GWTTestCase {
                 finishTest();
             }
         });
-    }
 
-    //test login username errato
-    public void testLogin2(){
-        createService();
-        delayTestFinish(10000);
-
-        String[] utente = utentiTest.get(1);
+        //username errato
         service.login("usernameErrato", utente[3], new AsyncCallback<Utente>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -285,14 +161,8 @@ public class UtentiServiceImplTest extends GWTTestCase {
                 finishTest();
             }
         });
-    }
 
-    //test login password errata
-    public void testLogin3(){
-        createService();
-        delayTestFinish(10000);
-
-        String[] utente = utentiTest.get(1);
+        //password errata
         service.login(utente[2], "0000", new AsyncCallback<Utente>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -301,14 +171,15 @@ public class UtentiServiceImplTest extends GWTTestCase {
 
             @Override
             public void onSuccess(Utente utente) {
-                assertNull("Login username errato", utente);
+                assertNull("Login password errata", utente);
                 finishTest();
             }
         });
+
     }
 
     //test modifica utente
-    /*public void testAggiorna() throws Exception {
+    public synchronized void testAggiorna() throws Exception {
         //modifico nome e cognome
         utentiTest.get(1)[0] = "Mario";
         utentiTest.get(1)[1] = "Rossi";
@@ -329,12 +200,12 @@ public class UtentiServiceImplTest extends GWTTestCase {
                 finishTest();
             }
         });
-    }*/
+    }
 
-    public void testGetUtenteByUsername() throws Exception {
-        createService();
+    public synchronized void testGetUtenteByUsername() throws Exception {
         delayTestFinish(10000);
 
+        //utente esistente
         String[] utente = utentiTest.get(1);
         service.getUtenteByUsername(utente[2], new AsyncCallback<Utente>() {
             @Override
@@ -352,11 +223,190 @@ public class UtentiServiceImplTest extends GWTTestCase {
                 finishTest();
             }
         });
+
+        //utente non esistente
+        service.getUtenteByUsername(utentiTest.get(4)[2], new AsyncCallback<Utente>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get utente by username: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Utente result) {
+                assertNotNull(result);
+                finishTest();
+            }
+        });
+
+
     }
 
+    public synchronized void testGetCodocenti() throws Exception {
+        delayTestFinish(10000);
 
+        //assenza di codocenti
+        service.getCodocenti(utentiTest.get(1)[2], new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get codocenti: " + caught.getMessage());
+            }
 
+            @Override
+            public void onSuccess(ArrayList<Utente> result) {
+                assertEquals(0, result.size());
+                finishTest();
+            }
+        });
 
+        service.add(utentiTest.get(3), new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println("Failure add utente:" + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    service.getCodocenti(utentiTest.get(1)[2], new AsyncCallback<ArrayList<Utente>>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            fail("Failure get codocenti: " + caught.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(ArrayList<Utente> result) {
+                            assertEquals(1, result.size());
+                            finishTest();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public synchronized void testGetStudenti() throws Exception {
+        delayTestFinish(10000);
+        //assenza di studenti
+        service.getStudenti(new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get studenti: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Utente> result) {
+                assertEquals(0, result.size());
+                finishTest();
+            }
+        });
+
+        //in presenza di almeno uno studente
+        service.add(utentiTest.get(0), new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure add studente: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    service.getStudenti(new AsyncCallback<ArrayList<Utente>>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            fail("Failure get studenti: " + caught.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(ArrayList<Utente> students) {
+                            assertEquals(1, students.size());
+                            finishTest();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public synchronized void testGetDocenti() throws Exception {
+        delayTestFinish(10000);
+
+        service.getDocenti(new AsyncCallback<ArrayList<Utente>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get docenti: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Utente> docenti) {
+                try {
+                    service.getNumeroDocenti(new AsyncCallback<Integer>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            fail("Failure get num docenti: " + caught.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Integer result) {
+                            assertEquals("Docenti", result, new Integer(docenti.size()));
+                            finishTest();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    public synchronized void testRemove() throws Exception {
+        delayTestFinish(10000);
+        //remove utente inesistente
+        String[] utente = utentiTest.get(4); //segreteria
+        service.remove(new Utente(utente[0], utente[1], utente[2], utente[3], utente[4]), new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure remove: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                assertTrue("Remove utente non esistente", true);
+            }
+        });
+
+        //remove utente esistente
+        utente = utentiTest.get(2); //admin
+        service.remove(new Utente(utente[0], utente[1], utente[2], utente[3], utente[4]), new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure remove: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                assertTrue("Remove utente esistente", true);
+            }
+        });
+
+        service.getSize(new AsyncCallback<Integer>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get size: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Integer size) {
+                assertEquals("Rimozione utente", new Integer(3), size);
+                finishTest();
+            }
+        });
+
+    }
 
     @Override
     public String getModuleName() {
