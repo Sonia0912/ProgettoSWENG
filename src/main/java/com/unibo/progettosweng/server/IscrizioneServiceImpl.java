@@ -39,21 +39,6 @@ public class IscrizioneServiceImpl extends RemoteServiceServlet implements Iscri
         }
     }
 
-    // quando viene modificato un corso, se si modifica il nome devono essere modificate le relative iscrizioni
-    @Override
-    public String aggiorna(String vecchioCorso, String nuovoCorso) throws IllegalArgumentException {
-        createOrOpenDB();
-        vecchioCorso = escapeHtml(vecchioCorso);
-        nuovoCorso = escapeHtml(nuovoCorso);
-        for (String i: map.getKeys()) {
-            if(map.get(i).getCorso().equals(vecchioCorso)){
-                Iscrizione nuovaIscr = new Iscrizione(map.get(i).getStudente(), nuovoCorso);
-                map.replace(i, nuovaIscr);
-            }
-        }
-        return "successo";
-    }
-
     public ArrayList<Iscrizione> getIscrizioniStudente(String studente) {
         createOrOpenDB();
         ArrayList<Iscrizione> iscrizioni = new ArrayList<>();

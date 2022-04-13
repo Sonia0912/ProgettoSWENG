@@ -12,4 +12,6 @@
   <!-- Specify the path to any remote services.                   -->
   <servlet path="/progettosweng/utenti" class="com.unibo.progettosweng.server.UtenteServiceImpl" />
 
+  <servlet path="/progettosweng/iscrizioni" class="com.unibo.progettosweng.server.IscrizioneServiceImpl" />
+
 </module>

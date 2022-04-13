@@ -9,6 +9,5 @@ import java.util.ArrayList;
 @RemoteServiceRelativePath("iscrizioni")
 public interface IscrizioneService extends RemoteService {
     String add(String studente, String corso) throws IllegalArgumentException;
-    String aggiorna(String vecchioCorso, String nuovoCorso) throws IllegalArgumentException;
     ArrayList<Iscrizione> getIscrizioniStudente(String studente) throws IllegalArgumentException;
 }
