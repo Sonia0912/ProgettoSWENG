@@ -20,7 +20,6 @@ import com.unibo.progettosweng.client.model.Utente;
 import com.unibo.progettosweng.client.model.Valutazione;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PortaleSegreteria extends Portale {
@@ -31,25 +30,6 @@ public class PortaleSegreteria extends Portale {
     private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
     private static ValutazioneServiceAsync serviceValutazioni = GWT.create(ValutazioneService.class);
 
-    //private static ArrayList<String[]> listaDaInserire;
-    /*
-            new ArrayList<String[]>(Arrays.asList(
-            new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
-            new String[]{"Sistemi Operativi", "sofianeri@mail.com", "25"},
-            new String[]{"Sistemi Operativi", "francescoverdi@mail.com", "30"},
-            new String[]{"Algebra lineare", "lucabianchi@mail.com", "19"},
-            new String[]{"Algebra lineare", "francescoverdi@mail.com", "23"}
-    ));
-     */
-
-    private static ArrayList<String[]> listaDaPubblicare ;
-    /*= new ArrayList<String[]>(Arrays.asList(
-            new String[]{"Chimica", "lucabianchi@mail.com", "24"},
-            new String[]{"Chimica", "francescoverdi@mail.com", "24"},
-            new String[]{"Chimica", "sofianeri@mail.com", "24"},
-            new String[]{"Algebra lineare", "sofianeri@mail.com", "26"}
-    ));
-     */
 
     @Override
     public void salvaCredenziali() {
@@ -123,7 +103,7 @@ public class PortaleSegreteria extends Portale {
 
                 @Override
                 public void onSuccess(ArrayList<Valutazione> val) {
-                    CellTable<Valutazione> tableVotiDaInserire = creaTabellaVoti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
+                    CellTable<Valutazione> tableVotiDaInserire = creaTabellaVotiStudenti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.");
                     spazioDinamico.clear();
                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
                     spazioDinamico.add(tableVotiDaInserire);
@@ -135,6 +115,32 @@ public class PortaleSegreteria extends Portale {
 
     }
 
+    private CellTable<Valutazione> creaTabellaVotiStudenti(ArrayList<Valutazione> listaVoti, String messaggioVuoto) {
+        CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
+        tableVoti.addStyleName("tablePortale");
+        tableVoti.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
+        tableVoti.setEmptyTableWidget(new Label(messaggioVuoto));
+
+        TextColumn<Valutazione> corsoCol = new TextColumn<Valutazione>() {
+            @Override
+            public String getValue(Valutazione object) {
+                return object.getNomeCorso();
+            }
+        };
+        tableVoti.addColumn(corsoCol, "Nome del corso");
+
+        TextColumn<Valutazione> votoCol = new TextColumn<Valutazione>() {
+            @Override
+            public String getValue(Valutazione object) {
+                return String.valueOf(object.getVoto());
+            }
+        };
+        tableVoti.addColumn(votoCol, "Voto");
+
+        tableVoti.setRowCount(listaVoti.size(), true);
+        tableVoti.setRowData(0, listaVoti);
+        return tableVoti;
+    }
     private void caricaPubblicazione() {
 
         try {
@@ -233,7 +239,11 @@ public class PortaleSegreteria extends Portale {
         votiCol.setFieldUpdater(new FieldUpdater<Utente, String>() {
             @Override
             public void update(int index, Utente object, String value) {
-                visualizzaVoti(object.getUsername());
+                try {
+                    visualizzaVoti(object.getUsername());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -242,7 +252,6 @@ public class PortaleSegreteria extends Portale {
         return tableStudenti;
     }
 
-    // Da modificare quando avremo l'oggetto Voto
     private CellTable<Valutazione> creaTabellaVoti(List<Valutazione> listaVoti, String messaggioVuoto, boolean daInserire) {
         CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
         tableVoti.addStyleName("tablePortale");
@@ -383,14 +392,20 @@ public class PortaleSegreteria extends Portale {
         });
     }
 
-    private void visualizzaVoti(String username) {
+    private void visualizzaVoti(String username) throws Exception {
         spazioDinamico.clear();
-        spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti</div>"));
-        spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> ha ottenuto i seguenti voti: </div>"));
-        String[][] voti = {{"Algebra", "18"}, {"Sistemi Operativi", "23"}};
-        for(int i = 0; i < voti.length; i++) {
-            spazioDinamico.add(new HTML("<div class=\"listaPortale\"> - " + voti[i][0] + ": " + voti[i][1] + "</div>"));
-        }
+        serviceValutazioni.getValutazioniStudente(username, new AsyncCallback<ArrayList<Valutazione>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Window.alert("Failure on getValutazioniStudente: " + throwable.getMessage());
+            }
+            @Override
+            public void onSuccess(ArrayList<Valutazione> listaValutazioni) {
+                CellTable<Valutazione> tableVoti = creaTabellaVotiStudenti(listaValutazioni, "Non hai ancora nessun voto.");
+                spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei voti</div>"));
+                spazioDinamico.add(tableVoti);
+            }
+        });
     }
 
 }
