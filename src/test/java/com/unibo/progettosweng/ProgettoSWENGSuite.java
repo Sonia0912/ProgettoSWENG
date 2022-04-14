@@ -1,10 +1,7 @@
 package com.unibo.progettosweng;
 
-import com.unibo.progettosweng.client.EsamiServiceImplTest;
-import com.unibo.progettosweng.client.ProgettoSWENGTest;
+import com.unibo.progettosweng.client.*;
 import com.google.gwt.junit.tools.GWTTestSuite;
-import com.unibo.progettosweng.client.RegistrazioniServiceImplTest;
-import com.unibo.progettosweng.client.UtentiServiceImplTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

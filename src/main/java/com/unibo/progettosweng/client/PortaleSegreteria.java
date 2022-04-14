@@ -92,7 +92,7 @@ public class PortaleSegreteria extends Portale {
                 }
                 @Override
                 public void onSuccess(ArrayList<Valutazione> val) {
-                    CellTable<Valutazione> tableVotiDaInserire = creaTabellaVotiStudenti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.");
+                    CellTable<Valutazione> tableVotiDaInserire = creaTabellaVoti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
                     spazioDinamico.clear();
                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
                     spazioDinamico.add(tableVotiDaInserire);
