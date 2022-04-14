@@ -26,30 +26,11 @@ import java.util.List;
 public class PortaleSegreteria extends Portale {
 
     Utente segreteria = null;
+
     private static UtenteServiceAsync service = GWT.create(UtenteService.class);
     private static IscrizioneServiceAsync serviceIscrizione = GWT.create(IscrizioneService.class);
     private static RegistrazioneServiceAsync serviceRegistrazione = GWT.create(RegistrazioneService.class);
     private static ValutazioneServiceAsync serviceValutazioni = GWT.create(ValutazioneService.class);
-
-    //private static ArrayList<String[]> listaDaInserire;
-    /*
-            new ArrayList<String[]>(Arrays.asList(
-            new String[]{"Sistemi Operativi", "lucabianchi@mail.com", "28"},
-            new String[]{"Sistemi Operativi", "sofianeri@mail.com", "25"},
-            new String[]{"Sistemi Operativi", "francescoverdi@mail.com", "30"},
-            new String[]{"Algebra lineare", "lucabianchi@mail.com", "19"},
-            new String[]{"Algebra lineare", "francescoverdi@mail.com", "23"}
-    ));
-     */
-
-    private static ArrayList<String[]> listaDaPubblicare ;
-    /*= new ArrayList<String[]>(Arrays.asList(
-            new String[]{"Chimica", "lucabianchi@mail.com", "24"},
-            new String[]{"Chimica", "francescoverdi@mail.com", "24"},
-            new String[]{"Chimica", "sofianeri@mail.com", "24"},
-            new String[]{"Algebra lineare", "sofianeri@mail.com", "26"}
-    ));
-     */
 
     @Override
     public void salvaCredenziali() {
@@ -74,18 +55,8 @@ public class PortaleSegreteria extends Portale {
                 }
             }
         });
-        btnInserimento.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                caricaInserimento();
-            }
-        });
-        btnPubblicazione.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                caricaPubblicazione();
-            }
-        });
+        btnInserimento.addClickHandler(clickEvent -> caricaInserimento());
+        btnPubblicazione.addClickHandler(clickEvent -> caricaPubblicazione());
         menuLaterale.add(btnStudenti);
         menuLaterale.add(btnInserimento);
         menuLaterale.add(btnPubblicazione);
@@ -103,7 +74,6 @@ public class PortaleSegreteria extends Portale {
             public void onFailure(Throwable throwable) {
                 Window.alert("Failure: " + throwable.getMessage());
             }
-
             @Override
             public void onSuccess(ArrayList<Utente> studenti) {
                 CellTable<Utente> tableStudenti = creaTabellaStudenti(studenti, "Non ci sono studenti registrati.");
@@ -114,17 +84,16 @@ public class PortaleSegreteria extends Portale {
     }
 
     private void caricaInserimento() {
+        spazioDinamico.clear();
         try {
             serviceValutazioni.getValutazioniDaInserire(new AsyncCallback<ArrayList<Valutazione>>() {
                 @Override
                 public void onFailure(Throwable throwable) {
                     Window.alert("Errore durante ottenimento delle valutazioni da inserire");
                 }
-
                 @Override
                 public void onSuccess(ArrayList<Valutazione> val) {
                     CellTable<Valutazione> tableVotiDaInserire = creaTabellaVoti(val, "Non ci sono voti da inserire, aspetta che un docente li invii.", true);
-                    spazioDinamico.clear();
                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da inserire</div>"));
                     spazioDinamico.add(tableVotiDaInserire);
                 }
@@ -132,23 +101,19 @@ public class PortaleSegreteria extends Portale {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void caricaPubblicazione() {
-
+        spazioDinamico.clear();
         try {
             serviceValutazioni.getValutazioniDaPubblicare(new AsyncCallback<ArrayList<Valutazione>>() {
                 @Override
                 public void onFailure(Throwable throwable) {
                     Window.alert("Errore durante l'ottenimento della valutazioni da pubblicare");
                 }
-
                 @Override
                 public void onSuccess(ArrayList<Valutazione> valPub) {
-
                     CellTable<Valutazione> tableVotiDaPubblicare = creaTabellaVoti(valPub, "Non ci sono voti da pubblicare, ricordati che prima devi inserirli.", false);
-                    spazioDinamico.clear();
                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Voti da pubblicare</div>"));
                     spazioDinamico.add(tableVotiDaPubblicare);
                 }
@@ -156,7 +121,6 @@ public class PortaleSegreteria extends Portale {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public CellTable<Utente> creaTabellaStudenti(List<Utente> listaUtenti, String messaggioVuoto) {
@@ -242,7 +206,6 @@ public class PortaleSegreteria extends Portale {
         return tableStudenti;
     }
 
-    // Da modificare quando avremo l'oggetto Voto
     private CellTable<Valutazione> creaTabellaVoti(List<Valutazione> listaVoti, String messaggioVuoto, boolean daInserire) {
         CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
         tableVoti.addStyleName("tablePortale");
@@ -293,16 +256,15 @@ public class PortaleSegreteria extends Portale {
                             public void onFailure(Throwable throwable) {
                                 Window.alert("Errore durante il cambiamento di stato");
                             }
-
                             @Override
                             public void onSuccess(Void val) {
-                                Window.alert("Stato cambiato correttamente ");
+                                Window.alert("Voto inserito correttamente");
+                                caricaInserimento();
                             }
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    caricaInserimento();
                 }
             });
         } else {
@@ -318,7 +280,6 @@ public class PortaleSegreteria extends Portale {
             azioneCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
                 @Override
                 public void update(int index, Valutazione object, String value) {
-
                     try {
                         object.setStato(2);
                         serviceValutazioni.aggiorna(object, new AsyncCallback<Void>() {
@@ -326,16 +287,15 @@ public class PortaleSegreteria extends Portale {
                             public void onFailure(Throwable throwable) {
                                 Window.alert("Errore durante il cambiamento di stato");
                             }
-
                             @Override
                             public void onSuccess(Void v) {
-                                Window.alert("Stato cambiato correttamente ");
+                                Window.alert("Voto pubblicato correttamente");
+                                caricaPubblicazione();
                             }
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    caricaPubblicazione();
                 }
             });
         }

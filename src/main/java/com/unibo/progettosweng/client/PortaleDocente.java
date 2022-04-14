@@ -153,7 +153,6 @@ public class PortaleDocente extends Portale {
             public void onFailure(Throwable throwable) {
                 Window.alert("Failure: " + throwable.getMessage());
             }
-
             @Override
             public void onSuccess(ArrayList<Corso> corsi) {
                 try {
@@ -162,7 +161,6 @@ public class PortaleDocente extends Portale {
                         public void onFailure(Throwable throwable) {
                             Window.alert("Failure: " + throwable.getMessage());
                         }
-
                         @Override
                         public void onSuccess(ArrayList<Esame> listaEsami) {
                             CellTable<Esame> tableEsamiDocente = creaTabellaEsami(listaEsami, "Non hai ancora creato nessun esame.");
@@ -174,7 +172,6 @@ public class PortaleDocente extends Portale {
                                     public void onFailure(Throwable throwable) {
                                         Window.alert("Failure: " + throwable.getMessage());
                                     }
-
                                     @Override
                                     public void onSuccess(ArrayList<Corso> corsiCodocente) {
                                         try {
@@ -183,13 +180,11 @@ public class PortaleDocente extends Portale {
                                                 public void onFailure(Throwable throwable) {
                                                     Window.alert("Failure: " + throwable.getMessage());
                                                 }
-
                                                 @Override
                                                 public void onSuccess(ArrayList<Esame> listaEsamiCoDoc) {
                                                     CellTable<Esame> tableEsamiDocente = creaTabellaEsami(listaEsamiCoDoc, "Non hai ancora creato nessun esame.");
                                                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">I miei esami da co-docente</div>"));
                                                     spazioDinamico.add(tableEsamiDocente);
-
                                                     Button btnCreaEsame = new Button("Crea esame");
                                                     btnCreaEsame.addClickHandler(new ClickHandler() {
                                                         @Override
@@ -383,6 +378,7 @@ public class PortaleDocente extends Portale {
         };
         tableEsami.addColumn(diffCol, "Difficoltà");
 
+        // Pulsante per inserire i voti
         ButtonCell votiCell = new ButtonCell();
         Column<Esame, String> votiCol = new Column<Esame, String>(votiCell) {
             @Override
@@ -395,27 +391,23 @@ public class PortaleDocente extends Portale {
         votiCol.setFieldUpdater(new FieldUpdater<Esame, String>() {
             @Override
             public void update(int index, Esame object, String value) {
+                spazioDinamico.clear();
                 serviceRegistrazione.getRegistrazioniFromEsame(object.getNomeCorso(), new AsyncCallback<ArrayList<Registrazione>>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         Window.alert("Failure: " + throwable.getMessage());
                     }
-
                     @Override
                     public void onSuccess(ArrayList<Registrazione> registrazioni) {
                         serviceValutazione.getValutazioniFromEsame(object.getNomeCorso(), new AsyncCallback<ArrayList<Valutazione>>() {
                             @Override
-                            public void onFailure(Throwable throwable) {
-                                Window.alert("Failure: " + throwable.getMessage());
-                            }
-
+                            public void onFailure(Throwable throwable) { Window.alert("Failure: " + throwable.getMessage()); }
                             @Override
                             public void onSuccess(ArrayList<Valutazione> valutazioni) {
-                                spazioDinamico.clear();
                                 VerticalPanel tableValutazioni = creaTabellaValutazioni(registrazioni, valutazioni, "Non ci sono iscritti da valutare per questo esame.");
                                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Inserisci valutazioni per l'esame di " + object.getNomeCorso() +"</div>"));
                                 spazioDinamico.add(tableValutazioni);
-                                CellTable<Valutazione> tableModificaValutazioni = creaTabellaModificaValutazioni(valutazioni,"Non ci sono valutazioni da modificare");
+                                CellTable<Valutazione> tableModificaValutazioni = creaTabellaModificaValutazioni(valutazioni,"Non ci sono valutazioni da modificare.");
                                 spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voti</div>"));
                                 spazioDinamico.add(tableModificaValutazioni);
                             }
@@ -425,6 +417,7 @@ public class PortaleDocente extends Portale {
             }
         });
 
+        // Pulsante per modificare l'esame
         ButtonCell modificaCell = new ButtonCell();
         Column<Esame, String> modificaCol = new Column<Esame, String>(modificaCell) {
             @Override
@@ -443,6 +436,7 @@ public class PortaleDocente extends Portale {
             }
         });
 
+        // Pulsante per cancellare l'esame
         ButtonCell eliminaCell = new ButtonCell();
         Column<Esame, String> eliminaCol = new Column<Esame, String>(eliminaCell) {
             @Override
@@ -514,13 +508,16 @@ public class PortaleDocente extends Portale {
     private VerticalPanel creaTabellaValutazioni(List<Registrazione> listaRegistrazioni, List<Valutazione> valutazioniOld, String messaggioVuoto) {
         VerticalPanel vp = new VerticalPanel();
         CellTable<Registrazione> tableRegistrazioni = new CellTable<Registrazione>();
+        List<Registrazione> votiGiaInseriti = new ArrayList<>();
         for (int i = 0; i < listaRegistrazioni.size(); i++){
             for (int j = 0; j < valutazioniOld.size(); j++){
                 if (listaRegistrazioni.get(i).getStudente().equals(valutazioniOld.get(j).getStudente()) && listaRegistrazioni.get(i).getCorso().equals(valutazioniOld.get(j).getNomeCorso())) {
-                    listaRegistrazioni.remove(listaRegistrazioni.get(i));
+                    //listaRegistrazioni.remove(listaRegistrazioni.get(i));
+                    votiGiaInseriti.add(listaRegistrazioni.get(i));
                 }
             }
         }
+        listaRegistrazioni.removeAll(votiGiaInseriti);
         ArrayList<String[]> valutazioni = new ArrayList<>();
         tableRegistrazioni.addStyleName("tablePortale");
         tableRegistrazioni.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
@@ -547,8 +544,8 @@ public class PortaleDocente extends Portale {
             @Override
             public void update(int index, Registrazione object, String value) {
                 if (Integer.parseInt(value) < 18 || Integer.parseInt(value) > 30){
-                    Window.alert("!Il voto deve essere compreso tra 18 e 30");
-                }else {
+                    Window.alert("Il voto deve essere compreso tra 18 e 30");
+                } else {
                     valutazioni.add(new String[]{object.getCorso(), object.getStudente(), value, "0"});
                 }
 
@@ -566,11 +563,15 @@ public class PortaleDocente extends Portale {
                     }
                     @Override
                     public void onSuccess(String s) {
-                        Window.alert(s);
-                        try {
-                            caricaEsami();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if(valutazioni.size() == 0) {
+                            Window.alert("Nessuna valutazione inserita");
+                        } else {
+                            Window.alert(s);
+                            try {
+                                caricaEsami();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
@@ -620,10 +621,9 @@ public class PortaleDocente extends Portale {
         modificaCol.setFieldUpdater(new FieldUpdater<Valutazione, String>() {
             @Override
             public void update(int index, Valutazione object, String value) {
-
                 if(object.getStato() == 2) {
-                    Window.alert("Non puoi modificare un voto già pubblicato");
-                }else {
+                    Window.alert("Il voto è già stato pubblicato, non puoi più modificarlo.");
+                } else {
                     spazioDinamico.clear();
                     spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Modifica voto</div>"));
                     for(int i = 0; i < listaValutazioni.size(); i++){
