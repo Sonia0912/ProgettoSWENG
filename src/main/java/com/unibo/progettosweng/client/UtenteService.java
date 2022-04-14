@@ -22,4 +22,5 @@ public interface UtenteService extends RemoteService {
     ArrayList<Utente> getDocenti() throws Exception;
     int getNumeroStudenti() throws Exception;
     int getNumeroDocenti() throws Exception;
+    int getSize() throws Exception;
 }

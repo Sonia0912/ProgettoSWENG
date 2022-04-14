@@ -36,21 +36,6 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
         return "successo";
     }
 
-    // quando viene modificato un corso, se si modifica il nome devono essere modificate le relative registrazioni
-    @Override
-    public String aggiorna(String vecchioCorso, String nuovoCorso) throws IllegalArgumentException {
-        createOrOpenDB();
-        vecchioCorso = escapeHtml(vecchioCorso);
-        nuovoCorso = escapeHtml(nuovoCorso);
-        for (String i: map.getKeys()) {
-            if(map.get(i).getCorso().equals(vecchioCorso)){
-                Registrazione nuovaRegistr = new Registrazione(map.get(i).getStudente(), nuovoCorso);
-                map.replace(i, nuovaRegistr);
-            }
-        }
-        return "successo";
-    }
-
     @Override
     public ArrayList<Registrazione> getRegistrazioniStudente(String studente) throws IllegalArgumentException {
         createOrOpenDB();
@@ -74,6 +59,10 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
 
         }
         return registrazioni;
+    }
+
+    public Integer getSize(){
+        return map.getSize();
     }
 
     private String escapeHtml(String html) {

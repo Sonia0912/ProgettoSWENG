@@ -140,15 +140,15 @@ public class ModificaEsame implements Form{
                 esame.setDifficolta(hardness.getSelectedItemText());
 
                 try {
-                    esameService.aggiorna(esame, new AsyncCallback<Void>() {
+                    esameService.aggiorna(esame, new AsyncCallback<Esame>() {
                         @Override
                         public void onFailure(Throwable throwable) {
                             Window.alert("Errore durante la modifica dell'esame: " + throwable.getMessage());
                         }
 
                         @Override
-                        public void onSuccess(Void v) {
-                            Window.alert("L'esame " + esame.getNomeCorso() +" è stato modificato corretamente");
+                        public void onSuccess(Esame result) {
+                            Window.alert("L'esame " + result.getNomeCorso() +" è stato modificato correttamente");
                         }
                     });
                 } catch (Exception e) {

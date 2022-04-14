@@ -89,13 +89,14 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     }
 
     @Override
-    public void aggiorna(Esame esame) throws Exception {
+    public Esame aggiorna(Esame esame) throws Exception {
         createOrOpenDB();
         for ( String i: map.getKeys()) {
             if(map.get(i).equals(esame)){
-                map.replace(i,esame);
+                return map.replace(i,esame);
             }
         }
+        return null;
     }
 
     @Override
@@ -124,6 +125,10 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
             }
         }
         return esami;
+    }
+
+    public Integer getSize(){
+        return map.getSize();
     }
 
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
