@@ -143,6 +143,11 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return map.size();
     }
 
+    @Override
+    public int getSizeMap() throws Exception {
+        return map.getSize();
+    }
+
 
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {

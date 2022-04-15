@@ -13,7 +13,7 @@
   <servlet path="/progettosweng/utenti" class="com.unibo.progettosweng.server.UtenteServiceImpl" />
   <servlet path="/progettosweng/esami" class="com.unibo.progettosweng.server.EsameServiceImpl" />
   <servlet path="/progettosweng/registrazioni" class="com.unibo.progettosweng.server.RegistrazioneServiceImpl" />
-
+  <servlet path="/progettosweng/corsi" class="com.unibo.progettosweng.server.CorsoServiceImpl" />
   <servlet path="/progettosweng/iscrizioni" class="com.unibo.progettosweng.server.IscrizioneServiceImpl" />
 
 </module>
