@@ -52,7 +52,6 @@ public class InserimentoUtente implements Form {
         tipo.addItem("Docente");
         tipo.addItem("Studente");
         tipo.addItem("Segreteria");
-        tipo.addItem("Admin");
         formPanel.add(tipo);
 
         final Label labelPassword = new Label("Password*:");
