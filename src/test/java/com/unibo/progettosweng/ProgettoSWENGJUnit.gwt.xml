@@ -15,5 +15,6 @@
   <servlet path="/progettosweng/registrazioni" class="com.unibo.progettosweng.server.RegistrazioneServiceImpl" />
   <servlet path="/progettosweng/corsi" class="com.unibo.progettosweng.server.CorsoServiceImpl" />
   <servlet path="/progettosweng/iscrizioni" class="com.unibo.progettosweng.server.IscrizioneServiceImpl" />
+  <servlet path="/progettosweng/valutazioni" class="com.unibo.progettosweng.server.ValutazioneServiceImpl" />
 
 </module>

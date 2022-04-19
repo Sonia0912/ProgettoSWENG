@@ -13,6 +13,7 @@ public class ProgettoSWENGSuite extends GWTTestSuite {
     suite.addTestSuite(RegistrazioniServiceImplTest.class);
     suite.addTestSuite(IscrizioneServiceImplTest.class);
     suite.addTestSuite(CorsoServiceImplTest.class);
+    suite.addTestSuite(ValutazioniServiceImplTest.class);
     return suite;
   }
 }

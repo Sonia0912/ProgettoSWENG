@@ -52,7 +52,6 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
 
     @Override
     public String addMore(ArrayList<String[]> listaValutazioni) throws IllegalArgumentException {
-
         for (String[] val: listaValutazioni) {
             add(val);
         }
@@ -121,13 +120,13 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
     }
 
     @Override
-        public Valutazione cambiaStatoValutazione(String username, String corso,  int stato) throws Exception {
-       createOrOpenDB();
+    public Valutazione cambiaStatoValutazione(String username, String corso,  int stato) throws Exception {
+        createOrOpenDB();
         for (String i : map.getKeys()) {
             if(map.get(i).getStudente().equals(username) && map.get(i).getNomeCorso().equals(corso)){
-              map.get(i).setStato(stato);
-              db.commit();
-              return map.get(i);
+                map.get(i).setStato(stato);
+                db.commit();
+                return map.get(i);
             }
         }
         return null;
@@ -166,6 +165,10 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         return valutazioni;
     }
 
+    public Integer getSize(){
+        return map.getSize();
+    }
+
 
     private String escapeHtml(String html) {
         if (html == null) {
@@ -176,3 +179,4 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
     }
 
 }
+

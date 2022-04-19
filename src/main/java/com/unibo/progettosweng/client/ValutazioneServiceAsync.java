@@ -17,4 +17,5 @@ public interface ValutazioneServiceAsync {
     void getValutazioniDaInserire(AsyncCallback<ArrayList<Valutazione>> callback) throws Exception;
     void getValutazioniDaPubblicare(AsyncCallback<ArrayList<Valutazione>> callback) throws Exception;
     void cambiaStatoValutazione(String username,String corso, int stato, AsyncCallback<Valutazione> callback) throws Exception;
+    void getSize(AsyncCallback<Integer> callback) throws Exception;
 }

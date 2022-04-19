@@ -18,4 +18,5 @@ public interface ValutazioneService extends RemoteService {
     ArrayList<Valutazione> getValutazioniDaInserire() throws Exception;
     ArrayList<Valutazione> getValutazioniDaPubblicare() throws Exception;
     Valutazione cambiaStatoValutazione(String username,String corso, int stato) throws Exception;
+    Integer getSize() throws Exception;
 }
