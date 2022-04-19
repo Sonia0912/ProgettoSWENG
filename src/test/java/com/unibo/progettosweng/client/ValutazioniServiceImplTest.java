@@ -139,7 +139,7 @@ public class ValutazioniServiceImplTest extends GWTTestCase {
 
                         @Override
                         public void onSuccess(Integer result) {
-                            assertEquals("get utenti", result, new Integer(valutazioni.length));
+                            assertEquals("get valutazioni", result, new Integer(valutazioni.length));
                             finishTest();
                         }
                     });
@@ -202,6 +202,61 @@ public class ValutazioniServiceImplTest extends GWTTestCase {
             }
         });
     }
+
+    public synchronized void testAggiorna() throws Exception {
+        delayTestFinish(10000);
+        int index = 2;
+        valutazioniTest.get(index)[2] = "20";
+        Valutazione newVal = new Valutazione(valutazioniTest.get(index)[0], valutazioniTest.get(index)[1], Integer.parseInt(valutazioniTest.get(index)[2]), Integer.parseInt(valutazioniTest.get(index)[3]));
+        service.aggiorna(newVal, new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure aggiorna valutazione: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                assertTrue(true);
+                finishTest();
+            }
+        });
+    }
+
+    //solo quelle con stato = 2 (pubblicate)
+    public synchronized void testGetValutazioniStudente() throws Exception {
+        delayTestFinish(10000);
+
+        service.getValutazioniStudente(valutazioniTest.get(0)[1], new AsyncCallback<ArrayList<Valutazione>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get valutazioni studente: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Valutazione> valutazioni) {
+                assertEquals("get valutazioni studente", 1, valutazioni.size());
+                finishTest();
+            }
+        });
+    }
+
+    public synchronized void testGetValutazioniFromEsame(){
+        delayTestFinish(10000);
+
+        service.getValutazioniFromEsame("Basi di Dati", new AsyncCallback<ArrayList<Valutazione>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                fail("Failure get valutazione from esame: " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(ArrayList<Valutazione> result) {
+                assertEquals("get valutazioni from esame", 1, result.size());
+                finishTest();
+            }
+        });
+    }
+
 
     @Override
     public String getModuleName() {
