@@ -140,13 +140,10 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
 
     public int getNumeroCorsi() {
         createOrOpenDB();
-        return map.size();
-    }
-
-    @Override
-    public int getSizeMap() throws Exception {
         return map.getSize();
     }
+
+
 
 
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
