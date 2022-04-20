@@ -129,7 +129,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return lista;
     }
 
-    public int getNumeroCorsi() {
+    public int getSize() {
         createOrOpenDB();
         return map.getSize();
     }

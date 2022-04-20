@@ -60,7 +60,8 @@ public class Homepage implements Pagina {
                 String numDocenti = String.valueOf(countDoc);
 
                 try {
-                    serviceCorso.getNumeroCorsi(new AsyncCallback<Integer>() {
+                    //prendo il numero dei corsi nel db
+                    serviceCorso.getSize(new AsyncCallback<Integer>() {
                         @Override
                         public void onFailure(Throwable throwable) {
                             Window.alert("Failure numCorsi: " + throwable.getMessage());

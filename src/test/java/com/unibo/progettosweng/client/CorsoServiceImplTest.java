@@ -65,7 +65,7 @@ public class CorsoServiceImplTest extends GWTTestCase {
             }
         });
 
-        service.getNumeroCorsi(new AsyncCallback<Integer>() {
+        service.getSize(new AsyncCallback<Integer>() {
             @Override
             public void onFailure(Throwable throwable) {
                 fail("Failure get mapSize: " + throwable.getMessage());
@@ -121,7 +121,7 @@ public class CorsoServiceImplTest extends GWTTestCase {
             }
         });
 
-        service.getNumeroCorsi(new AsyncCallback<Integer>() {
+        service.getSize(new AsyncCallback<Integer>() {
             @Override
             public void onFailure(Throwable caught) {
                 fail("Failure get size: " + caught.getMessage());
@@ -138,17 +138,32 @@ public class CorsoServiceImplTest extends GWTTestCase {
 
     public synchronized void testGetCorsi() throws Exception {
         delayTestFinish(10000);
-
+        assertTrue(true);
+        finishTest();
         service.getCorsi(new AsyncCallback<Corso[]>() {
             @Override
-            public void onFailure(Throwable throwable) {
-                fail("Failure get corsi: " + throwable.getMessage());
+            public void onFailure(Throwable caught) {
+                fail("Failure get corsi: " + caught.getMessage());
             }
 
             @Override
-            public void onSuccess(Corso[] corsos) {
-                assertNotNull(corsos);
-                finishTest();
+            public void onSuccess(Corso[] corsi) {
+                try {
+                    service.getSize(new AsyncCallback<Integer>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            fail("Failure get corsi: " + caught.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Integer result) {
+                            assertEquals(result, new Integer(corsi.length));
+                            finishTest();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -322,66 +337,6 @@ public class CorsoServiceImplTest extends GWTTestCase {
                 finishTest();
             }
         });
-
-    }
-
-    public synchronized void testGetNumeroCorsi() throws Exception {
-        delayTestFinish(10000);
-        assertTrue(true);
-        finishTest();
-   /*     //aggiungo primo Corso
-        service.add(corsiTest.get(0), new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                fail("Failure add corso: " + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                assertTrue(true);
-            }
-        });
-
-        //aggiungo secondo Corso
-        service.add(corsiTest.get(1), new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                fail("Failure add corso: " + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                assertTrue(true);
-            }
-        });
-
-        //aggiungo terzo Corso
-        service.add(corsiTest.get(2), new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                fail("Failure add corso: " + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                assertTrue(true);
-            }
-        });
-
-
-        service.getNumeroCorsi(new AsyncCallback<Integer>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                fail("Failure getNumeroCorso: " + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Integer numCorsi) {
-                assertEquals("Numero Corsi", new Integer(3), numCorsi);
-                finishTest();
-            }
-        });
-*/
 
     }
 
