@@ -1,3 +1,6 @@
+/**
+ * Classe che implementa l'interfaccia Pagina e mostra il form di login per accedere al portale.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Login implements Pagina{
+public class Login implements Pagina {
     FormPanel login;
     Image logo = new Image();
     private final UtenteServiceAsync utente = GWT.create(UtenteService.class);
@@ -144,19 +147,14 @@ public class Login implements Pagina{
                                             }
                                             break;
                                     }
-                                }else {
+                                }else{
                                     Window.alert("Username o password incorretti.");
                                 }
                             }
                         });
 
-
             }
         });
     }
-
-
-
-
 
 }

@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per inserire un corso nel portale docente.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -156,9 +159,5 @@ public class InserimentoCorso implements Form {
         });
         return nuovoCorso;
     }
-
-
-
-
 
 }

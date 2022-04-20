@@ -1,20 +1,19 @@
+/**
+ *  Classe che rappresenta l'oggetto Utente.
+ **/
 package com.unibo.progettosweng.client.model;
-
 
 import java.io.Serializable;
 
-
 public class Utente implements Serializable {
 
-
-    private static final long serialVersionUID = 6920472853042767550L;
     private String nome;
     private String cognome;
     private String username;
     private String password;
     private String tipo;
 
-    public Utente(){
+    public Utente() {
 
     }
 
@@ -40,12 +39,10 @@ public class Utente implements Serializable {
 
     public void setNome(String nome){
         this.nome = nome;
-
     }
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
-
     }
 
     public void setPassword(String password) {
@@ -55,6 +52,7 @@ public class Utente implements Serializable {
     public void setUsername(String username){
         this.username = username;
     }
+
     @Override
     public String toString(){
         return this.nome+" "+this.cognome+" "+this.username+" "+this.tipo;

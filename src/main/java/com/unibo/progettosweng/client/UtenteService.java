@@ -1,3 +1,6 @@
+/**
+ *  Interfaccia client-side per l'RCP service.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -6,13 +9,10 @@ import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
 
-/**
- * The client-side stub for the RPC service.
- */
 @RemoteServiceRelativePath("utenti")
 public interface UtenteService extends RemoteService {
     String add(String[] input) throws IllegalArgumentException;
-        void remove(Utente ut) throws IllegalArgumentException;
+    void remove(Utente ut) throws IllegalArgumentException;
     Utente[] getUtenti() throws Exception;
     Utente login(String username, String password) ;
     Utente aggiorna(Utente utente, String usernameOriginale) throws Exception;

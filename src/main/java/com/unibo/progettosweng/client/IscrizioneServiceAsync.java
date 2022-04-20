@@ -1,8 +1,10 @@
+/**
+ *  Interfaccia asincrona per il servizio da chiamare lato client.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.unibo.progettosweng.client.model.Iscrizione;
-
 import java.util.ArrayList;
 
 public interface IscrizioneServiceAsync {

@@ -1,3 +1,6 @@
+/**
+ *  Classe per serializzare e deserializzare l'oggetto Valutazione inserito nel db.
+ **/
 package com.unibo.progettosweng.client.model.Serializer;
 
 import com.unibo.progettosweng.client.model.Valutazione;

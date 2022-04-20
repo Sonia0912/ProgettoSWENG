@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per modificare un utente nel portale admin.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -44,15 +47,6 @@ public class ModificaInfoUtente implements Form {
         cognome.setName("Cognome");
         formPanel.add(cognome);
 
-//        final Label labelEmail = new Label("Email:");
-//        labelEmail.getElement().setClassName("label");
-//        formPanel.add(labelEmail);
-//        final TextBox email = new TextBox();
-//        email.getElement().setClassName("input");
-//        email.setValue(utente.getUsername());
-//        email.setName("Email");
-//        formPanel.add(email);
-
         final Label labelPassword = new Label("Password:");
         labelPassword.getElement().setClassName("label");
         formPanel.add(labelPassword);
@@ -61,27 +55,6 @@ public class ModificaInfoUtente implements Form {
         password.setValue(utente.getPassword());
         password.setName("Password");
         formPanel.add(password);
-/*
-        final Label labelTipo = new Label("Tipo di utente*:");
-        labelTipo.getElement().setClassName("label");
-        formPanel.add(labelTipo);
-        ListBox tipo = new ListBox();
-        tipo.getElement().setClassName("input");
-        tipo.addItem("");
-        tipo.addItem("Docente");
-        tipo.addItem("Studente");
-        tipo.addItem("Segreteria");
-        tipo.addItem("Admin");
-
-        formPanel.add(tipo);
-
-        final Label labelPassword = new Label("Password*:");
-        labelPassword.getElement().setClassName("label");
-        formPanel.add(labelPassword);
-        final PasswordTextBox password = new PasswordTextBox();
-        password.getElement().setClassName("input");
-        password.setName("Password");
-        formPanel.add(password);*/
 
         Button send = new Button("Modifica");
         send.getElement().setClassName("btn-send");
@@ -129,9 +102,5 @@ public class ModificaInfoUtente implements Form {
         });
         return editUtente;
     }
-
-
-
-
 
 }

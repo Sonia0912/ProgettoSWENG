@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa RegistrazioneService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -18,12 +22,6 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
 
     DB db;
     HTreeMap<String, Registrazione> map;
-
-    private void createOrOpenDB(){
-        this.db = getDb("registrazioni.db");
-        this.map = this.db.hashMap("registrazioniMap").counterEnable().keySerializer(Serializer.STRING)
-                .valueSerializer(new SerializerRegistrazione()).createOrOpen();
-    }
 
     @Override
     public String add(String studente, String corso) throws IllegalArgumentException {
@@ -56,7 +54,6 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
             if(map.get(i).getCorso().equals(nomeCorso)){
                 registrazioni.add(map.get(i));
             }
-
         }
         return registrazioni;
     }
@@ -65,12 +62,20 @@ public class RegistrazioneServiceImpl extends RemoteServiceServlet implements Re
         return map.getSize();
     }
 
+    // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
         if (html == null) {
             return null;
         }
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
+    }
+
+    // Apre il db registrazioni.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("registrazioni.db");
+        this.map = this.db.hashMap("registrazioniMap").counterEnable().keySerializer(Serializer.STRING)
+                .valueSerializer(new SerializerRegistrazione()).createOrOpen();
     }
 
     private DB getDb(String nameDB){

@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per modificare un corso nel portale docente.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -150,9 +153,5 @@ public class ModificaCorso implements Form{
         });
         return editCorso;
     }
-
-
-
-
 
 }

@@ -1,3 +1,6 @@
+/**
+ *  Classe che rappresenta l'oggetto Valutazione.
+ **/
 package com.unibo.progettosweng.client.model;
 
 import java.io.Serializable;
@@ -9,7 +12,7 @@ public class Valutazione implements Serializable {
     private int voto;
     private int stato;
 
-    public Valutazione(){
+    public Valutazione() {
 
     }
 
@@ -40,7 +43,6 @@ public class Valutazione implements Serializable {
         this.studente = studente;
     }
 
-
     public void setStato(int stato) {
         this.stato = stato;
     }
@@ -58,8 +60,8 @@ public class Valutazione implements Serializable {
         return this.nomeCorso+" "+this.studente+" "+this.voto+" "+this.stato;
     }
 
-   @Override
-   public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if(obj != null){
             if(obj.getClass() == this.getClass()){
                 Valutazione other = (Valutazione) obj;
@@ -69,6 +71,6 @@ public class Valutazione implements Serializable {
             }
         }
         return false;
-   }
+    }
 
 }

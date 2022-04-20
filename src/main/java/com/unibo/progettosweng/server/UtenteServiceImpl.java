@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa UtenteService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.unibo.progettosweng.client.UtenteService;
@@ -14,19 +18,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- * The server-side implementation of the RPC service.
- */
 @SuppressWarnings("serial")
 public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteService {
 
     DB db;
     HTreeMap<String,Utente> map;
-
-    private void createOrOpenDB(){
-        this.db = getDb("utenti.db");
-        this.map = this.db.hashMap("utentiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
-    }
 
     @Override
     public String add(String[] input) throws IllegalArgumentException {
@@ -40,14 +36,14 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
         }else {
             map.put(String.valueOf(map.size() + 1), ut);
             db.commit();
-            return "(size: " + map.size()+ ") L'utente " + ut.getNome() + " " + ut.getCognome() + " è stato creato e aggiunto al database.";
+            return "L'utente " + ut.getNome() + " " + ut.getCognome() + " è stato creato e aggiunto al database.";
         }
     }
 
     @Override
     public void remove(Utente utente) throws IllegalArgumentException {
         createOrOpenDB();
-        for ( String i: map.getKeys()) {
+        for (String i: map.getKeys()) {
             if(map.get(i).equals(utente)){
                 map.remove(i);
             }
@@ -55,7 +51,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     @Override
-    public Utente[] getUtenti() throws Exception{
+    public Utente[] getUtenti() throws Exception {
         createOrOpenDB();
         Utente[] utenti = new Utente[map.size()];
         int k = 0;
@@ -165,7 +161,7 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
     }
 
     private boolean controlloUtenteDuplicato(HTreeMap<String,Utente> map, Utente utente){
-        for ( String i: map.getKeys()) {
+        for (String i: map.getKeys()) {
             if (map.get(i).getUsername().equals(utente.getUsername()) ){
                 return true;
             }
@@ -182,6 +178,11 @@ public class UtenteServiceImpl extends RemoteServiceServlet implements UtenteSer
                 ">", "&gt;");
     }
 
+    // Apre il db utenti.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("utenti.db");
+        this.map = this.db.hashMap("utentiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerUtente()).createOrOpen();
+    }
 
     private DB getDb(String nameDB){
         ServletContext context = this.getServletContext();

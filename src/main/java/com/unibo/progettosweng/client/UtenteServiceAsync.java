@@ -1,3 +1,6 @@
+/**
+ *  Interfaccia asincrona per il servizio da chiamare lato client.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -5,12 +8,7 @@ import com.unibo.progettosweng.client.model.Utente;
 
 import java.util.ArrayList;
 
-
-/**
- * The async counterpart of <code>GreetingService</code>.
- */
 public interface UtenteServiceAsync {
-    //tutti questi metodi devono essere void
     void remove(Utente ut, AsyncCallback<Void> callback) throws IllegalArgumentException;
     void add(String[] input, AsyncCallback<String> callback) throws IllegalArgumentException;
     void getUtenti(AsyncCallback<Utente[]> callback) throws Exception;

@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa ValutazioneService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -17,23 +21,6 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
     DB db;
     HTreeMap<String,Valutazione> map;
 
-    private void createOrOpenDB(){
-        this.db = getDb("valutazioni.db");
-        this.map = this.db.hashMap("valutazioniMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerValutazione()).createOrOpen();
-    }
-
-    private DB getDb(String nameDB) {
-        ServletContext context = this.getServletContext();
-        synchronized (context) {
-            DB db = (DB)context.getAttribute("DB_Valutazioni");
-            if(db == null) {
-                db = DBMaker.fileDB(nameDB).make();
-                context.setAttribute("DB_Valutazioni", db);
-            }
-            return db;
-        }
-    }
-
     @Override
     public String add(String[] input) throws IllegalArgumentException {
         createOrOpenDB();
@@ -46,7 +33,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         }else {
             map.put(String.valueOf(map.size() + 1), valutazione);
             db.commit();
-            return "(size: " + map.size()+ ") La valutazione di " + valutazione.getStudente()+ " del corso " + valutazione.getNomeCorso()+ " è stata creata e aggiunta al database.";
+            return "La valutazione di " + valutazione.getStudente()+ " del corso " + valutazione.getNomeCorso()+ " è stata creata e aggiunta al database.";
         }
     }
 
@@ -55,19 +42,16 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         for (String[] val: listaValutazioni) {
             add(val);
         }
-        return "(size: " + map.size()+ ") Le valutazioni sono state create e aggiunte al database.";
-
+        return "Le valutazioni sono state create e aggiunte al database.";
     };
 
     private boolean controlloValutazioneDuplicato(HTreeMap<String, Valutazione> map, Valutazione val) {
-
         for (String i : map.getKeys()) {
             if(map.get(i).getNomeCorso().equals(val.getNomeCorso()) && map.get(i).getStudente().equals(val.getStudente())){
                 return true;
             }
         }
         return false;
-
     }
 
     @Override
@@ -77,7 +61,7 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
             if(map.get(i).getNomeCorso().equals(nomeCorso) && map.get(i).getStudente().equals(studente)){
                 map.remove(i);
                 db.commit();
-                return "La taglia: " + map.size() + ". La valutazione di " + studente + " del corso di " + nomeCorso + " è stata rimossa.";
+                return "La valutazione di " + studente + " del corso di " + nomeCorso + " è stata rimossa.";
             }
         }
         return "Nessun voto presente";
@@ -169,13 +153,30 @@ public class ValutazioneServiceImpl extends RemoteServiceServlet implements Valu
         return map.getSize();
     }
 
-
     private String escapeHtml(String html) {
         if (html == null) {
             return null;
         }
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
+    }
+
+    // Apre il db valutazione.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("valutazioni.db");
+        this.map = this.db.hashMap("valutazioniMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerValutazione()).createOrOpen();
+    }
+
+    private DB getDb(String nameDB) {
+        ServletContext context = this.getServletContext();
+        synchronized (context) {
+            DB db = (DB)context.getAttribute("DB_Valutazioni");
+            if(db == null) {
+                db = DBMaker.fileDB(nameDB).make();
+                context.setAttribute("DB_Valutazioni", db);
+            }
+            return db;
+        }
     }
 
 }

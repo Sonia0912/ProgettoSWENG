@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa EsameService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -19,23 +23,6 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     DB db;
     HTreeMap<String, Esame> map;
 
-    private void createOrOpenDB(){
-        this.db = getDb("esami.db");
-        this.map = this.db.hashMap("esamiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerEsame()).createOrOpen();
-    }
-
-    private DB getDb(String nameDB) {
-        ServletContext context = this.getServletContext();
-        synchronized (context) {
-            DB db = (DB)context.getAttribute("DB_Esami");
-            if(db == null) {
-                db = DBMaker.fileDB(nameDB).make();
-                context.setAttribute("DB_Esami", db);
-            }
-            return db;
-        }
-    }
-
     @Override
     public String add(String[] input) throws IllegalArgumentException {
         createOrOpenDB();
@@ -53,7 +40,6 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     }
 
     private boolean controlloEsamiDuplicati(HTreeMap<String, Esame> map, Esame esame) {
-
         for ( String i: map.getKeys()) {
             if (map.get(i).getNomeCorso().equals(esame.getNomeCorso()) ){
                 return true;
@@ -69,7 +55,7 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
             if(map.get(i).getNomeCorso().equals(key)){
                 map.remove(i);
                 db.commit();
-                return "(taglia: " + map.size() + ") L'esame di " + key + " è  stato rimosso.";
+                return "L'esame di " + key + " è  stato rimosso.";
             }
         }
         return "Nessun corso Presente!";
@@ -78,14 +64,13 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
     @Override
     public ArrayList<Esame> getEsami() throws Exception {
         createOrOpenDB();
-        ArrayList<Esame> esames = new ArrayList<>();
-
+        ArrayList<Esame> esami = new ArrayList<>();
         int k = 0;
         for ( String i: map.getKeys()) {
-            esames.add(map.get(i));
+            esami.add(map.get(i));
             k++;
         }
-        return esames;
+        return esami;
     }
 
     @Override
@@ -140,8 +125,22 @@ public class EsameServiceImpl extends RemoteServiceServlet implements EsameServi
                 ">", "&gt;");
     }
 
+    // Apre il db esami.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("esami.db");
+        this.map = this.db.hashMap("esamiMap").counterEnable().keySerializer(Serializer.STRING).valueSerializer(new SerializerEsame()).createOrOpen();
+    }
 
-
-
+    private DB getDb(String nameDB) {
+        ServletContext context = this.getServletContext();
+        synchronized (context) {
+            DB db = (DB)context.getAttribute("DB_Esami");
+            if(db == null) {
+                db = DBMaker.fileDB(nameDB).make();
+                context.setAttribute("DB_Esami", db);
+            }
+            return db;
+        }
+    }
 
 }

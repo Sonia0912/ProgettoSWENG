@@ -1,3 +1,6 @@
+/**
+ * Classe che implementa Pagina per mostrare le informazioni dell'universita' nel sito.
+ * */
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -5,7 +8,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.Utente;
-import org.checkerframework.checker.units.qual.A;
 
 public class Homepage implements Pagina {
 
@@ -30,11 +32,6 @@ public class Homepage implements Pagina {
     final static HTML titolo2 = new HTML("Vita vera. Conoscenza vera. Persone vere.");
     final static HTML paragrafo2 = new HTML("<i>Smart is an acronym for Specific, Measurable, Realistic and Time Sensitive.</i> <br /><br /> The first thing to remember about success is that it is a process – nothing more, nothing less. There is really no magic to it and it’s not reserved only for a select few people. As such, success really has nothing to do with luck, coincidence or fate. It really comes down to understanding the steps in the process and then executing on those steps.");
     final static HTML divImgHp = new HTML("<div id=\"divHp\"> <img src=\"img/campusBuilding.jpg\" class=\"uniFotoSfondo\"> <div class=\"centeredAbove\">UNITECH</div> <div class=\"centeredBelow\">Scienza, tecnologia e innovazione</div> </div>");
-/*    final static HTML contatore1 = new HTML("<div class=\"contatore\"><div class=\"contatoreColonne\"><img class=\"iconaContatore\" src=\"img/iconaStudenti.png\" /><div class=\"colonnaNumeri\"><div class=\"numeroContatore\">" + numeriContatore[0] + "</div><div class=\"titoloContatore\">" + titoloContatore[0] + "</div></div></div></div>");
-    final static HTML contatore2 = new HTML("<div class=\"contatore\"><div class=\"contatoreColonne\"><img class=\"iconaContatore\" src=\"img/iconaCorsi.png\" /><div class=\"colonnaNumeri\"><div class=\"numeroContatore\">" + numeriContatore[1] + "</div><div class=\"titoloContatore\">" + titoloContatore[1] + "</div></div></div></div>");
-    final static HTML contatore3 = new HTML("<div class=\"contatore\"><div class=\"contatoreColonne\"><img class=\"iconaContatore\" src=\"img/iconaDipartimenti.png\" /><div class=\"colonnaNumeri\"><div class=\"numeroContatore\">" + numeriContatore[2] + "</div><div class=\"titoloContatore\">" + titoloContatore[2] + "</div></div></div></div>");
-    final static HTML contatore4 = new HTML("<div class=\"contatore\"><div class=\"contatoreColonne\"><img class=\"iconaContatore\" src=\"img/iconaProfessore.png\" /><div class=\"colonnaNumeri\"><div class=\"numeroContatore\">" + numeriContatore[3] + "</div><div class=\"titoloContatore\">" + titoloContatore[3] + "</div></div></div></div>");*/
-
     final static HTML divStudentiHp = new HTML("<div class=\"titoloStudenti\">Incontra i nostri studenti</div><div class=\"sottotitoloStudenti\">Unitech students tell their own stories of what life at Unitech means to them.</div>");
     final static HTML studente1 = new HTML("<div class=\"immagineStudenteDiv\"><img src=\"img/studente1.jpg\" class=\"immagineStudente\"/><div class=\"nomeStudente\">Luca Rossi</div><div class=\"facoltaStudente\">Fisica</div></div>");
     final static HTML studente2 = new HTML("<div class=\"immagineStudenteDiv\"><img src=\"img/studente2.jpg\" class=\"immagineStudente\"/><div class=\"nomeStudente\">Sara Verdi</div><div class=\"facoltaStudente\">Matematica</div></div>");
@@ -162,39 +159,5 @@ public class Homepage implements Pagina {
             }
         });
     }
-
-/*    private void aggiornaCifre() throws Exception {
-        numeriContatore[2] = "5";
-        serviceUtente.getUtenti(new AsyncCallback<Utente[]>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                Window.alert("Failure numStudenti: " + throwable.getMessage());
-            }
-            @Override
-            public void onSuccess(Utente[] utenti) {
-                int countStud = 0;
-                int countDoc = 0;
-                for(int i = 0; i < utenti.length; i++) {
-                    if(utenti[i].getTipo().equals("Studente")) {
-                        countStud++;
-                    } else if (utenti[i].getTipo().equals("Docente")) {
-                        countDoc++;
-                    }
-                }
-                numeriContatore[0] = String.valueOf(countStud);
-                numeriContatore[3] = String.valueOf(countDoc);
-            }
-        });
-        serviceCorso.getNumeroCorsi(new AsyncCallback<Integer>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                Window.alert("Failure numCorsi: " + throwable.getMessage());
-            }
-            @Override
-            public void onSuccess(Integer n) {
-                numeriContatore[1] = String.valueOf(n);
-            }
-        });
-    }*/
 
 }

@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per modificare un esame nel portale docente.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -19,7 +22,8 @@ public class ModificaEsame implements Form{
     Esame esame;
     private EsameServiceAsync esameService = GWT.create(EsameService.class);
 
-    public ModificaEsame (Esame esame){ this.esame = esame;
+    public ModificaEsame (Esame esame){
+        this.esame = esame;
     }
 
     @Override
@@ -158,9 +162,5 @@ public class ModificaEsame implements Form{
         });
         return editEsame;
     }
-
-
-
-
 
 }

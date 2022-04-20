@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per modificare un voto gia' deciso nel portale docente.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -94,6 +97,6 @@ public class ModificaValutazione implements Form {
             }
         });
         return nuovaValutazione;
-
     }
+
 }

@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per inserire un utente nel portale admin.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -102,9 +105,5 @@ public class InserimentoUtente implements Form {
         });
         return nuovoUtente;
     }
-
-
-
-
 
 }

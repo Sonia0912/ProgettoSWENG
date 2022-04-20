@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa CorsoService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.unibo.progettosweng.client.CorsoService;
@@ -8,24 +12,14 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
-
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
 
-/**
- * The server-side implementation of the RPC service.
- */
 @SuppressWarnings("serial")
 public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoService {
 
     DB db;
     HTreeMap<String,Corso> map;
-
-    private void createOrOpenDB(){
-        this.db = getDb("corsi.db");
-        this.map = this.db.hashMap("corsiMap").counterEnable().keySerializer(Serializer.STRING)
-                .valueSerializer(new SerializerCorso()).createOrOpen();
-    }
 
     @Override
     public String add(String[] input) throws IllegalArgumentException {
@@ -39,7 +33,7 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         } else {
             map.put(String.valueOf(map.size() + 1), corso);
             db.commit();
-            return "(size: " + map.size()+ ") Il corso " + corso.getNomeCorso() + ", inzio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
+            return "Il corso " + corso.getNomeCorso() + ", inizio: " + corso.getDataInizio() + " è stato creato e aggiunto al database.";
         }
     }
 
@@ -50,10 +44,10 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
             if(map.get(i).getNomeCorso().equals(nomeCorso)){
                 map.remove(i);
                 db.commit();
-                return "(taglia: " + map.size() + ") Il corso " + nomeCorso + " è  stato rimosso.";
+                return "Il corso " + nomeCorso + " è  stato rimosso.";
             }
         }
-        return "Nessun corso presente";
+        return "Nessun corso presente.";
     }
 
     @Override
@@ -68,8 +62,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return corsi;
     }
 
-
-    //metodo che viene invocato quando vengono modificato le informazioni degli utenti
     @Override
     public void aggiorna(Corso corso){
         createOrOpenDB();
@@ -115,7 +107,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return null;
     }
 
-
     private boolean controlloCorsoDuplicato(HTreeMap<String, Corso> map, Corso corso){
         for (String i: map.getKeys()) {
             if (map.get(i).getNomeCorso().equals(corso.getNomeCorso())){
@@ -143,9 +134,6 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         return map.getSize();
     }
 
-
-
-
     // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
         if (html == null) {
@@ -153,6 +141,13 @@ public class CorsoServiceImpl extends RemoteServiceServlet implements CorsoServi
         }
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
+    }
+
+    // Apre il db corsi.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("corsi.db");
+        this.map = this.db.hashMap("corsiMap").counterEnable().keySerializer(Serializer.STRING)
+                .valueSerializer(new SerializerCorso()).createOrOpen();
     }
 
     private DB getDb(String nameDB){

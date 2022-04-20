@@ -1,9 +1,10 @@
+/**
+ * Interfaccia che fornisce il metodo per la creazione del form.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.ui.FormPanel;
 
 public interface Form {
-
-    //metodo per ottenere il form
     public FormPanel getForm() throws Exception;
 }

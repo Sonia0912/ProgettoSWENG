@@ -1,3 +1,6 @@
+/**
+ *  Interfaccia client-side per l'RCP service.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;

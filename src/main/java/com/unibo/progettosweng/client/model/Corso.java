@@ -1,3 +1,6 @@
+/**
+ *  Classe che rappresenta l'oggetto Corso.
+ **/
 package com.unibo.progettosweng.client.model;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -61,7 +64,6 @@ public class Corso implements Serializable {
         return esameCreato;
     }
 
-
     public static final ProvidesKey<Corso> KEY_PROVIDER = new ProvidesKey<Corso>() {
         @Override
         public Object getKey(Corso item) {
@@ -71,7 +73,6 @@ public class Corso implements Serializable {
 
     public void setCodocente(String codocente) {
         this.codocente = codocente;
-
     }
 
     public void setDataFine(String dataFine) {
@@ -106,4 +107,5 @@ public class Corso implements Serializable {
         }
         return false;
     }
+
 }

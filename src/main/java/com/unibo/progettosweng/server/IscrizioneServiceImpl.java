@@ -1,3 +1,7 @@
+/**
+ *  Classe che estende RemoteServiceServlet e implementa IscrizioneService.
+ *  E' l'implementazione del servizio RCP lato server.
+ **/
 package com.unibo.progettosweng.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -17,12 +21,6 @@ public class IscrizioneServiceImpl extends RemoteServiceServlet implements Iscri
 
     DB db;
     HTreeMap<String, Iscrizione> map;
-
-    private void createOrOpenDB(){
-        this.db = getDb("iscrizioni.db");
-        this.map = this.db.hashMap("iscrizioniMap").counterEnable().keySerializer(Serializer.STRING)
-                .valueSerializer(new SerializerIscrizione()).createOrOpen();
-    }
 
     @Override
     public String add(String studente, String corso) throws IllegalArgumentException {
@@ -59,12 +57,20 @@ public class IscrizioneServiceImpl extends RemoteServiceServlet implements Iscri
         return false;
     }
 
+    // metodo per assicurarsi che non le stringhe vengano lette come tali e non come codice html
     private String escapeHtml(String html) {
         if (html == null) {
             return null;
         }
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
+    }
+
+    // Apre il db iscrizioni.db e se non esiste lo crea
+    private void createOrOpenDB(){
+        this.db = getDb("iscrizioni.db");
+        this.map = this.db.hashMap("iscrizioniMap").counterEnable().keySerializer(Serializer.STRING)
+                .valueSerializer(new SerializerIscrizione()).createOrOpen();
     }
 
     private DB getDb(String nameDB){

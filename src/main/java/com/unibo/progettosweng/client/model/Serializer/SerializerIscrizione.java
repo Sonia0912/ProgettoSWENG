@@ -1,11 +1,12 @@
+/**
+ *  Classe per serializzare e deserializzare l'oggetto Iscrizione inserito nel db.
+ **/
 package com.unibo.progettosweng.client.model.Serializer;
 
-import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Iscrizione;
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;
-
 import java.io.IOException;
 import java.io.Serializable;
 

@@ -1,3 +1,6 @@
+/**
+ *  Interfaccia client-side per l'RCP service.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -6,7 +9,6 @@ import com.unibo.progettosweng.client.model.Corso;
 import com.unibo.progettosweng.client.model.Esame;
 
 import java.util.ArrayList;
-
 
 @RemoteServiceRelativePath("esami")
 public interface EsameService extends RemoteService {

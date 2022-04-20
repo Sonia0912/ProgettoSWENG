@@ -1,3 +1,6 @@
+/**
+ * Classe che fornisce il form per inserire un esame nel portale docente.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.core.client.GWT;
@@ -100,7 +103,6 @@ public class InserimentoEsame implements Form{
         corso.setName(this.nomeCorso);
         corso.setName("Corso");
         corso.addItem("");
-        //corso.setValue(this.nomeCorso);
 
         serviceCorsi.getCorsiDocente(docente.getUsername(), new AsyncCallback<ArrayList<Corso>>() {
             @Override
@@ -135,9 +137,7 @@ public class InserimentoEsame implements Form{
             }
         });
 
-
         formPanel.add(corso);
-
 
         Button send = new Button("Inserisci");
         send.getElement().setClassName("btn-send");
@@ -216,9 +216,5 @@ public class InserimentoEsame implements Form{
         });
         return nuovoEsame;
     }
-
-
-
-
 
 }

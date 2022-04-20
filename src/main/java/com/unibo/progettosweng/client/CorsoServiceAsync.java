@@ -1,12 +1,13 @@
+/**
+ *  Interfaccia asincrona per il servizio da chiamare lato client.
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.unibo.progettosweng.client.model.Corso;
-
 import java.util.ArrayList;
 
 public interface CorsoServiceAsync {
-    //tutti questi metodi devono essere void
     void add(String[] input, AsyncCallback<String> callback) throws IllegalArgumentException;
     void remove(String key, AsyncCallback<String> callback) throws IllegalArgumentException;
     void getCorsi(AsyncCallback<Corso[]> callback) throws Exception;
