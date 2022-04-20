@@ -1,5 +1,5 @@
 /**
- * HOMEPAGE
+ * HOMEPAGE - Entry Point
  */
 package com.unibo.progettosweng.client;
 
@@ -11,14 +11,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.unibo.progettosweng.client.model.Corso;
-import com.unibo.progettosweng.client.model.Utente;
-import org.checkerframework.checker.units.qual.C;
 
 public class ProgettoSWENG implements EntryPoint {
-
-    private static final String SERVER_ERROR = "An error occurred while "
-            + "attempting to contact the server. Please check your network "
-            + "connection and try again.";
 
     CorsoServiceAsync serviceCorso = GWT.create(CorsoService.class);
 

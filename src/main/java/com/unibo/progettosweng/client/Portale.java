@@ -1,8 +1,8 @@
+/**
+ * Classe astratta per i portali (studente, docente, admin, segreteria)
+ **/
 package com.unibo.progettosweng.client;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;

@@ -1,3 +1,6 @@
+/**
+ *   Classe che implementa il portale admin
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -13,10 +16,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.*;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PortaleAdmin extends Portale {
@@ -273,7 +274,6 @@ public class PortaleAdmin extends Portale {
         spazioDinamico.add(new HTML("<div class=\"titolettoPortale\">Esami</div>"));
         if(tipo.equalsIgnoreCase("studente")) {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> si è registrato/a ai seguenti esami: </div>"));
-            //esami = new String[]{"Chimica", "Fisica nucleare", "Sistemi Operativi"};
             serviceRegistrazione.getRegistrazioniStudente(username, new AsyncCallback<ArrayList<Registrazione>>() {
                 @Override
                 public void onFailure(Throwable throwable) {
@@ -289,7 +289,6 @@ public class PortaleAdmin extends Portale {
             });
         } else {
             spazioDinamico.add(new HTML("<div class=\"listaPortaleIntro\"><b>" + username + "</b> è assegnato come docente ai seguenti esami: </div>"));
-            //esami = new String[]{"Fisica nucleare", "Sistemi Operativi"};
             serviceCorso.getCorsiDocente(username, new AsyncCallback<ArrayList<Corso>>() {
                 @Override
                 public void onFailure(Throwable throwable) {
@@ -351,7 +350,5 @@ public class PortaleAdmin extends Portale {
                 }
             });
         }
-
     }
-
 }

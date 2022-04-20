@@ -1,9 +1,10 @@
+/**
+ *   Classe che implementa il portale studente
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.*;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
@@ -12,8 +13,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.unibo.progettosweng.client.model.*;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -381,8 +380,6 @@ public class PortaleStudente extends Portale {
                         public void onSuccess(String output) {
                             Window.alert(output);
                             if(!output.equals("Ti sei già iscritto a questo corso")) {
-/*                                corsiEsplorabili.remove(index);
-                                corsiIscritto.add(object);*/
                                 try {
                                     caricaEsploraCorsi();
                                 } catch (Exception e) {
@@ -483,7 +480,6 @@ public class PortaleStudente extends Portale {
         return tableEsami;
     }
 
-    // Da modificare quando avremo l'oggetto Voto
     private CellTable<Valutazione> creaTabellaVoti(ArrayList<Valutazione> listaVoti, String messaggioVuoto) {
         CellTable<Valutazione> tableVoti = new CellTable<Valutazione>();
         tableVoti.addStyleName("tablePortale");
@@ -510,5 +506,4 @@ public class PortaleStudente extends Portale {
         tableVoti.setRowData(0, listaVoti);
         return tableVoti;
     }
-
 }

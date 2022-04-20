@@ -1,3 +1,6 @@
+/**
+ *   Classe che implementa il portale segreteria
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -18,7 +21,6 @@ import com.unibo.progettosweng.client.model.Iscrizione;
 import com.unibo.progettosweng.client.model.Registrazione;
 import com.unibo.progettosweng.client.model.Utente;
 import com.unibo.progettosweng.client.model.Valutazione;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -388,5 +390,4 @@ public class PortaleSegreteria extends Portale {
             }
         });
     }
-
 }

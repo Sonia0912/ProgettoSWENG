@@ -1,3 +1,6 @@
+/**
+ *   Classe che implementa il portale docente
+ **/
 package com.unibo.progettosweng.client;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -18,8 +21,6 @@ import com.google.gwt.user.client.ui.Label;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.unibo.progettosweng.client.model.*;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
